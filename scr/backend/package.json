@@ -1,0 +1,23 @@
+{
+  "name": "knowhub",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts"
+  },
+  "author": "",
+  "license": "",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^5.21.1",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.8.1",
+    "prisma": "^5.21.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
