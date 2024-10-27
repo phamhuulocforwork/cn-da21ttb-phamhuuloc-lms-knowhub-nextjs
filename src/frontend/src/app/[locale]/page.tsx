@@ -1,10 +1,3 @@
-import { useTranslations } from "next-intl";
-
-export default function HomePage() {
-  const t = useTranslations("Index");
-  return (
-    <div>
-      <h1>{t("title")}</h1>
-    </div>
-  );
+export default function Home() {
+  return <h1>Home</h1>;
 }

@@ -11,6 +11,14 @@ const config = {
   theme: {
     extend: {
       colors: {
+        sidebar: {
+          DEFAULT: "#ffffff",
+          foreground: "#0f172a",
+          primary: "#70d5f0",
+          "primary-foreground": "#ffffff",
+          accent: "#0e91e9",
+          "accent-foreground": "#ffffff",
+        },
         background: {
           DEFAULT: "#ffffff",
           light: "#ffffff",
@@ -120,7 +128,6 @@ const config = {
       // },
     },
   },
-  plugins: [require("tailwindcss-animate")],
 } satisfies Config;
 
 export default config;
