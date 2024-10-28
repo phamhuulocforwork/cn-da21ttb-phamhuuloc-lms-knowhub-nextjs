@@ -11,24 +11,11 @@ const config = {
   theme: {
     extend: {
       colors: {
-        sidebar: {
-          DEFAULT: "#ffffff",
-          foreground: "#0f172a",
-          primary: "#70d5f0",
-          "primary-foreground": "#ffffff",
-          accent: "#0e91e9",
-          "accent-foreground": "#ffffff",
-        },
-        background: {
-          DEFAULT: "#ffffff",
-          light: "#ffffff",
-          dark: "#0f172a",
-        },
-        text: {
-          DEFAULT: "#0f172a",
-          light: "#0f172a",
-          dark: "#ffffff",
-        },
+        border: "#cbd5e1",
+        input: "#cbd5e1",
+        ring: "#d71441",
+        background: "#ffffff",
+        foreground: "#0d1117",
         primary: {
           DEFAULT: "#70d5f0",
           "50": "#edfbfe",
@@ -89,43 +76,43 @@ const config = {
           "950": "#22292f",
         },
         accent: {
-          DEFAULT: "#0e91e9",
-          "50": "#f0f9ff",
-          "100": "#e0f2fe",
-          "200": "#bae2fd",
-          "300": "#7dc9fc",
-          "400": "#38abf8",
-          "500": "#0e91e9",
-          "600": "#0278c7",
-          "700": "#0362a1",
-          "800": "#075385",
-          "900": "#0c476e",
-          "950": "#082f49",
+          DEFAULT: "#1faed8",
+          "50": "#edfbfe",
+          "100": "#d2f4fb",
+          "200": "#aae8f7",
+          "300": "#70d5f0",
+          "400": "#1faed8",
+          "500": "#139cc7",
+          "600": "#137ca7",
+          "700": "#166488",
+          "800": "#1b536f",
+          "900": "#1b465e",
+          "950": "#0c2c40",
           foreground: "#ffffff",
         },
-        // popover: {
-        //   DEFAULT: "hsl(var(--popover))",
-        //   foreground: "hsl(var(--popover-foreground))",
-        // },
-        // card: {
-        //   DEFAULT: "hsl(var(--card))",
-        //   foreground: "hsl(var(--card-foreground))",
-        // },
+        popover: {
+          DEFAULT: "#d71441",
+          foreground: "#ffffff",
+        },
+        card: {
+          DEFAULT: "#e04704",
+          foreground: "#ffffff",
+        },
       },
-      // keyframes: {
-      //   'accordion-down': {
-      //     from: { height: '0' },
-      //     to: { height: 'var(--radix-accordion-content-height)' },
-      //   },
-      //   'accordion-up': {
-      //     from: { height: 'var(--radix-accordion-content-height)' },
-      //     to: { height: '0' },
-      //   },
-      // },
-      // animation: {
-      //   'accordion-down': 'accordion-down 0.2s ease-out',
-      // 'accordion-up': 'accordion-up 0.2s ease-out',
-      // },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
   },
 } satisfies Config;
