@@ -27,7 +27,11 @@ const FullLogo = ({
   destructiveColor,
   secondaryColor,
 }: ColorProps) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6633.21 1168.84">
+  <svg
+    className="max-w-48"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 6633.21 1168.84"
+  >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6633.21 1168.84">
       <g>
         <path
@@ -99,7 +103,7 @@ const IconLogo = ({
   </svg>
 );
 
-export function Logo() {
+export function Logo({ maxWidth }: { maxWidth?: string }) {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [showFullLogo, setShowFullLogo] = useState(true);

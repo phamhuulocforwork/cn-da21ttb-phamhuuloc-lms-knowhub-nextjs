@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/SideBar";
 
 import { Logo } from "@/components/app/Logo";
+import { Separator } from "@/components/ui/Separator";
 import useIsMobile from "@/components/hooks/use-mobile";
 
 const items = [
@@ -66,7 +67,20 @@ export function AppSidebar() {
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
-          {/* <SidebarGroupLabel>Projects</SidebarGroupLabel> */}
+          <Separator className="my-2" />
+          <SidebarGroupLabel>Projects</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem className="flex items-center justify-center">
+                <SidebarMenuButton asChild>
+                  <a href="#">
+                    <BookOpen />
+                    <span>abc</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
           <SidebarGroupContent></SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

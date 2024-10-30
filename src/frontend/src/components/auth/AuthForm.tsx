@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { Logo } from "@/components/app/Logo";
 
 interface SignInFormProps {
   children: React.ReactNode;
@@ -36,6 +37,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
         className="flex w-full flex-col items-center justify-center"
       >
         <Card className="min-w-96 border-none">
+          <Logo />
           <CardHeader className="flex w-full flex-col items-center gap-y-4">
             <CardTitle>{headerLabel}</CardTitle>
           </CardHeader>
