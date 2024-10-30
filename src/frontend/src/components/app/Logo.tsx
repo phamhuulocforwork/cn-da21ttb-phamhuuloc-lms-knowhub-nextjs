@@ -1,7 +1,6 @@
-import { useSidebar } from "@/components/ui/SideBar";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface ColorProps {
   textColor: string;
@@ -101,12 +100,27 @@ const IconLogo = ({
 );
 
 export function Logo() {
-  const { open } = useSidebar();
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [showFullLogo, setShowFullLogo] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setShowFullLogo(entry.contentRect.width >= 200);
+      }
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   const colors = useMemo<ColorProps>(
@@ -122,14 +136,16 @@ export function Logo() {
     }),
     [theme, mounted],
   );
+
   return (
     <div
+      ref={containerRef}
       className={cn(
         "flex w-full items-center justify-center",
-        open ? "p-4" : "p-0",
+        showFullLogo ? "p-4" : "p-0",
       )}
     >
-      {open ? <FullLogo {...colors} /> : <IconLogo {...colors} />}
+      {showFullLogo ? <FullLogo {...colors} /> : <IconLogo {...colors} />}
     </div>
   );
 }

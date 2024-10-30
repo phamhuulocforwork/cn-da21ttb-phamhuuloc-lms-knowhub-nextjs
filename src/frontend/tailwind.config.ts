@@ -94,10 +94,6 @@ const config = {
           DEFAULT: "#d71441",
           foreground: "#ffffff",
         },
-        card: {
-          DEFAULT: "#e04704",
-          foreground: "#ffffff",
-        },
       },
       keyframes: {
         "accordion-down": {
