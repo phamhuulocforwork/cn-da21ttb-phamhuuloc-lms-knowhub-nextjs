@@ -1,7 +1,8 @@
 import { SidebarTrigger } from "@/components/ui/SideBar";
-import { SwitchThemeButton } from "@/components/app/SwitchThemeButton";
 import useIsMobile from "@/components/hooks/use-mobile";
 import { Button } from "@/components/ui/Button";
+import { SwitchTheme } from "@/components/app/SwitchTheme";
+import { Logo } from "@/components/app/Logo";
 
 export function AppHeader({
   handleShowLoginModal,
@@ -11,9 +12,10 @@ export function AppHeader({
   const isMobile = useIsMobile();
 
   return (
-    <header className="flex max-h-20 min-h-20 w-full items-center justify-between px-11">
+    <header className="flex max-h-20 min-h-20 w-full items-center justify-between px-4 md:px-11">
       {isMobile && <SidebarTrigger />}
-      <SwitchThemeButton />
+      {!isMobile && <SwitchTheme variant="toggle" />}
+      {isMobile && <Logo />}
       <Button onClick={handleShowLoginModal}>Login</Button>
     </header>
   );

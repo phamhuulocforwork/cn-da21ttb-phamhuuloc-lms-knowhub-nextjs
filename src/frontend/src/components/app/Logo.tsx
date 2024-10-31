@@ -103,7 +103,7 @@ const IconLogo = ({
   </svg>
 );
 
-export function Logo({ maxWidth }: { maxWidth?: string }) {
+export function Logo({ className }: { className?: string }) {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [showFullLogo, setShowFullLogo] = useState(true);
@@ -144,10 +144,7 @@ export function Logo({ maxWidth }: { maxWidth?: string }) {
   return (
     <div
       ref={containerRef}
-      className={cn(
-        "flex w-full items-center justify-center",
-        showFullLogo ? "p-4" : "p-0",
-      )}
+      className={cn(className, "flex w-full items-center justify-center py-2")}
     >
       {showFullLogo ? <FullLogo {...colors} /> : <IconLogo {...colors} />}
     </div>

@@ -18,6 +18,7 @@ import {
 import { Logo } from "@/components/app/Logo";
 import { Separator } from "@/components/ui/Separator";
 import useIsMobile from "@/components/hooks/use-mobile";
+import { SwitchTheme } from "./SwitchTheme";
 
 const items = [
   {
@@ -42,7 +43,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       {!isMobile && (
-        <SidebarTrigger className="absolute -right-3 top-20 h-6 w-6 rounded-full border-2 border-border bg-background p-1 dark:bg-foreground" />
+        <SidebarTrigger className="absolute -right-3 top-20 z-30 rounded-full border border-border bg-background p-1 duration-0 dark:bg-foreground" />
       )}
       <SidebarHeader>
         <Logo />
@@ -81,7 +82,21 @@ export function AppSidebar() {
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
-          <SidebarGroupContent></SidebarGroupContent>
+          {isMobile && (
+            <>
+              <Separator className="my-2" />
+              <SidebarGroupLabel>Setting</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem className="flex items-center justify-center">
+                    <SidebarMenuButton asChild>
+                      <SwitchTheme variant="select" />
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </>
+          )}
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
