@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 const config = {
   darkMode: ["class"],
@@ -9,13 +10,33 @@ const config = {
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
         border: "#cbd5e1",
         input: "#cbd5e1",
         ring: "#d71441",
         background: "#ffffff",
-        foreground: "#0d1117",
+        foreground: {
+          DEFAULT: "#0d1117",
+          "50": "#f5f7fa",
+          "100": "#eaeef4",
+          "200": "#d0dae7",
+          "300": "#a7bbd2",
+          "400": "#7798b9",
+          "500": "#567ba1",
+          "600": "#426187",
+          "700": "#374f6d",
+          "800": "#30445c",
+          "900": "#2c3b4e",
+          "950": "#0d1117",
+        },
         primary: {
           DEFAULT: "#70d5f0",
           "50": "#edfbfe",
@@ -94,23 +115,14 @@ const config = {
           DEFAULT: "#d71441",
           foreground: "#ffffff",
         },
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+        card: {
+          DEFAULT: "#ffffff",
+          foreground: "#0d1117",
         },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
+  plugins: [animate],
 } satisfies Config;
 
 export default config;
