@@ -14,7 +14,6 @@ export function AppHeader({
 
   return (
     <header className="flex max-h-20 min-h-20 w-full items-center justify-between px-4 md:px-11">
-      <AppCommand />
       {isMobile && <SidebarTrigger />}
       {!isMobile && <SwitchTheme variant="toggle" />}
       {isMobile && <Logo />}

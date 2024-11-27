@@ -1,4 +1,4 @@
-import { ColorPaletteDemo } from "@/components/app/ColorPalette";
+import { ColorPaletteDemo } from "@/components/ui/ColorPalette";
 
 export default function Home() {
   return (
