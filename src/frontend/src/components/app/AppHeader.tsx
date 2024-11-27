@@ -1,15 +1,11 @@
 import { SidebarTrigger } from "@/components/ui/SideBar";
-import useIsMobile from "@/components/hooks/use-mobile";
-import { Button } from "@/components/ui/Button";
 import { SwitchTheme } from "@/components/app/SwitchTheme";
 import { Logo } from "@/components/app/Logo";
-import { AppCommand } from "@/components/app/AppCommand";
+import LoginModal from "@/components/auth/LoginModal";
 
-export function AppHeader({
-  handleShowLoginModal,
-}: {
-  handleShowLoginModal: () => void;
-}) {
+import useIsMobile from "@/components/hooks/use-mobile";
+
+export function AppHeader() {
   const isMobile = useIsMobile();
 
   return (
@@ -17,7 +13,7 @@ export function AppHeader({
       {isMobile && <SidebarTrigger />}
       {!isMobile && <SwitchTheme variant="toggle" />}
       {isMobile && <Logo />}
-      <Button onClick={handleShowLoginModal}>Login</Button>
+      <LoginModal />
     </header>
   );
 }

@@ -42,14 +42,14 @@ const ColorShade = React.forwardRef<HTMLDivElement, ColorShadeProps>(
               {...props}
             >
               <Label
-                className="select-none text-xs font-semibold md:text-sm"
+                className="truncate text-xs font-semibold md:text-sm"
                 style={{ color: getContrastingColor(hex) }}
               >
                 {isDefault ? "Default" : shade}
               </Label>
             </div>
           </TooltipTrigger>
-          <TooltipContent className="select-none bg-background text-foreground dark:bg-foreground dark:text-background">
+          <TooltipContent className="bg-background text-foreground dark:bg-foreground dark:text-background">
             Copied ✅
           </TooltipContent>
         </Tooltip>
@@ -76,7 +76,7 @@ const ColorRow = React.forwardRef<HTMLDivElement, ColorRowProps>(
         className={cn("flex flex-col gap-2", className)}
         {...props}
       >
-        <Label className="select-none capitalize">{colorName}</Label>
+        <Label className="capitalize">{colorName}</Label>
         <div className="flex items-center gap-2">
           <div className="grid flex-1 grid-cols-6 gap-1 md:grid-cols-12">
             {colorObj.DEFAULT && (
@@ -114,7 +114,7 @@ const ColorPaletteDemo = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "container flex flex-col gap-4 rounded-lg bg-zinc-100 p-8 dark:bg-gray-800",
+        "flex select-none flex-col gap-4 rounded-lg bg-zinc-100 p-8 shadow-md dark:bg-gray-800",
         className,
       )}
       {...props}
