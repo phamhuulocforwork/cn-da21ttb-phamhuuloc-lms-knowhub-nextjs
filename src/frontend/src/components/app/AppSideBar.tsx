@@ -1,10 +1,16 @@
 "use client";
 
-import { BookOpen, Home, Search } from "lucide-react";
+import {
+  Search,
+  Frame,
+  PieChart,
+  Home,
+} from "lucide-react";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -12,31 +18,47 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/SideBar";
 
 import { Logo } from "@/components/app/Logo";
 import { Separator } from "@/components/ui/Separator";
 import useIsMobile from "@/components/hooks/use-mobile";
-import { SwitchTheme } from "./SwitchTheme";
+import { NavUser } from "./NavUser";
 
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
+const data = {
+  user: {
+    name: "Hữu Lộc",
+    email: "phamhuulocforwork@gmail.com",
+    avatar: "https://avatars.githubusercontent.com/u/146953048?v=4&size=64.jpg",
   },
-  {
-    title: "My Learning",
-    url: "#",
-    icon: BookOpen,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-];
+  navMain: [
+    {
+      title: "Home",
+      url: "#",
+      icon: Home,
+      isActive: true,
+    },
+    {
+      title: "Search",
+      url: "#",
+      icon: Search,
+    },
+  ],
+  projects: [
+    {
+      name: "Design Engineering",
+      url: "#",
+      icon: Frame,
+    },
+    {
+      name: "Sales & Marketing",
+      url: "#",
+      icon: PieChart,
+    },
+  ],
+};
 
 export function AppSidebar() {
   const isMobile = useIsMobile();
@@ -53,7 +75,7 @@ export function AppSidebar() {
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {data.navMain.map((item) => (
                 <SidebarMenuItem
                   key={item.title}
                   className="flex items-center justify-center"
@@ -72,33 +94,27 @@ export function AppSidebar() {
           <SidebarGroupLabel>Projects</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem className="flex items-center justify-center">
-                <SidebarMenuButton asChild>
-                  <a href="#">
-                    <BookOpen />
-                    <span>abc</span>
-                  </a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              {data.projects.map((item) => (
+                <SidebarMenuItem
+                  key={item.name}
+                  className="flex items-center justify-center"
+                >
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.name}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
-          {isMobile && (
-            <>
-              <Separator className="my-2" />
-              <SidebarGroupLabel>Setting</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <SidebarMenuItem className="flex items-center justify-center">
-                    <SidebarMenuButton asChild>
-                      <SwitchTheme variant="select" />
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </>
-          )}
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }
