@@ -1,7 +1,7 @@
 "use client";
 
 import { NeatConfig, NeatGradient } from "@firecms/neat";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 
 export const lightConfig: NeatConfig = {
@@ -97,23 +97,36 @@ export default function AuthLayout({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
+  const [isCanvasSupported, setIsCanvasSupported] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    const checkCanvasSupport = () => {
+      const canvas = document.createElement("canvas");
+      setIsCanvasSupported(!!(canvas.getContext && canvas.getContext("2d")));
+    };
+
+    checkCanvasSupport();
+  }, []);
+
+  useEffect(() => {
+    if (!canvasRef.current || !isCanvasSupported) return;
+
     const gradient = new NeatGradient({
       ref: canvasRef.current,
       ...(theme === "dark" ? darkConfig : lightConfig),
     });
     gradient.speed = 4;
     return () => gradient.destroy();
-  }, [theme]);
+  }, [theme, isCanvasSupported]);
 
   return (
     <div className="relative flex h-full min-h-screen w-full items-center justify-center bg-transparent">
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 -z-10 h-full w-full"
-      />
+      {isCanvasSupported && (
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 -z-10 hidden h-full w-full lg:block"
+        />
+      )}
       {children}
     </div>
   );

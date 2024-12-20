@@ -5,7 +5,7 @@ import * as z from "zod";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "~/schemas";
+import { RegisterSchema } from "~/schemas";
 
 import {
   Form,
@@ -20,27 +20,27 @@ import { CardWrapper } from "@/components/auth/CardWrapper";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-import { login } from "~/actions/login";
+import { register } from "~/actions/register";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const [loading, setLoading] = useTransition();
 
-  const t = useTranslations("auth.login");
+  const t = useTranslations("auth.register");
   const tValidation = useTranslations("auth.validation");
 
-  const form = useForm<z.infer<ReturnType<typeof LoginSchema>>>({
-    resolver: zodResolver(LoginSchema(tValidation)),
+  const form = useForm<z.infer<ReturnType<typeof RegisterSchema>>>({
+    resolver: zodResolver(RegisterSchema(tValidation)),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  const onSubmit = (values: z.infer<ReturnType<typeof LoginSchema>>) => {
+  const onSubmit = (values: z.infer<ReturnType<typeof RegisterSchema>>) => {
     setLoading(() => {
-      login(values);
+      register(values);
     });
   };
 
@@ -48,12 +48,12 @@ export const LoginForm = () => {
     <CardWrapper
       headerLabel={t("headerLabel")}
       backButtonLabel={t("backButtonLabel")}
-      backButtonLink="/register"
+      backButtonLink="/login"
       backButtonLinkText={t("backButtonLinkText")}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-2">
+          <div className="space-y-1">
             <FormField
               control={form.control}
               name="email"
@@ -74,30 +74,48 @@ export const LoginForm = () => {
             />
             <FormField
               control={form.control}
-              name="password"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("password")}</FormLabel>
+                  <FormLabel>{t("name")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       disabled={loading}
-                      type="password"
-                      placeholder={t("passwordPlaceholder")}
+                      type="text"
+                      placeholder={t("namePlaceholder")}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="flex w-full justify-end">
-              <Link
-                className="text-right text-sm text-primary underline-offset-4 hover:underline"
-                href="/forgot-password"
-              >
-                {t("forgotPassword")}
-              </Link>
-            </div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("password")}</FormLabel>
+                  <FormControl>
+                    <Input {...field} disabled={loading} type="password" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("confirmPassword")}</FormLabel>
+                  <FormControl>
+                    <Input {...field} disabled={loading} type="password" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <Button className="w-full" type="submit" disabled={loading}>
@@ -110,30 +128,9 @@ export const LoginForm = () => {
                 t("submit")
               )}
             </Button>
-            <SocialButtons loginWithGoogleLabel={t("loginWithGoogleLabel")} />
           </div>
         </form>
       </Form>
     </CardWrapper>
-  );
-};
-
-const SocialButtons = ({
-  loginWithGoogleLabel,
-}: {
-  loginWithGoogleLabel: string;
-}) => {
-  return (
-    <div className="flex w-full flex-col items-center justify-center gap-2">
-      <Button
-        size="lg"
-        className="w-full justify-center gap-2"
-        variant="outline"
-        onClick={() => {}}
-      >
-        <FcGoogle className="h-6 w-6" />
-        {loginWithGoogleLabel}
-      </Button>
-    </div>
   );
 };

@@ -9,27 +9,32 @@
       "headerLabel": "Login",
       "loginWithGoogleLabel": "Login with Google",
       "password": "Password",
-      "passwordPlaceholder": "********",
       "submit": "Login",
       "submitLoading": "Logging in..."
     },
     "register": {
       "backButtonLabel": "Already have an account? ",
+      "email": "Email",
+      "emailPlaceholder": "example@gmail.com",
+      "name": "Name",
+      "namePlaceholder": "John Doe",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
       "backButtonLinkText": "Login",
       "headerLabel": "Register",
       "submit": "Register",
       "submitLoading": "Registering..."
     },
     "validation": {
-      "errors": {
-        "invalidCredentials": "Invalid email or password",
-        "invalidEmail": "Please enter a valid email address",
-        "invalidPassword": "Please enter a password",
-        "passwordMin": "Password must be at least 8 characters"
-      },
-      "success": {
-        "login": "Successfully logged in"
-      }
+      "invalidCredentials": "Invalid email or password",
+      "invalidEmail": "Invalid email",
+      "invalidName": "Invalid name",
+      "invalidPassword": "Please enter a password",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordLowercase": "Password must contain at least one lowercase letter",
+      "passwordUppercase": "Password must contain at least one uppercase letter",
+      "passwordNumber": "Password must contain at least one number",
+      "passwordsDoNotMatch": "Passwords do not match"
     }
   }
 }

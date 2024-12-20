@@ -21,7 +21,7 @@ interface CardWrapperProps {
 
 export const Header = () => {
   return (
-    <div className="flex flex-col items-center justify-center py-8">
+    <div className="my-4 flex flex-col items-center justify-center">
       <Logo />
     </div>
   );
@@ -37,7 +37,7 @@ const BackButton = ({
   backButtonLinkText: string;
 }) => {
   return (
-    <div className="mt-4 flex w-full items-center justify-center gap-2 text-sm">
+    <div className="flex w-full items-center justify-center gap-2 text-sm">
       {backButtonLabel}
       <Button variant="link" className="p-0 text-sm">
         <Link href={backButtonLink}>{backButtonLinkText}</Link>
@@ -54,7 +54,7 @@ export const CardWrapper = ({
   backButtonLinkText,
 }: CardWrapperProps) => {
   return (
-    <Card className="w-[480px] max-w-full border-none bg-transparent px-8 py-6 shadow-none">
+    <Card className="w-[480px] border-none bg-transparent px-4 shadow-none md:px-8">
       <CardHeader>
         <Header />
         <CardTitle className="text-2xl font-black">{headerLabel}</CardTitle>
