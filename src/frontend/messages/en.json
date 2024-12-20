@@ -1,5 +1,35 @@
 {
-  "Index": {
-    "title": "Hello, world!"
+  "auth": {
+    "login": {
+      "backButtonLabel": "Don't have an account? ",
+      "backButtonLinkText": "Register",
+      "email": "Email",
+      "emailPlaceholder": "example@gmail.com",
+      "forgotPassword": "Forgot password?",
+      "headerLabel": "Login",
+      "loginWithGoogleLabel": "Login with Google",
+      "password": "Password",
+      "passwordPlaceholder": "********",
+      "submit": "Login",
+      "submitLoading": "Logging in..."
+    },
+    "register": {
+      "backButtonLabel": "Already have an account? ",
+      "backButtonLinkText": "Login",
+      "headerLabel": "Register",
+      "submit": "Register",
+      "submitLoading": "Registering..."
+    },
+    "validation": {
+      "errors": {
+        "invalidCredentials": "Invalid email or password",
+        "invalidEmail": "Please enter a valid email address",
+        "invalidPassword": "Please enter a password",
+        "passwordMin": "Password must be at least 8 characters"
+      },
+      "success": {
+        "login": "Successfully logged in"
+      }
+    }
   }
 }
