@@ -83,7 +83,6 @@ export const LoginForm = () => {
                       {...field}
                       disabled={loading}
                       type="password"
-                      placeholder={t("passwordPlaceholder")}
                     />
                   </FormControl>
                   <FormMessage />
