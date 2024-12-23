@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, LogIn, SunMoon } from "lucide-react";
+import { ChevronsUpDown, LogIn, SunMoon, UserPlus } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -55,13 +55,16 @@ export function NavGuest() {
             sideOffset={4}
           >
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => router.push("/login")}>
+              <DropdownMenuItem className="cursor-pointer" onClick={() => router.push("/login")}>
                 <LogIn />
                 Log In
               </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer" onClick={() => router.push("/register")}>
+                <UserPlus />
+                Register
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme(theme === "light" ? "dark" : "light")}
               >
                 <SunMoon />
                 {theme === "light" ? "Theme: dark" : "Theme: light"}
