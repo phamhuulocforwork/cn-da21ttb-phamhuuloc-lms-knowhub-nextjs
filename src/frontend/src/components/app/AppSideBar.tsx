@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Search,
-  Frame,
-  PieChart,
-  Home,
-} from "lucide-react";
+import { Search, Frame, PieChart, Home } from "lucide-react";
 
 import {
   Sidebar,
@@ -26,13 +21,9 @@ import { Logo } from "@/components/app/Logo";
 import { Separator } from "@/components/ui/Separator";
 import useIsMobile from "@/components/hooks/use-mobile";
 import { NavUser } from "./NavUser";
+import { useAuth } from "@/contexts/AuthProvider";
 
 const data = {
-  user: {
-    name: "Hữu Lộc",
-    email: "phamhuulocforwork@gmail.com",
-    avatar: "https://avatars.githubusercontent.com/u/146953048?v=4&size=64.jpg",
-  },
   navMain: [
     {
       title: "Home",
@@ -62,6 +53,10 @@ const data = {
 
 export function AppSidebar() {
   const isMobile = useIsMobile();
+  const { user, logout } = useAuth();
+
+  console.log(user);
+
   return (
     <Sidebar collapsible="icon">
       {!isMobile && (
@@ -112,7 +107,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {user && <NavUser user={user} logout={logout} />}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

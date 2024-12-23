@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterBody, RegisterBodyType } from "~/schemas";
+import { useRouter } from "@/i18n/routing";
 
 import {
   Form,
@@ -22,6 +23,7 @@ import { register } from "~/actions/register";
 import { ParentFormMessage } from "@/components/ui/ParentFormMessage";
 
 export const RegisterForm = () => {
+  const router = useRouter();
   const [loading, setLoading] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -46,6 +48,11 @@ export const RegisterForm = () => {
       register(values).then((res) => {
         setError(res.error);
         setSuccess(res.success);
+        if (res.success) {
+          setTimeout(() => {
+            router.push("/login");
+          }, 500);
+        }
       });
     });
   };

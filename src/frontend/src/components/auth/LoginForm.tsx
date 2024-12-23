@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginBody, LoginBodyType } from "~/schemas";
@@ -20,16 +20,19 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import { login } from "~/actions/login";
 import { ParentFormMessage } from "@/components/ui/ParentFormMessage";
+import { signIn } from "next-auth/react";
+import { useRouter } from "@/i18n/routing";
 
 export const LoginForm = () => {
-  const [loading, setLoading] = useTransition();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
   const t = useTranslations("auth.login");
   const tValidation = useTranslations("auth.validation");
+  const tServerMessages = useTranslations("auth.serverMessages");
 
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody(tValidation)),
@@ -39,15 +42,29 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit = (values: LoginBodyType) => {
+  const onSubmit = async (values: LoginBodyType) => {
+    setLoading(true);
     setError("");
     setSuccess("");
-    setLoading(() => {
-      login(values).then((res) => {
-        setError(res.error);
-        setSuccess(res.success);
-      });
+
+    const result = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
     });
+
+    if (result?.error) {
+      setError(tServerMessages("error.loginFailed"));
+      setLoading(false);
+      return;
+    }
+
+    if (result?.ok) {
+      setSuccess(tServerMessages("success.login"));
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
+    }
   };
 
   return (

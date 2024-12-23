@@ -11,11 +11,15 @@ const api = axios.create({
 export const login = async (values: LoginBodyType) => {
   const t = await getTranslations("auth.serverMessages");
   try {
-    await api.post("/api/auth/login", {
+    const response = await api.post("/api/auth/login", {
       email: values.email,
       password: values.password,
     });
-    return { success: t("success.login") };
+
+    return {
+      success: t("success.login"),
+      user: response.data.user,
+    };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 401) {
