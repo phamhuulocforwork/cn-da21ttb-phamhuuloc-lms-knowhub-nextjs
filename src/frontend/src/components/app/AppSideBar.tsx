@@ -20,8 +20,9 @@ import {
 import { Logo } from "@/components/app/Logo";
 import { Separator } from "@/components/ui/Separator";
 import useIsMobile from "@/components/hooks/use-mobile";
-import { NavUser } from "./NavUser";
+import { NavUser } from "@/components/app/NavUser";
 import { useAuth } from "@/contexts/AuthProvider";
+import { NavGuest } from "@/components/app/NavGuest";
 
 const data = {
   navMain: [
@@ -107,7 +108,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        {user && <NavUser user={user} logout={logout} />}
+        {user ? <NavUser user={user} logout={logout} /> : <NavGuest />}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
