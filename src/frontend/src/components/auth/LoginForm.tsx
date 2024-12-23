@@ -1,11 +1,9 @@
 "use client";
 
-import * as z from "zod";
-
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "~/schemas";
+import { LoginBody, LoginBodyType } from "~/schemas";
 
 import {
   Form,
@@ -23,24 +21,32 @@ import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { login } from "~/actions/login";
+import { ParentFormMessage } from "@/components/ui/ParentFormMessage";
 
 export const LoginForm = () => {
   const [loading, setLoading] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
   const t = useTranslations("auth.login");
   const tValidation = useTranslations("auth.validation");
 
-  const form = useForm<z.infer<ReturnType<typeof LoginSchema>>>({
-    resolver: zodResolver(LoginSchema(tValidation)),
+  const form = useForm<LoginBodyType>({
+    resolver: zodResolver(LoginBody(tValidation)),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<ReturnType<typeof LoginSchema>>) => {
+  const onSubmit = (values: LoginBodyType) => {
+    setError("");
+    setSuccess("");
     setLoading(() => {
-      login(values);
+      login(values).then((res) => {
+        setError(res.error);
+        setSuccess(res.success);
+      });
     });
   };
 
@@ -79,11 +85,7 @@ export const LoginForm = () => {
                 <FormItem>
                   <FormLabel>{t("password")}</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      disabled={loading}
-                      type="password"
-                    />
+                    <Input {...field} disabled={loading} type="password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -98,6 +100,8 @@ export const LoginForm = () => {
               </Link>
             </div>
           </div>
+          <ParentFormMessage message={error} variant="error" />
+          <ParentFormMessage message={success} />
           <div className="flex flex-col gap-2">
             <Button className="w-full" type="submit" disabled={loading}>
               {loading ? (

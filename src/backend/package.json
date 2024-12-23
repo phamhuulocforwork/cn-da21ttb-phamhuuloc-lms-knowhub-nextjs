@@ -8,6 +8,7 @@
     "start": "node dist/server.ts",
     "check-db": "ts-node src/scripts/check-db.ts",
     "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio"
   },

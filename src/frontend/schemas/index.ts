@@ -1,18 +1,19 @@
 import * as z from "zod";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const LoginSchema = (t: any) =>
+type Translations = {
+  (key: string): string;
+};
+
+export const LoginBody = (t: Translations) =>
   z.object({
-    email: z.string().email({
+    email: z.string().regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
       message: t("invalidEmail"),
     }),
-    password: z.string().min(1, {
-      message: t("invalidPassword"),
-    }),
+    password: z.string().min(1, { message: t("invalidPassword") }),
   });
+export type LoginBodyType = z.infer<ReturnType<typeof LoginBody>>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const RegisterSchema = (t: any) =>
+export const RegisterBody = (t: Translations) =>
   z
     .object({
       name: z.string().min(1, {
@@ -39,7 +40,14 @@ export const RegisterSchema = (t: any) =>
         }),
       confirmPassword: z.string(),
     })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: t("passwordsDoNotMatch"),
-      path: ["confirmPassword"],
+    .strict()
+    .superRefine(({ confirmPassword, password }, ctx) => {
+      if (confirmPassword !== password) {
+        ctx.addIssue({
+          code: "custom",
+          message: t("passwordNotMatch"),
+          path: ["confirmPassword"],
+        });
+      }
     });
+export type RegisterBodyType = z.infer<ReturnType<typeof RegisterBody>>;

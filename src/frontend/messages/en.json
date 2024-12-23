@@ -35,6 +35,19 @@
       "passwordUppercase": "Password must contain at least one uppercase letter",
       "passwordNumber": "Password must contain at least one number",
       "passwordsDoNotMatch": "Passwords do not match"
+    },
+    "serverMessages": {
+      "error": {
+        "emailExists": "Email already registered",
+        "invalidCredentials": "Invalid email or password",
+        "loginFailed": "Login failed. Please try again",
+        "tooManyRequests": "Too many attempts. Please try again later",
+        "registrationFailed": "Registration failed. Please try again"
+      },
+      "success": {
+        "login": "Login successful. Redirecting...",
+        "register": "Registration successful. Redirecting..."
+      }
     }
   }
 }

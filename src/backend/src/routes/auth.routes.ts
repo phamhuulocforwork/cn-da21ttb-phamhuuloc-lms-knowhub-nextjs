@@ -3,7 +3,7 @@ import AuthController from "../controllers/auth/auth.controller";
 
 const router = Router();
 
-//@ts-ignore
-router.post("/register", AuthController.register);
+router.post("/login", AuthController.login as any);
+router.post("/register", AuthController.register as any);
 
 export default router;

@@ -1,9 +1,9 @@
 "use client";
 
-import { LoginForm } from "@/components/auth/LoginForm";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "@/i18n/routing";
+import { LoginForm } from "@/components/auth/LoginForm";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,7 +29,6 @@ export default function LoginPage() {
             />
           </div>
         </div>
-
         <div className="flex w-full items-center justify-center">
           <LoginForm />
         </div>
