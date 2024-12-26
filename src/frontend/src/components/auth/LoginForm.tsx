@@ -143,17 +143,39 @@ const SocialButtons = ({
 }: {
   loginWithGoogleLabel: string;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
+
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      setError(undefined);
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      console.error("Google login error:", error);
+      setError("Failed to login with Google. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-2">
       <Button
         size="lg"
         className="w-full justify-center gap-2"
         variant="outline"
-        onClick={() => {}}
+        onClick={handleGoogleLogin}
+        disabled={isLoading}
       >
-        <FcGoogle className="h-6 w-6" />
+        {isLoading ? (
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+        ) : (
+          <FcGoogle className="h-6 w-6" />
+        )}
         {loginWithGoogleLabel}
       </Button>
+      {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
   );
 };
