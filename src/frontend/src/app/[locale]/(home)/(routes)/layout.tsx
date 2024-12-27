@@ -1,6 +1,6 @@
 import { SidebarProvider } from "@/components/ui/SideBar";
-import { AppSidebar } from "@/components/app/AppSideBar";
-import { AppHeader } from "@/components/app/AppHeader";
+import { AppSidebar } from "@/components/common/AppSideBar";
+import { AppHeader } from "@/components/common/AppHeader";
 
 export default function LocaleLayout({
   children,

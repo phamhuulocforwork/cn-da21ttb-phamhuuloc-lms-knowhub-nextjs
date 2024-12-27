@@ -15,11 +15,11 @@ import {
   FormMessage,
 } from "@/components/ui/Form";
 
-import { CardWrapper } from "@/components/auth/CardWrapper";
+import { CardWrapper } from "@/app/[locale]/(auth)/_components/CardWrapper";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { register } from "~/actions/register";
+import { register } from "~/actions/auth/register";
 import { ParentFormMessage } from "@/components/ui/ParentFormMessage";
 
 export const RegisterForm = () => {

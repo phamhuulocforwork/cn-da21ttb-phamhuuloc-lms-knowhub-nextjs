@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { login } from "~/actions/login";
+import { login } from "~/actions/auth/login";
 import { getServerSession } from "next-auth/next";
 
 export const authOptions: NextAuthOptions = {

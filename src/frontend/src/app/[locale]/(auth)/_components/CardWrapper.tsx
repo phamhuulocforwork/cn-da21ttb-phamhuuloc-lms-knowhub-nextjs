@@ -7,8 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/Card";
-import { Logo } from "@/components/app/Logo";
-import { Button } from "../ui/Button";
+import { Logo } from "@/components/common/Logo";
+import { Button } from "../../../../components/ui/Button";
 import { Link } from "@/i18n/routing";
 
 interface CardWrapperProps {

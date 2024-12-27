@@ -17,12 +17,12 @@ import {
   SidebarTrigger,
 } from "@/components/ui/SideBar";
 
-import { Logo } from "@/components/app/Logo";
+import { Logo } from "@/components/common/Logo";
 import { Separator } from "@/components/ui/Separator";
 import useIsMobile from "@/components/hooks/use-mobile";
-import { NavUser } from "@/components/app/NavUser";
+import { NavUser } from "@/components/common/NavUser";
 import { useAuth } from "@/contexts/AuthProvider";
-import { NavGuest } from "@/components/app/NavGuest";
+import { NavGuest } from "@/components/common/NavGuest";
 
 const data = {
   navMain: [
