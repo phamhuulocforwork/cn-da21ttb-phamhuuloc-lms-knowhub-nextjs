@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
+import { useTranslations } from "next-intl";
 
 interface PaginationControlsProps {
   currentPage: number;
@@ -29,10 +30,12 @@ export function PaginationControls({
   onPageChange,
   onItemsPerPageChange,
 }: PaginationControlsProps) {
+  const t = useTranslations("admin.pagination");
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <p className="text-muted-foreground text-sm">Items per page</p>
+        <p className="text-muted-foreground text-sm">{t("itemsPerPage")}</p>
         <Select
           value={itemsPerPage.toString()}
           onValueChange={(value) => onItemsPerPageChange(Number(value))}

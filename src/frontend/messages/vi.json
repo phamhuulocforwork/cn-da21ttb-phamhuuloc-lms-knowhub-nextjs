@@ -1,1 +1,102 @@
-{}
+{
+  "navigation": {
+    "navigation": "Điều hướng",
+    "dashboard": "Bảng điều khiển",
+    "home": "Trang chủ",
+    "users": "Người dùng"
+  },
+  "auth": {
+    "login": {
+      "backButtonLabel": "Chưa có tài khoản? ",
+      "backButtonLinkText": "Đăng ký",
+      "email": "Email",
+      "emailPlaceholder": "example@gmail.com",
+      "forgotPassword": "Quên mật khẩu?",
+      "headerLabel": "Đăng nhập",
+      "loginWithGoogleLabel": "Đăng nhập bằng Google",
+      "password": "Mật khẩu",
+      "submit": "Đăng nhập",
+      "submitLoading": "Đang đăng nhập..."
+    },
+    "register": {
+      "backButtonLabel": "Đã có tài khoản? ",
+      "email": "Email",
+      "emailPlaceholder": "example@gmail.com",
+      "name": "Tên",
+      "namePlaceholder": "Nguyễn Văn A",
+      "password": "Mật khẩu",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "backButtonLinkText": "Đăng nhập",
+      "headerLabel": "Đăng ký",
+      "submit": "Đăng ký",
+      "submitLoading": "Đang đăng ký..."
+    },
+    "validation": {
+      "invalidCredentials": "Email hoặc mật khẩu không hợp lệ",
+      "invalidEmail": "Email không hợp lệ",
+      "invalidName": "Tên không hợp lệ",
+      "invalidPassword": "Vui lòng nhập mật khẩu",
+      "passwordMin": "Mật khẩu phải có ít nhất 8 ký tự",
+      "passwordLowercase": "Mật khẩu phải chứa ít nhất một chữ thường",
+      "passwordUppercase": "Mật khẩu phải chứa ít nhất một chữ hoa",
+      "passwordNumber": "Mật khẩu phải chứa ít nhất một số",
+      "passwordsDoNotMatch": "Mật khẩu không khớp"
+    },
+    "serverMessages": {
+      "error": {
+        "emailExists": "Email đã được đăng ký",
+        "invalidCredentials": "Email hoặc mật khẩu không hợp lệ",
+        "loginFailed": "Đăng nhập thất bại. Vui lòng thử lại",
+        "tooManyRequests": "Quá nhiều lần thử. Vui lòng thử lại sau",
+        "registrationFailed": "Đăng ký thất bại. Vui lòng thử lại"
+      },
+      "success": {
+        "login": "Đăng nhập thành công. Đang chuyển hướng...",
+        "register": "Đăng ký thành công. Đang chuyển hướng..."
+      }
+    }
+  },
+  "admin": {
+    "users": {
+      "title": "Quản lý người dùng",
+      "description": "Quản lý thành viên trong nhóm và quyền tài khoản của họ tại đây.",
+      "allUsers": "Tất cả người dùng",
+      "search": "Tìm kiếm",
+      "export": "Xuất",
+      "addUser": "Thêm người dùng",
+      "noUsers": "Không tìm thấy người dùng",
+      "createUser": {
+        "title": "Tạo người dùng",
+        "name": "Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "role": "Vai trò",
+        "selectRole": "Chọn vai trò",
+        "cancel": "Hủy",
+        "submit": "Tạo người dùng",
+        "submitting": "Đang tạo..."
+      },
+      "editUser": {
+        "title": "Chỉnh sửa người dùng",
+        "name": "Tên",
+        "email": "Email",
+        "role": "Vai trò",
+        "save": "Lưu thay đổi",
+        "cancel": "Hủy",
+        "saving": "Đang lưu..."
+      },
+      "table": {
+        "userName": "Tên người dùng",
+        "role": "Vai trò",
+        "createdAt": "Ngày tạo",
+        "actions": {
+          "edit": "Chỉnh sửa người dùng",
+          "delete": "Xóa người dùng"
+        }
+      }
+    },
+    "pagination": {
+      "itemsPerPage": "Số mục/trang"
+    }
+  }
+}

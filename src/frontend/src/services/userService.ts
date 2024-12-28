@@ -5,9 +5,28 @@ const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
+interface GetUsersParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
+
+interface GetUsersResponse {
+  users: User[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
 export const userService = {
-  async getUsers() {
-    const response = await api.get("/api/user");
+  async getUsers(params?: GetUsersParams): Promise<GetUsersResponse> {
+    const { page = 1, limit = 10, search = "" } = params || {};
+    const response = await api.get("/api/user", {
+      params: { page, limit, search }
+    });
     return response.data;
   },
 

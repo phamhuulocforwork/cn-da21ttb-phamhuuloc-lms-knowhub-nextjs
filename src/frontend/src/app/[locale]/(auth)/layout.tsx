@@ -2,9 +2,8 @@
 
 import { NeatConfig, NeatGradient } from "@firecms/neat";
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "next-themes";
 
-export const lightConfig: NeatConfig = {
+const config: NeatConfig = {
   colors: [
     {
       color: "#D2F4FB",
@@ -47,56 +46,12 @@ export const lightConfig: NeatConfig = {
   resolution: 1,
 };
 
-export const darkConfig: NeatConfig = {
-  colors: [
-    {
-      color: "#554226",
-      enabled: true,
-    },
-    {
-      color: "#03162D",
-      enabled: true,
-    },
-    {
-      color: "#002027",
-      enabled: true,
-    },
-    {
-      color: "#020210",
-      enabled: true,
-    },
-    {
-      color: "#02152A",
-      enabled: true,
-    },
-  ],
-  speed: 2.5,
-  horizontalPressure: 3,
-  verticalPressure: 4,
-  waveFrequencyX: 2,
-  waveFrequencyY: 3,
-  waveAmplitude: 5,
-  shadows: 1,
-  highlights: 5,
-  colorBrightness: 1,
-  colorSaturation: 7,
-  wireframe: false,
-  colorBlending: 8,
-  backgroundColor: "#003FFF",
-  backgroundAlpha: 1,
-  grainScale: 3,
-  grainIntensity: 0.3,
-  grainSpeed: 1,
-  resolution: 1,
-};
-
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { theme } = useTheme();
+  const CanvasRef = useRef<HTMLCanvasElement>(null);
   const [isCanvasSupported, setIsCanvasSupported] = useState<boolean>(false);
 
   useEffect(() => {
@@ -109,22 +64,28 @@ export default function AuthLayout({
   }, []);
 
   useEffect(() => {
-    if (!canvasRef.current || !isCanvasSupported) return;
+    if (!isCanvasSupported) return;
 
-    const gradient = new NeatGradient({
-      ref: canvasRef.current,
-      ...(theme === "dark" ? darkConfig : lightConfig),
-    });
-    gradient.speed = 4;
-    return () => gradient.destroy();
-  }, [theme, isCanvasSupported]);
+    let Gradient: NeatGradient | null = null;
+
+    if (CanvasRef.current) {
+      Gradient = new NeatGradient({
+        ref: CanvasRef.current,
+        ...config,
+      });
+      Gradient.speed = 4;
+    }
+    return () => {
+      Gradient?.destroy();
+    };
+  }, [isCanvasSupported]);
 
   return (
     <div className="relative flex h-full min-h-screen w-full items-center justify-center bg-transparent">
       {isCanvasSupported && (
         <canvas
-          ref={canvasRef}
-          className="absolute inset-0 -z-10 hidden h-full w-full lg:block"
+          ref={CanvasRef}
+          className={`absolute inset-0 -z-10 hidden h-full w-full lg:block`}
         />
       )}
       {children}

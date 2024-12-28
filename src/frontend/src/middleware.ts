@@ -16,7 +16,6 @@ const authMiddleware = withAuth(
       const locale = req.nextUrl.pathname.split("/")[1]; // Lấy locale từ URL
       return NextResponse.redirect(new URL(`/${locale}`, req.url));
     }
-
     return intlMiddleware(req);
   },
   {
@@ -44,9 +43,7 @@ export default function middleware(req: any) {
 
 export const config = {
   matcher: [
-    // Matcher cho admin routes
     "/admin/:path*",
-    // Matcher cho i18n và các routes khác
     "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|auth/callback/google).*)",
   ],
 };

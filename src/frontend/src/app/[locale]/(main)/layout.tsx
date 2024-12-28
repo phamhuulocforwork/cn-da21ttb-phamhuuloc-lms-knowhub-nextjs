@@ -2,7 +2,7 @@ import { SidebarProvider } from "@/components/ui/SideBar";
 import { AppSidebar } from "@/components/common/AppSideBar";
 import { AppHeader } from "@/components/common/AppHeader";
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

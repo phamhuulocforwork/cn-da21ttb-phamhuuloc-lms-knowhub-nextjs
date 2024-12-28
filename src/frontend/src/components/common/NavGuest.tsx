@@ -55,16 +55,24 @@ export function NavGuest() {
             sideOffset={4}
           >
             <DropdownMenuGroup>
-              <DropdownMenuItem className="cursor-pointer" onClick={() => router.push("/login")}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => router.push("/login")}
+              >
                 <LogIn />
                 Log In
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer" onClick={() => router.push("/register")}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => router.push("/register")}
+              >
                 <UserPlus />
                 Register
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => setTheme(theme === "light" ? "dark" : "light")}
               >
                 <SunMoon />
                 {theme === "light" ? "Theme: dark" : "Theme: light"}

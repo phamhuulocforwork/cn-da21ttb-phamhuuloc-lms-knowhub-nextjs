@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/Select";
 import { Role } from "@/types/user";
 import { userService } from "@/services/userService";
+import { useTranslations } from "next-intl";
 
 const createUserSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -43,8 +44,13 @@ interface CreateUserDialogProps {
   onSuccess: () => void;
 }
 
-export function CreateUserDialog({ open, onClose, onSuccess }: CreateUserDialogProps) {
+export function CreateUserDialog({
+  open,
+  onClose,
+  onSuccess,
+}: CreateUserDialogProps) {
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("admin.users.createUser");
 
   const form = useForm<CreateUserFormData>({
     resolver: zodResolver(createUserSchema),
@@ -74,7 +80,7 @@ export function CreateUserDialog({ open, onClose, onSuccess }: CreateUserDialogP
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create User</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -83,7 +89,7 @@ export function CreateUserDialog({ open, onClose, onSuccess }: CreateUserDialogP
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("name")}</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={loading} />
                   </FormControl>
@@ -96,7 +102,7 @@ export function CreateUserDialog({ open, onClose, onSuccess }: CreateUserDialogP
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={loading} type="email" />
                   </FormControl>
@@ -109,7 +115,7 @@ export function CreateUserDialog({ open, onClose, onSuccess }: CreateUserDialogP
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t("password")}</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={loading} type="password" />
                   </FormControl>
@@ -122,7 +128,7 @@ export function CreateUserDialog({ open, onClose, onSuccess }: CreateUserDialogP
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Role</FormLabel>
+                  <FormLabel>{t("role")}</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -130,7 +136,7 @@ export function CreateUserDialog({ open, onClose, onSuccess }: CreateUserDialogP
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a role" />
+                        <SelectValue placeholder={t("selectRole")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -147,10 +153,10 @@ export function CreateUserDialog({ open, onClose, onSuccess }: CreateUserDialogP
             />
             <div className="flex justify-end gap-2">
               <Button variant="outline" onClick={onClose} disabled={loading}>
-                Cancel
+                {t("cancel")}
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? "Creating..." : "Create user"}
+                {loading ? t("submitting") : t("submit")}
               </Button>
             </div>
           </form>
@@ -158,4 +164,4 @@ export function CreateUserDialog({ open, onClose, onSuccess }: CreateUserDialogP
       </DialogContent>
     </Dialog>
   );
-} 
+}

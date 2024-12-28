@@ -21,7 +21,7 @@ export default function RegisterPage() {
         <div className="relative hidden w-full bg-primary-100 p-4 dark:bg-slate-900 md:flex lg:rounded-2xl">
           <div className="absolute bottom-4 left-8 w-11/12">
             <Image
-              src="/assets/illustrations/auth.png"
+              src="assets/images/illustrations/auth.png"
               alt="Auth Illustration"
               width={1000}
               height={1000}

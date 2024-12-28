@@ -5,43 +5,47 @@ import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Plus, Download } from "lucide-react";
-import { usePagination } from "@/components/hooks/use-pagination";
 import { UserTable } from "./UserTable";
 import { PaginationControls } from "./PaginationControls";
 import { EditUserDialog } from "./EditUserDialog";
 import { userService } from "@/services/userService";
 import { downloadExcel } from "@/lib/excel";
 import { CreateUserDialog } from "./CreateUserDialog";
+import { useDebounce } from "@/hooks/use-debounce";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { useTranslations } from "next-intl";
 
 export default function UserManagement() {
+  const t = useTranslations("admin.users");
   const [users, setUsers] = useState<User[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  const {
-    paginatedItems: currentUsers,
-    currentPage,
-    totalPages,
-    itemsPerPage,
-    setPage,
-    changeItemsPerPage,
-  } = usePagination({
-    items: users.filter(
-      (user) =>
-        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchQuery.toLowerCase()),
-    ),
-  });
+  const debouncedSearch = useDebounce(searchQuery, 500);
 
   const fetchUsers = useCallback(async () => {
     try {
-      const data = await userService.getUsers();
-      setUsers(data);
+      setLoading(true);
+      const { users, meta } = await userService.getUsers({
+        page: currentPage,
+        limit: itemsPerPage,
+        search: debouncedSearch,
+      });
+      setUsers(users);
+      setTotalPages(meta.totalPages);
+      setTotalUsers(meta.total);
     } catch (error) {
       console.error("Failed to fetch users:", error);
+    } finally {
+      setLoading(false);
     }
-  }, []);
+  }, [currentPage, itemsPerPage, debouncedSearch]);
 
   useEffect(() => {
     fetchUsers();
@@ -49,10 +53,13 @@ export default function UserManagement() {
 
   const handleDeleteUser = async (userId: string) => {
     try {
+      setLoading(true);
       await userService.deleteUser(userId);
       await fetchUsers();
     } catch (error) {
       console.error("Failed to delete user:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,21 +78,19 @@ export default function UserManagement() {
     <div className="mx-4 py-10 md:mx-11">
       <div className="space-y-4">
         <div>
-          <h1 className="text-2xl font-semibold">User management</h1>
-          <p className="text-muted-foreground">
-            Manage your team members and their account permissions here.
-          </p>
+          <h1 className="text-2xl font-semibold">{t("title")}</h1>
+          <p className="text-muted-foreground">{t("description")}</p>
         </div>
 
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">
-            All users{" "}
-            <span className="text-muted-foreground">{users.length}</span>
+            {t("allUsers")}{" "}
+            <span className="text-muted-foreground">{totalUsers}</span>
           </h2>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2">
               <Input
-                placeholder="Search"
+                placeholder={t("search")}
                 className="w-[300px]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -97,27 +102,33 @@ export default function UserManagement() {
               className="gap-2"
             >
               <Download className="h-4 w-4" />
-              Export
+              {t("export")}
             </Button>
             <Button onClick={() => setShowCreateDialog(true)} className="gap-2">
               <Plus className="h-4 w-4" />
-              Add user
+              {t("addUser")}
             </Button>
           </div>
         </div>
 
-        <UserTable
-          users={currentUsers}
-          onEdit={setEditingUser}
-          onDelete={handleDeleteUser}
-        />
+        {loading ? (
+          <LoadingSpinner />
+        ) : users && users.length > 0 ? (
+          <UserTable
+            users={users}
+            onEdit={setEditingUser}
+            onDelete={handleDeleteUser}
+          />
+        ) : (
+          <div className="py-4 text-center">{t("noUsers")}</div>
+        )}
 
         <PaginationControls
           currentPage={currentPage}
           totalPages={totalPages}
           itemsPerPage={itemsPerPage}
-          onPageChange={setPage}
-          onItemsPerPageChange={changeItemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={setItemsPerPage}
         />
 
         {editingUser && (

@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/Select";
 import { Role, User } from "@/types/user";
 import { userService } from "@/services/userService";
+import { useTranslations } from "next-intl";
 
 const editUserSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -50,6 +51,7 @@ export function EditUserDialog({
   onSuccess,
 }: EditUserDialogProps) {
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("admin.users.editUser");
 
   const form = useForm<EditUserFormData>({
     resolver: zodResolver(editUserSchema),
@@ -80,7 +82,7 @@ export function EditUserDialog({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit User</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -89,7 +91,7 @@ export function EditUserDialog({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("name")}</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={loading} />
                   </FormControl>
@@ -102,7 +104,7 @@ export function EditUserDialog({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={loading} type="email" />
                   </FormControl>
@@ -115,7 +117,7 @@ export function EditUserDialog({
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Role</FormLabel>
+                  <FormLabel>{t("role")}</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -140,10 +142,10 @@ export function EditUserDialog({
             />
             <div className="flex justify-end gap-2">
               <Button variant="outline" onClick={onClose} disabled={loading}>
-                Cancel
+                {t("cancel")}
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? "Saving..." : "Save changes"}
+                {loading ? t("saving") : t("save")}
               </Button>
             </div>
           </form>

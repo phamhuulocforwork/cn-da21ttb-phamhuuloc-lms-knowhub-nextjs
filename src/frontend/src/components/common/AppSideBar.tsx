@@ -1,6 +1,7 @@
 "use client";
 
-import { Search, Home, BookOpen, Users } from "lucide-react";
+import { Home, Users } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 import {
   Sidebar,
@@ -24,72 +25,40 @@ import { NavUser } from "@/components/common/NavUser";
 import { useAuth } from "@/contexts/AuthProvider";
 import { NavGuest } from "@/components/common/NavGuest";
 
+import { useTranslations } from "next-intl";
+
 const sidebarConfig = {
   GUEST: {
     navMain: [
       {
-        title: "Home",
+        title: "home",
         url: "/",
         icon: Home,
-        isActive: true,
-      },
-      {
-        title: "Search",
-        url: "/search",
-        icon: Search,
       },
     ],
   },
   STUDENT: {
     navMain: [
       {
-        title: "Home",
+        title: "home",
         url: "/student",
         icon: Home,
-        isActive: true,
-      },
-      {
-        title: "Courses",
-        url: "/student/courses",
-        icon: BookOpen,
-      },
-      {
-        title: "Search",
-        url: "/student/search",
-        icon: Search,
       },
     ],
   },
   TEACHER: {
     navMain: [
       {
-        title: "Home",
+        title: "home",
         url: "/teacher",
         icon: Home,
-        isActive: true,
-      },
-      {
-        title: "My Courses",
-        url: "/teacher/courses",
-        icon: BookOpen,
-      },
-      {
-        title: "Students",
-        url: "/teacher/students",
-        icon: Users,
       },
     ],
   },
   ADMIN: {
     navMain: [
       {
-        title: "Dashboard",
-        url: "/admin",
-        icon: Home,
-        isActive: true,
-      },
-      {
-        title: "Users",
+        title: "users",
         url: "/admin/users",
         icon: Users,
       },
@@ -100,6 +69,8 @@ const sidebarConfig = {
 export function AppSidebar() {
   const isMobile = useIsMobile();
   const { user, logout } = useAuth();
+  const t = useTranslations("navigation");
+  const pathname = usePathname();
 
   const role = user?.role || "GUEST";
   const sidebarItems = sidebarConfig[role as keyof typeof sidebarConfig];
@@ -114,7 +85,7 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("navigation")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {sidebarItems.navMain.map((item) => (
@@ -122,10 +93,13 @@ export function AppSidebar() {
                   key={item.title}
                   className="flex items-center justify-center"
                 >
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname.endsWith(item.url)}
+                  >
                     <a href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span>{t(item.title)}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

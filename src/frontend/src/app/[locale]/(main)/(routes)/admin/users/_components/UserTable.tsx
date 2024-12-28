@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/Table";
 import { MoreVertical } from "lucide-react";
 import { User } from "@/types/user";
+import { useTranslations } from "next-intl";
 
 interface UserTableProps {
   users: User[];
@@ -26,6 +27,8 @@ interface UserTableProps {
 }
 
 export function UserTable({ users, onEdit, onDelete }: UserTableProps) {
+  const t = useTranslations("admin.users.table");
+  
   return (
     <div className="rounded-md border">
       <Table>
@@ -34,9 +37,9 @@ export function UserTable({ users, onEdit, onDelete }: UserTableProps) {
             <TableHead className="w-12">
               <Checkbox />
             </TableHead>
-            <TableHead>User name</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Create at</TableHead>
+            <TableHead>{t("userName")}</TableHead>
+            <TableHead>{t("role")}</TableHead>
+            <TableHead>{t("createdAt")}</TableHead>
             <TableHead className="w-12"></TableHead>
           </TableRow>
         </TableHeader>
@@ -88,10 +91,10 @@ export function UserTable({ users, onEdit, onDelete }: UserTableProps) {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={() => onEdit(user)}>
-                      Edit user
+                      {t("actions.edit")}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => onDelete(user.id)}>
-                      Delete user
+                      {t("actions.delete")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

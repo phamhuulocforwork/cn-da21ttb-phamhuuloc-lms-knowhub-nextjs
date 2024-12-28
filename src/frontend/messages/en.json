@@ -1,4 +1,10 @@
 {
+  "navigation": {
+    "navigation": "Navigation",
+    "dashboard": "Dashboard",
+    "home": "Home",
+    "users": "Users"
+  },
   "auth": {
     "login": {
       "backButtonLabel": "Don't have an account? ",
@@ -48,6 +54,49 @@
         "login": "Login successful. Redirecting...",
         "register": "Registration successful. Redirecting..."
       }
+    }
+  },
+  "admin": {
+    "users": {
+      "title": "User management",
+      "description": "Manage your team members and their account permissions here.",
+      "allUsers": "All users",
+      "search": "Search",
+      "export": "Export",
+      "addUser": "Add user",
+      "noUsers": "No users found",
+      "createUser": {
+        "title": "Create User",
+        "name": "Name",
+        "email": "Email",
+        "password": "Password",
+        "role": "Role",
+        "selectRole": "Select a role",
+        "cancel": "Cancel",
+        "submit": "Create user",
+        "submitting": "Creating..."
+      },
+      "editUser": {
+        "title": "Edit User",
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "save": "Save changes",
+        "cancel": "Cancel",
+        "saving": "Saving..."
+      },
+      "table": {
+        "userName": "User name",
+        "role": "Role",
+        "createdAt": "Created at",
+        "actions": {
+          "edit": "Edit user",
+          "delete": "Delete user"
+        }
+      }
+    },
+    "pagination": {
+      "itemsPerPage": "Items/page"
     }
   }
 }
