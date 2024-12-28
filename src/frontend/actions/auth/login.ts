@@ -18,7 +18,13 @@ export const login = async (values: LoginBodyType) => {
 
     return {
       success: t("success.login"),
-      user: response.data.user,
+      user: {
+        id: response.data.user.id,
+        name: response.data.user.name,
+        email: response.data.user.email,
+        image: response.data.user.image,
+        role: response.data.user.role,
+      },
     };
   } catch (error) {
     if (axios.isAxiosError(error)) {

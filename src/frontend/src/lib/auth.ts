@@ -32,6 +32,7 @@ export const authOptions: NextAuthOptions = {
           name: data.user.name,
           email: data.user.email,
           image: data.user.image,
+          role: data.user.role,
         };
       },
     }),
@@ -60,6 +61,7 @@ export const authOptions: NextAuthOptions = {
           name: response.user.name,
           email: response.user.email,
           image: response.user.image,
+          role: response.user.role,
           error: response.error,
           success: response.success,
         };
@@ -84,6 +86,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           image: user.image,
           provider: account.provider,
+          role: user.role,
         };
       }
       return token;
@@ -96,6 +99,7 @@ export const authOptions: NextAuthOptions = {
           email: token.email as string,
           image: token.image as string,
           provider: token.provider as string,
+          role: token.role as string,
         };
       }
       return session;
@@ -111,6 +115,7 @@ declare module "next-auth" {
       email: string;
       image: string;
       provider: string;
+      role: string;
     };
   }
   interface User {
@@ -118,6 +123,7 @@ declare module "next-auth" {
     name: string;
     email: string;
     image: string;
+    role: string;
     provider?: string;
   }
 }

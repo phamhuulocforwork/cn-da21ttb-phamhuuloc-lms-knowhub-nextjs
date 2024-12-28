@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Frame, PieChart, Home } from "lucide-react";
+import { Search, Home, BookOpen, Users } from "lucide-react";
 
 import {
   Sidebar,
@@ -24,39 +24,85 @@ import { NavUser } from "@/components/common/NavUser";
 import { useAuth } from "@/contexts/AuthProvider";
 import { NavGuest } from "@/components/common/NavGuest";
 
-const data = {
-  navMain: [
-    {
-      title: "Home",
-      url: "#",
-      icon: Home,
-      isActive: true,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-  ],
+const sidebarConfig = {
+  GUEST: {
+    navMain: [
+      {
+        title: "Home",
+        url: "/",
+        icon: Home,
+        isActive: true,
+      },
+      {
+        title: "Search",
+        url: "/search",
+        icon: Search,
+      },
+    ],
+  },
+  STUDENT: {
+    navMain: [
+      {
+        title: "Home",
+        url: "/student",
+        icon: Home,
+        isActive: true,
+      },
+      {
+        title: "Courses",
+        url: "/student/courses",
+        icon: BookOpen,
+      },
+      {
+        title: "Search",
+        url: "/student/search",
+        icon: Search,
+      },
+    ],
+  },
+  TEACHER: {
+    navMain: [
+      {
+        title: "Home",
+        url: "/teacher",
+        icon: Home,
+        isActive: true,
+      },
+      {
+        title: "My Courses",
+        url: "/teacher/courses",
+        icon: BookOpen,
+      },
+      {
+        title: "Students",
+        url: "/teacher/students",
+        icon: Users,
+      },
+    ],
+  },
+  ADMIN: {
+    navMain: [
+      {
+        title: "Dashboard",
+        url: "/admin",
+        icon: Home,
+        isActive: true,
+      },
+      {
+        title: "Users",
+        url: "/admin/users",
+        icon: Users,
+      },
+    ],
+  },
 };
 
 export function AppSidebar() {
   const isMobile = useIsMobile();
   const { user, logout } = useAuth();
 
-  console.log(user);
+  const role = user?.role || "GUEST";
+  const sidebarItems = sidebarConfig[role as keyof typeof sidebarConfig];
 
   return (
     <Sidebar collapsible="icon">
@@ -71,7 +117,7 @@ export function AppSidebar() {
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {data.navMain.map((item) => (
+              {sidebarItems.navMain.map((item) => (
                 <SidebarMenuItem
                   key={item.title}
                   className="flex items-center justify-center"
@@ -87,24 +133,6 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
           <Separator className="my-2" />
-          <SidebarGroupLabel>Projects</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {data.projects.map((item) => (
-                <SidebarMenuItem
-                  key={item.name}
-                  className="flex items-center justify-center"
-                >
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.name}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>

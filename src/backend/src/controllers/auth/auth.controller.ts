@@ -34,6 +34,7 @@ export default new (class AuthController {
           name: user.name,
           email: user.email,
           image: user.image,
+          role: user.role,
         },
         token,
       });
@@ -46,7 +47,7 @@ export default new (class AuthController {
 
   async googleAuth(req: Request, res: Response): Promise<Response> {
     try {
-      const { email, name, image } = req.body;
+      const { email, name, image, role } = req.body;
 
       let user = await db.user.findUnique({
         where: { email },
@@ -59,6 +60,7 @@ export default new (class AuthController {
             name,
             image,
             password: require("crypto").randomBytes(32).toString("hex"),
+            role,
           },
         });
       }
@@ -110,6 +112,7 @@ export default new (class AuthController {
           name: user.name,
           email: user.email,
           image: user.image,
+          role: user.role,
         },
         token,
       });
@@ -118,34 +121,5 @@ export default new (class AuthController {
         error: "Internal server error",
       });
     }
-  }
-
-  async updateUser(req: Request, res: Response): Promise<Response> {
-    const { id, name, email, image } = req.body;
-    const user = await db.user.update({ where: { id }, data: { name, email, image } });
-    return res.status(200).json(user);
-  }
-
-  async deleteUser(req: Request, res: Response): Promise<Response> {
-    const { id } = req.body;
-    const user = await db.user.delete({ where: { id } });
-    return res.status(200).json(user);
-  }
-
-  async getUser(req: Request, res: Response): Promise<Response> {
-    const { id } = req.body;
-    const user = await db.user.findUnique({ where: { id } });
-    return res.status(200).json(user);
-  }
-
-  async getUsers(req: Request, res: Response): Promise<Response> {
-    const users = await db.user.findMany();
-    return res.status(200).json(users);
-  }
-
-  async getUserByEmail(req: Request, res: Response): Promise<Response> {
-    const { email } = req.body;
-    const user = await db.user.findUnique({ where: { email } });
-    return res.status(200).json(user);
   }
 })();

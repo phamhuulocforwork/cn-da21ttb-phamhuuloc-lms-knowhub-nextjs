@@ -7,6 +7,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  GUEST
+  STUDENT 
+  TEACHER
+  ADMIN
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -14,6 +21,7 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String
+  role          Role      @default(STUDENT)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
