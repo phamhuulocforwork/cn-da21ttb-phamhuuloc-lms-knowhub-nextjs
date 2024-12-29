@@ -4,7 +4,6 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterBody, RegisterBodyType } from "~/schemas";
-import { useRouter } from "@/i18n/routing";
 
 import {
   Form,
@@ -19,11 +18,10 @@ import { CardWrapper } from "@/app/[locale]/(auth)/_components/CardWrapper";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { register } from "~/actions/auth/register";
 import { ParentFormMessage } from "@/components/ui/ParentFormMessage";
+import { authService } from "@/services/authService";
 
 export const RegisterForm = () => {
-  const router = useRouter();
   const [loading, setLoading] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -45,14 +43,8 @@ export const RegisterForm = () => {
     setError("");
     setSuccess("");
     setLoading(() => {
-      register(values).then((res) => {
-        setError(res.error);
-        setSuccess(res.success);
-        if (res.success) {
-          setTimeout(() => {
-            router.push("/login");
-          }, 500);
-        }
+      authService.register(values).then((res) => {
+        console.log(res);
       });
     });
   };

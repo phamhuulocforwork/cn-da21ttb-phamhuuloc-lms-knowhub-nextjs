@@ -1,14 +1,14 @@
 import express from "express";
-import cors from "cors";
+import { corsMiddleware } from "./middleware/cors.middleware";
 import { env } from "./config/env";
 import routes from "./routes";
-import cookieParser from 'cookie-parser';
+import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(cors());
+app.use(corsMiddleware);
 app.use(express.json());
-app.use(cookieParser('mySecretKey'));
+app.use(cookieParser("mySecretKey"));
 app.use("/api", routes);
 
 const PORT = env.PORT;

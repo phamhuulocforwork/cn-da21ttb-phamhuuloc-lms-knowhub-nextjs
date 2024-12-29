@@ -43,27 +43,28 @@ export const LoginForm = () => {
   });
 
   const onSubmit = async (values: LoginBodyType) => {
-    setLoading(true);
-    setError("");
-    setSuccess("");
+    try {
+      setLoading(true);
+      setError("");
+      setSuccess("");
 
-    const result = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-    });
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
 
-    if (result?.error) {
-      setError(tServerMessages("error.loginFailed"));
-      setLoading(false);
-      return;
-    }
+      if (result?.error) {
+        setError(tServerMessages("error.invalidCredentials"));
+        return;
+      }
 
-    if (result?.ok) {
       setSuccess(tServerMessages("success.login"));
-      setTimeout(() => {
-        router.push("/");
-      }, 500);
+      router.push("/");
+    } catch (error) {
+      setError(tServerMessages("error.loginFailed"));
+    } finally {
+      setLoading(false);
     }
   };
 

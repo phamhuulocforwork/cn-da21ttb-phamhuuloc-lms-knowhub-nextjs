@@ -54,25 +54,35 @@ export default new (class AuthController {
 
   async googleAuth(req: Request, res: Response): Promise<Response> {
     try {
-      const { email, name, image, role } = req.body;
+      const { email, name, image } = req.body;
 
+      // Find existing user
       let user = await db.user.findUnique({
         where: { email },
       });
 
       if (!user) {
+        // Create new user if doesn't exist
         user = await db.user.create({
           data: {
             email,
             name,
             image,
             password: require("crypto").randomBytes(32).toString("hex"),
-            role,
+            role: "STUDENT", // Default role for Google sign-ups
           },
         });
       }
 
       const token = generateToken(user.id);
+
+      // Set HTTP-only cookie
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "none",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      });
 
       return res.status(200).json({
         user: {
@@ -80,6 +90,7 @@ export default new (class AuthController {
           name: user.name,
           email: user.email,
           image: user.image,
+          role: user.role,
         },
         token,
       });
@@ -114,6 +125,46 @@ export default new (class AuthController {
       const token = generateToken(user.id);
 
       return res.status(201).json({
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+          role: user.role,
+        },
+        token,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: "Internal server error",
+      });
+    }
+  }
+
+  async refreshToken(req: Request, res: Response): Promise<Response> {
+    try {
+      const { userId } = req.body;
+
+      const user = await db.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user) {
+        return res.status(404).json({
+          error: "User not found",
+        });
+      }
+
+      const token = generateToken(user.id);
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "none",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
+      return res.status(200).json({
         user: {
           id: user.id,
           name: user.name,

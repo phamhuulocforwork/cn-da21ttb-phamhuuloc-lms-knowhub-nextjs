@@ -11,7 +11,7 @@ import { EditUserDialog } from "./EditUserDialog";
 import { userService } from "@/services/userService";
 import { downloadExcel } from "@/lib/excel";
 import { CreateUserDialog } from "./CreateUserDialog";
-import { useDebounce } from "@/hooks/use-debounce";
+import { useDebounce } from "@/components/hooks/use-debounce";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { useTranslations } from "next-intl";
 
