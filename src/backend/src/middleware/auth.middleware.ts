@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../utils/jwt.utils";
 import { db } from "../config/db";
+import { User } from "@prisma/client";
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -22,7 +23,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
       return res.status(401).json({ error: "User not found" });
     }
 
-    req.user = user;
+    (req as Request & { user: User }).user = user;
     next();
   } catch (error) {
     return res.status(401).json({ error: "Invalid token" });
@@ -31,7 +32,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
 export const adminMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = req.user;
+    const user = (req as Request & { user: User }).user;
 
     if (user?.role !== "ADMIN") {
       return res.status(403).json({ error: "Admin access required" });
