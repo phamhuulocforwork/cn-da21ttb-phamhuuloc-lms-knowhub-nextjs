@@ -4,8 +4,8 @@ export interface User {
   email: string;
   image?: string;
   role: Role;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 export enum Role {

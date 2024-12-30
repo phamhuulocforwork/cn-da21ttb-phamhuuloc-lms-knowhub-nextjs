@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import {
   Dialog,
   DialogContent,
@@ -28,15 +27,7 @@ import {
 import { Role } from "@/types/user";
 import { userService } from "@/services/userService";
 import { useTranslations } from "next-intl";
-
-const createUserSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  role: z.enum([Role.ADMIN, Role.TEACHER, Role.STUDENT, Role.GUEST]),
-});
-
-type CreateUserFormData = z.infer<typeof createUserSchema>;
+import { CreateUserBody, CreateUserBodyType } from "~/schemas";
 
 interface CreateUserDialogProps {
   open: boolean;
@@ -49,11 +40,11 @@ export function CreateUserDialog({
   onClose,
   onSuccess,
 }: CreateUserDialogProps) {
-  const [loading, setLoading] = useState(false);
   const t = useTranslations("admin.users.createUser");
+  const [loading, setLoading] = useState(false);
 
-  const form = useForm<CreateUserFormData>({
-    resolver: zodResolver(createUserSchema),
+  const form = useForm<CreateUserBodyType>({
+    resolver: zodResolver(CreateUserBody(t)),
     defaultValues: {
       name: "",
       email: "",
@@ -62,10 +53,14 @@ export function CreateUserDialog({
     },
   });
 
-  const onSubmit = async (data: CreateUserFormData) => {
+  const onSubmit = async (data: CreateUserBodyType) => {
     try {
       setLoading(true);
-      await userService.createUser(data);
+      await userService.createUser({
+        ...data,
+        role: data.role as Role,
+        updatedAt: new Date(),
+      });
       onSuccess();
       onClose();
       form.reset();

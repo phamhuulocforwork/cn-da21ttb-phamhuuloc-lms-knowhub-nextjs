@@ -51,6 +51,7 @@ function AuthContextContent({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, session]);
 
   const logout = async () => {
