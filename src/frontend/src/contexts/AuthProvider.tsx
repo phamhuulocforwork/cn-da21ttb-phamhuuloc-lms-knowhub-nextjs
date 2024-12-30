@@ -1,13 +1,21 @@
 "use client";
 
 import { SessionProvider, useSession, signOut } from "next-auth/react";
-import { createContext, useContext, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
+import { userService } from "@/services/userService";
+import { User } from "@/types/user";
 
 interface AuthContextType {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  user: any;
+  user: User | null;
   status: "loading" | "authenticated" | "unauthenticated";
   logout: () => Promise<void>;
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -22,17 +30,51 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 function AuthContextContent({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchUser = async () => {
+    try {
+      if (status === "authenticated" && session?.user?.accessToken) {
+        const userData = await userService.getCurrentUser();
+        setUser(userData);
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [status, session]);
 
   const logout = async () => {
-    await signOut({ callbackUrl: "/" });
+    try {
+      await signOut({ callbackUrl: "/" });
+      setUser(null);
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
+
+  const refreshUser = async () => {
+    await fetchUser();
+  };
+
+  const contextStatus = loading ? "loading" : status;
 
   return (
     <AuthContext.Provider
       value={{
-        user: session?.user || null,
-        status,
+        user,
+        status: contextStatus,
         logout,
+        refreshUser,
       }}
     >
       {children}

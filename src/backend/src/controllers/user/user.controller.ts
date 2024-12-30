@@ -103,14 +103,18 @@ export default new (class UserController {
 
   async getCurrentUser(req: Request, res: Response): Promise<Response> {
     try {
+      if (!req.user?.id) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
       const user = await db.user.findUnique({
-        where: { id: req.user?.id },
+        where: { id: req.user.id },
       });
-  
+
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-  
+
       return res.status(200).json({
         id: user.id,
         name: user.name,
@@ -119,6 +123,7 @@ export default new (class UserController {
         role: user.role,
       });
     } catch (error) {
+      console.error("Get current user error:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }

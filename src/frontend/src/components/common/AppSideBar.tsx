@@ -17,13 +17,12 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/SideBar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 
 import { Logo } from "@/components/common/Logo";
 import { Separator } from "@/components/ui/Separator";
 import useIsMobile from "@/components/hooks/use-mobile";
-import { NavUser } from "@/components/common/NavUser";
 import { useAuth } from "@/contexts/AuthProvider";
-import { NavGuest } from "@/components/common/NavGuest";
 
 import { useTranslations } from "next-intl";
 
@@ -109,9 +108,28 @@ export function AppSidebar() {
           <Separator className="my-2" />
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      {user && (
+        <SidebarFooter>
+          <div className="flex items-center gap-2" onClick={logout}>
+            <Avatar className="h-8 w-8 rounded-lg">
+              <AvatarImage src={user.image} alt={user.name} />
+              <AvatarFallback className="rounded-lg">
+                {user.name
+                  .split(" ")
+                  .map((n: string) => n[0])
+                  .join("")}
+              </AvatarFallback>
+            </Avatar>
+            <div className="grid flex-1 text-left text-sm leading-tight">
+              <span className="truncate font-semibold">{user.name}</span>
+              <span className="truncate text-xs">{user.role}</span>
+            </div>
+          </div>
+        </SidebarFooter>
+      )}
+      {/* <SidebarFooter>
         {user ? <NavUser user={user} logout={logout} /> : <NavGuest />}
-      </SidebarFooter>
+      </SidebarFooter> */}
       <SidebarRail />
     </Sidebar>
   );
