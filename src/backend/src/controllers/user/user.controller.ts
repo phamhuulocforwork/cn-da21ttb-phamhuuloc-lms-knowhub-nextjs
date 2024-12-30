@@ -100,4 +100,26 @@ export default new (class UserController {
     }
     return res.status(200).json(user);
   }
+
+  async getCurrentUser(req: Request, res: Response): Promise<Response> {
+    try {
+      const user = await db.user.findUnique({
+        where: { id: req.user?.id },
+      });
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      return res.status(200).json({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        image: user.image,
+        role: user.role,
+      });
+    } catch (error) {
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
 })();

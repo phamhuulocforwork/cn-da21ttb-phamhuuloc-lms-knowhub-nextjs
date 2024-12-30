@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { ParentFormMessage } from "@/components/ui/ParentFormMessage";
 import { authService } from "@/services/authService";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 export const RegisterForm = () => {
   const [loading, setLoading] = useTransition();
@@ -132,7 +133,7 @@ export const RegisterForm = () => {
             <Button className="w-full" type="submit" disabled={loading}>
               {loading ? (
                 <span className="flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  <LoadingSpinner size="sm" />
                   {t("submitLoading")}
                 </span>
               ) : (

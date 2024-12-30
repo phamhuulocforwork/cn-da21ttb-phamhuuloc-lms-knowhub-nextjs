@@ -23,6 +23,7 @@ import { FcGoogle } from "react-icons/fc";
 import { ParentFormMessage } from "@/components/ui/ParentFormMessage";
 import { signIn } from "next-auth/react";
 import { useRouter } from "@/i18n/routing";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -62,6 +63,7 @@ export const LoginForm = () => {
       setSuccess(tServerMessages("success.login"));
       router.push("/");
     } catch (error) {
+      console.error("Login error:", error);
       setError(tServerMessages("error.loginFailed"));
     } finally {
       setLoading(false);
@@ -124,7 +126,7 @@ export const LoginForm = () => {
             <Button className="w-full" type="submit" disabled={loading}>
               {loading ? (
                 <span className="flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  <LoadingSpinner size="sm" />
                   {t("submitLoading")}
                 </span>
               ) : (
@@ -170,7 +172,7 @@ const SocialButtons = ({
         disabled={isLoading}
       >
         {isLoading ? (
-          <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          <LoadingSpinner size="sm" />
         ) : (
           <FcGoogle className="h-6 w-6" />
         )}

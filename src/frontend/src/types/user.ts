@@ -5,6 +5,7 @@ export interface User {
   image?: string;
   role: Role;
   createdAt: string;
+  updatedAt: string;
 }
 
 export enum Role {

@@ -12,7 +12,7 @@ import { userService } from "@/services/userService";
 import { downloadExcel } from "@/lib/excel";
 import { CreateUserDialog } from "./CreateUserDialog";
 import { useDebounce } from "@/components/hooks/use-debounce";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { useTranslations } from "next-intl";
 
 export default function UserManagement() {
@@ -82,32 +82,37 @@ export default function UserManagement() {
           <p className="text-muted-foreground">{t("description")}</p>
         </div>
 
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-base font-semibold">
             {t("allUsers")}{" "}
             <span className="text-muted-foreground">{totalUsers}</span>
           </h2>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <div className="w-full sm:w-auto">
               <Input
                 placeholder={t("search")}
-                className="w-[300px]"
+                className="w-full sm:w-[300px]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <Button
-              onClick={handleExportUsers}
-              variant="outline"
-              className="gap-2"
-            >
-              <Download className="h-4 w-4" />
-              {t("export")}
-            </Button>
-            <Button onClick={() => setShowCreateDialog(true)} className="gap-2">
-              <Plus className="h-4 w-4" />
-              {t("addUser")}
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleExportUsers}
+                variant="outline"
+                className="gap-2"
+              >
+                <Download className="h-4 w-4" />
+                <span className="hidden sm:inline">{t("export")}</span>
+              </Button>
+              <Button
+                onClick={() => setShowCreateDialog(true)}
+                className="gap-2"
+              >
+                <Plus className="h-4 w-4" />
+                <span className="hidden sm:inline">{t("addUser")}</span>
+              </Button>
+            </div>
           </div>
         </div>
 

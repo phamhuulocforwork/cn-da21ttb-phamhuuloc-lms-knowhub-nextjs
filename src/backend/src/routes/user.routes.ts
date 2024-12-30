@@ -8,5 +8,6 @@ router.delete("/:id", authMiddleware as any, adminMiddleware as any, UserControl
 router.get("/:id", authMiddleware as any, adminMiddleware as any, UserController.getUser as any);
 router.get("/email/:email", authMiddleware as any, adminMiddleware as any, UserController.getUserByEmail as any);
 router.get("/", authMiddleware as any, adminMiddleware as any, UserController.getUsers as any);
+router.get("/me", authMiddleware as any, UserController.getCurrentUser as any);
 
 export default router;

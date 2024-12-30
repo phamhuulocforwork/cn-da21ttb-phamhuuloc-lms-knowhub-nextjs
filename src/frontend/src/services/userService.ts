@@ -26,6 +26,11 @@ export const userService = {
     return response.data;
   },
 
+  async getCurrentUser() {
+    const response = await api.get("/api/user/me");
+    return response.data;
+  },
+
   async getUser(id: string) {
     const response = await api.get(`/api/user/${id}`);
     return response.data;
