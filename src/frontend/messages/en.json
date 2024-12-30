@@ -64,7 +64,6 @@
       "search": "Search",
       "export": "Export",
       "addUser": "Add user",
-      "noUsers": "No users found",
       "createUser": {
         "title": "Create User",
         "name": "Name",
@@ -93,7 +92,8 @@
           "edit": "Edit user",
           "delete": "Delete user"
         }
-      }
+      },
+      "noData": "No users found"
     },
     "pagination": {
       "itemsPerPage": "Items/page"

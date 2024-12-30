@@ -93,7 +93,8 @@
           "edit": "Chỉnh sửa người dùng",
           "delete": "Xóa người dùng"
         }
-      }
+      },
+      "noData": "Không tìm thấy người dùng"
     },
     "pagination": {
       "itemsPerPage": "Số mục/trang"

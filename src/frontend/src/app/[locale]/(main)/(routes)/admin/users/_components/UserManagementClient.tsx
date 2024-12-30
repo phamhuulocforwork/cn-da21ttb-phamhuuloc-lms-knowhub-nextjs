@@ -12,8 +12,8 @@ import { userService } from "@/services/userService";
 import { downloadExcel } from "@/lib/excel";
 import { CreateUserDialog } from "./CreateUserDialog";
 import { useDebounce } from "@/components/hooks/use-debounce";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { useTranslations } from "next-intl";
+import { TableSkeleton } from "./TableSkeleton";
 
 export default function UserManagement() {
   const t = useTranslations("admin.users");
@@ -117,7 +117,7 @@ export default function UserManagement() {
         </div>
 
         {loading ? (
-          <LoadingSpinner />
+          <TableSkeleton />
         ) : users && users.length > 0 ? (
           <UserTable
             users={users}
@@ -125,7 +125,7 @@ export default function UserManagement() {
             onDelete={handleDeleteUser}
           />
         ) : (
-          <div className="py-4 text-center">{t("noUsers")}</div>
+          <div className="py-4 text-center">{t("noData")}</div>
         )}
 
         <PaginationControls

@@ -6,9 +6,10 @@ const spinnerVariants = cva(
   {
     variants: {
       size: {
-        default: "h-8 w-8",
+        default: "h-6 w-6",
         xs: "h-4 w-4",
         sm: "h-6 w-6",
+        md: "h-8 w-8",
         lg: "h-10 w-10",
       },
     },
@@ -24,8 +25,8 @@ interface LoadingSpinnerProps extends VariantProps<typeof spinnerVariants> {
 
 export function LoadingSpinner({ size, className }: LoadingSpinnerProps) {
   return (
-    <div className="flex h-32 w-full items-center justify-center">
-      <div className={cn(spinnerVariants({ size }), className)} />
+    <div className={cn(`flex items-center justify-center`, className)}>
+      <div className={cn(spinnerVariants({ size }))} />
     </div>
   );
 }

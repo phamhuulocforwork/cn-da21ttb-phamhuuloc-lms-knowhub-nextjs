@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import UserManagementClient from "./_components/UserManagementClient";
-import { UserManagementSkeleton } from "@/components/common/ManagementSkeleton";
+import { ManagementSkeleton } from "@/app/[locale]/(main)/(routes)/admin/users/_components/ManagementSkeleton";
 
 export default function UserManagementPage() {
   return (
-    <Suspense fallback={<UserManagementSkeleton />}>
+    <Suspense fallback={<ManagementSkeleton />}>
       <UserManagementClient />
     </Suspense>
   );

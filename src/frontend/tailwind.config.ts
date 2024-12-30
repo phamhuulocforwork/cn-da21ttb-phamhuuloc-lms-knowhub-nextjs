@@ -82,7 +82,7 @@ const config = {
           foreground: "#ffffff",
         },
         muted: {
-          DEFAULT: "#668091",
+          DEFAULT: "#b0bfc9",
           "50": "#f9fafb",
           "100": "#eceff2",
           "200": "#d5dde2",
