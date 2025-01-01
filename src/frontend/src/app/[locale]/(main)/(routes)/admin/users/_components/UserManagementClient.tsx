@@ -13,7 +13,7 @@ import { downloadExcel } from "@/lib/excel";
 import { CreateUserDialog } from "./CreateUserDialog";
 import { useDebounce } from "@/components/hooks/use-debounce";
 import { useTranslations } from "next-intl";
-import { TableSkeleton } from "./TableSkeleton";
+import { TableSkeleton } from "../../_components/TableSkeleton";
 
 export default function UserManagement() {
   const t = useTranslations("admin.users");

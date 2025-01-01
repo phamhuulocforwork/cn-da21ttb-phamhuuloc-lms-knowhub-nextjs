@@ -14,6 +14,33 @@ enum Role {
   ADMIN
 }
 
+enum Status {
+  DRAFT
+  PUBLISHED
+  DELETED
+}
+
+enum ContentType {
+  FILE
+  LINK
+  TEXT
+  IMAGE
+  VIDEO
+  AUDIO
+  CODE
+  MATH
+  TABLE
+  CHART
+  DIAGRAM
+  GRAPH
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  SHORT_ANSWER
+  LONG_ANSWER
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -24,4 +51,190 @@ model User {
   role          Role      @default(STUDENT)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  // Relations
+  projects      Project[]
+  courses       Course[]
+  quizzes       Quiz[]
+  wikis         Wiki[]
+  enrolledCourses CourseEnrollment[]
+  quizAttempts  QuizAttempt[]
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  thumbnail   String?
+  status      Status    @default(DRAFT)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+  deletedAt   DateTime?
+  
+  // Relations
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
+  courses     Course[]
+  quizzes     Quiz[]
+  wikis       Wiki[]
+  categories  Category[]
+}
+
+model Course {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  thumbnail   String?
+  videoUrl    String?
+  content     Content[]
+  status      Status    @default(DRAFT)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+  deletedAt   DateTime?
+
+  // Relations
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
+  project     Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String?
+  categories  Category[]
+  enrollments CourseEnrollment[]
+}
+
+model Quiz {
+  id              String    @id @default(cuid())
+  title           String
+  description     String?
+  thumbnail       String?
+  duration        Int       // in minutes
+  startTime       DateTime?
+  endTime         DateTime?
+  randomizeAnswers Boolean  @default(false)
+  status          Status    @default(DRAFT)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  publishedAt     DateTime?
+  deletedAt       DateTime?
+
+  // Relations
+  author          User      @relation(fields: [authorId], references: [id])
+  authorId        String
+  project         Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId       String?
+  categories      Category[]
+  questions       Question[]
+  attempts        QuizAttempt[]
+}
+
+model Wiki {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  thumbnail   String?
+  content     Content[]
+  status      Status    @default(DRAFT)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+  deletedAt   DateTime?
+
+  // Relations
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
+  project     Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String?
+  categories  Category[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+
+  // Relations
+  projects    Project[]
+  courses     Course[]
+  quizzes     Quiz[]
+  wikis       Wiki[]
+}
+
+model Content {
+  id          String      @id @default(cuid())
+  type        ContentType
+  value       String      @db.Text
+  order       Int
+  
+  // Relations
+  course      Course?     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId    String?
+  wiki        Wiki?       @relation(fields: [wikiId], references: [id], onDelete: Cascade)
+  wikiId      String?
+}
+
+model Question {
+  id              String        @id @default(cuid())
+  type            QuestionType
+  content         String        @db.Text
+  image           String?
+  isRequired      Boolean       @default(false)
+  points          Int          @default(1)
+  multipleAnswers Boolean       @default(false)
+  order           Int
+
+  // Relations
+  quiz            Quiz         @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  quizId          String
+  answers         Answer[]
+  attempts        QuestionAttempt[]
+}
+
+model Answer {
+  id          String    @id @default(cuid())
+  content     String
+  isCorrect   Boolean   @default(false)
+  order       Int
+
+  // Relations
+  question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId  String
+}
+
+model CourseEnrollment {
+  id        String    @id @default(cuid())
+  enrolledAt DateTime @default(now())
+  
+  // Relations
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  course    Course    @relation(fields: [courseId], references: [id])
+  courseId  String
+
+  @@unique([userId, courseId])
+}
+
+model QuizAttempt {
+  id          String    @id @default(cuid())
+  startedAt   DateTime  @default(now())
+  submittedAt DateTime?
+  score       Float?
+
+  // Relations
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  quiz        Quiz      @relation(fields: [quizId], references: [id])
+  quizId      String
+  answers     QuestionAttempt[]
+}
+
+model QuestionAttempt {
+  id          String    @id @default(cuid())
+  answer      String    @db.Text
+
+  // Relations
+  attempt     QuizAttempt @relation(fields: [attemptId], references: [id])
+  attemptId   String
+  question    Question    @relation(fields: [questionId], references: [id])
+  questionId  String
 }

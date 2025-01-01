@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/Checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,15 +27,13 @@ interface UserTableProps {
 
 export function UserTable({ users, onEdit, onDelete }: UserTableProps) {
   const t = useTranslations("admin.users.table");
-  
+
   return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-12">
-              <Checkbox />
-            </TableHead>
+            <TableHead className="w-12">#</TableHead>
             <TableHead>{t("userName")}</TableHead>
             <TableHead>{t("role")}</TableHead>
             <TableHead>{t("createdAt")}</TableHead>
@@ -44,10 +41,10 @@ export function UserTable({ users, onEdit, onDelete }: UserTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((user) => (
+          {users.map((user, index) => (
             <TableRow key={user.id}>
-              <TableCell>
-                <Checkbox />
+              <TableCell className="text-muted-foreground">
+                {index + 1}
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-3">

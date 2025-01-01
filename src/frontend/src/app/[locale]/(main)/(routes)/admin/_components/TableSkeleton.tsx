@@ -4,13 +4,10 @@ export function TableSkeleton() {
       <thead className="[&_tr]:border-b">
         <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
           <th className="text-muted-foreground h-10 w-12 px-2 text-left align-middle font-medium">
-            <div className="h-4 w-4 animate-pulse rounded-sm bg-muted"></div>
+            <div className="h-4 w-8 animate-pulse rounded-full bg-muted"></div>
           </th>
           <th className="text-muted-foreground h-10 px-2 text-left align-middle font-medium">
             <div className="h-4 w-24 animate-pulse rounded-full bg-muted"></div>
-          </th>
-          <th className="text-muted-foreground h-10 px-2 text-left align-middle font-medium">
-            <div className="h-4 w-16 animate-pulse rounded-full bg-muted"></div>
           </th>
           <th className="text-muted-foreground h-10 px-2 text-left align-middle font-medium">
             <div className="h-4 w-24 animate-pulse rounded-full bg-muted"></div>
@@ -30,7 +27,7 @@ export function TableSkeleton() {
             className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
           >
             <td className="p-2 align-middle">
-              <div className="h-4 w-4 animate-pulse rounded-sm bg-muted"></div>
+              <div className="h-4 w-8 animate-pulse rounded-full bg-muted"></div>
             </td>
             <td className="p-2 align-middle">
               <div className="flex items-center gap-3">
@@ -42,9 +39,6 @@ export function TableSkeleton() {
             </td>
             <td className="p-2 align-middle">
               <div className="h-4 w-16 animate-pulse rounded-full bg-muted"></div>
-            </td>
-            <td className="p-2 align-middle">
-              <div className="h-4 w-24 animate-pulse rounded-full bg-muted"></div>
             </td>
             <td className="p-2 align-middle">
               <div className="h-4 w-24 animate-pulse rounded-full bg-muted"></div>
