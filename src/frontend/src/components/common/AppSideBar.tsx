@@ -1,6 +1,5 @@
 "use client";
 
-import { Home, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import {
@@ -24,47 +23,9 @@ import useIsMobile from "@/components/hooks/use-mobile";
 import { useAuth } from "@/contexts/AuthProvider";
 
 import { useTranslations } from "next-intl";
-import { NavUser } from "@/components/common/NavUser";
+import { UserMenu } from "@/components/common/UserMenu";
 import { User } from "@/types/user";
-
-const sidebarConfig = {
-  GUEST: {
-    navMain: [
-      {
-        title: "home",
-        url: "/",
-        icon: Home,
-      },
-    ],
-  },
-  STUDENT: {
-    navMain: [
-      {
-        title: "home",
-        url: "/student",
-        icon: Home,
-      },
-    ],
-  },
-  TEACHER: {
-    navMain: [
-      {
-        title: "home",
-        url: "/teacher",
-        icon: Home,
-      },
-    ],
-  },
-  ADMIN: {
-    navMain: [
-      {
-        title: "users",
-        url: "/admin/users",
-        icon: Users,
-      },
-    ],
-  },
-};
+import { navigations } from "@/config/sidebarConfig";
 
 export function AppSidebar() {
   const isMobile = useIsMobile();
@@ -73,7 +34,7 @@ export function AppSidebar() {
   const pathname = usePathname();
 
   const role = user?.role || "GUEST";
-  const sidebarItems = sidebarConfig[role as keyof typeof sidebarConfig];
+  const sidebarItems = navigations[role as keyof typeof navigations];
 
   return (
     <Sidebar collapsible="icon">
@@ -88,7 +49,7 @@ export function AppSidebar() {
           <SidebarGroupLabel>{t("navigation")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {sidebarItems.navMain.map((item) => (
+              {sidebarItems.navigations.map((item) => (
                 <SidebarMenuItem
                   key={item.title}
                   className="flex items-center justify-center"
@@ -110,7 +71,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user as User | undefined} logout={logout} />
+        <UserMenu user={user as User | undefined} logout={logout} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

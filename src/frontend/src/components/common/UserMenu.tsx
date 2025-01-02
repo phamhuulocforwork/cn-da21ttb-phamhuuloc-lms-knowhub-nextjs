@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  LogOut,
-  SunMoon,
-  LogIn,
-  UserPlus,
-} from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import {
@@ -30,27 +22,10 @@ import {
 import { useTheme } from "next-themes";
 import { User } from "@/types/user";
 import { useRouter } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { menuItems } from "@/config/menuConfig";
+import { menuHandlers } from "@/config/menuHandlers";
 
-const menuConfig = {
-  GUEST: {
-    items: [
-      {
-        icon: LogIn,
-        title: "login",
-        action: (router: AppRouterInstance) => router.push("/login"),
-      },
-      {
-        icon: UserPlus,
-        title: "register",
-        action: (router: AppRouterInstance) => router.push("/register"),
-      },
-    ],
-  },
-};
-
-export function NavUser({
+export function UserMenu({
   user,
   logout,
 }: {
@@ -60,10 +35,19 @@ export function NavUser({
   const { isMobile } = useSidebar();
   const { theme, setTheme } = useTheme();
   const router = useRouter();
-
-  const t = useTranslations("sidebar");
   const role = user?.role || "GUEST";
-  const menuItems = menuConfig[role as keyof typeof menuConfig];
+  const items = menuItems[role];
+
+  const handleMenuAction = (actionId: string) => {
+    const handler = menuHandlers[actionId];
+    if (handler) {
+      handler(router, { theme: theme as string, setTheme }, { logout });
+    }
+  };
+
+  // Tách items theo type
+  const navigationItems = items.filter((item) => item.type === "navigation");
+  const actionItems = items.filter((item) => item.type === "action");
 
   return (
     <SidebarMenu>
@@ -106,7 +90,7 @@ export function NavUser({
             align="end"
             sideOffset={4}
           >
-            {user ? (
+            {user && (
               <>
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
@@ -128,58 +112,38 @@ export function NavUser({
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  {menuItems.items.map((item) => (
-                    <DropdownMenuItem
-                      key={item.title}
-                      onClick={() => item.action?.(router)}
-                    >
-                      <item.icon />
-                      {t(`menu.${item.title}`)}
-                    </DropdownMenuItem>
-                  ))}
-
-                  <DropdownMenuItem
-                    onClick={() =>
-                      setTheme(theme === "light" ? "dark" : "light")
-                    }
-                  >
-                    <SunMoon />
-                    {t("tool.theme")}
-                    {theme === "light" ? t("tool.light") : t("tool.dark")}
-                  </DropdownMenuItem>
-
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logout}>
-                    <LogOut />
-                    {t("menu.logout")}
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
               </>
-            ) : (
-              <DropdownMenuGroup>
-                {menuItems.items.map((item) => (
-                  <DropdownMenuItem
-                    key={item.title}
-                    className="cursor-pointer"
-                    onClick={() => item.action?.(router)}
-                  >
-                    <item.icon />
-                    {t(`menu.${item.title}`)}
-                  </DropdownMenuItem>
-                ))}
-
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                >
-                  <SunMoon />
-                  {t("tool.theme")}:{" "}
-                  {theme === "light" ? t("tool.dark") : t("tool.light")}
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
             )}
+            <DropdownMenuGroup>
+              {/* Navigation Items */}
+              {navigationItems.map((item) => (
+                <DropdownMenuItem
+                  key={item.id}
+                  onClick={() => handleMenuAction(item.id)}
+                >
+                  <item.icon className="h-4 w-4" />
+                  {item.label}
+                </DropdownMenuItem>
+              ))}
+
+              {/* Separator */}
+              {navigationItems.length > 0 && actionItems.length > 0 && (
+                <DropdownMenuSeparator />
+              )}
+
+              {/* Action Items */}
+              {actionItems.map((item) => (
+                <DropdownMenuItem
+                  key={item.id}
+                  onClick={() => handleMenuAction(item.id)}
+                >
+                  <item.icon className="h-4 w-4" />
+                  {item.id === "theme"
+                    ? `Theme: ${theme === "light" ? "dark" : "light"}`
+                    : item.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
