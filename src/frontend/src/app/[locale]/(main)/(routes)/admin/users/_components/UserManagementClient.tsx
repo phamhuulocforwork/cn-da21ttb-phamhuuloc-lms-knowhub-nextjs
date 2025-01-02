@@ -1,19 +1,20 @@
 "use client";
 
-import { User } from "@/types/user";
-import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Plus, Download } from "lucide-react";
-import { UserTable } from "./UserTable";
-import { PaginationControls } from "./PaginationControls";
-import { EditUserDialog } from "./EditUserDialog";
-import { userService } from "@/services/userService";
-import { downloadExcel } from "@/lib/excel";
-import { CreateUserDialog } from "./CreateUserDialog";
+import { TableSkeleton } from "@/components/common/TableSkeleton";
 import { useDebounce } from "@/components/hooks/use-debounce";
+import { Input } from "@/components/ui/Input";
+import { downloadExcel } from "@/lib/excel";
+import { userService } from "@/services/userService";
+import { User } from "@/types/user";
+
+import { CreateUserDialog } from "./CreateUserDialog";
+import { EditUserDialog } from "./EditUserDialog";
+import { PaginationControls } from "./PaginationControls";
+import { UserTable } from "./UserTable";
+import { Download, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { TableSkeleton } from "../../_components/TableSkeleton";
+import { useCallback, useEffect, useState } from "react";
 
 export default function UserManagement() {
   const t = useTranslations("admin.users");
