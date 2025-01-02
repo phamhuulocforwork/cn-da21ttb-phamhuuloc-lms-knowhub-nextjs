@@ -5,74 +5,71 @@ import { TableSkeleton } from "@/components/common/TableSkeleton";
 import { useDebounce } from "@/components/hooks/use-debounce";
 import { Input } from "@/components/ui/Input";
 import { downloadExcel } from "@/lib/excel";
-import { userService } from "@/services/userService";
-import { User } from "@/types/user";
-
-import { CreateUserDialog } from "./CreateUserDialog";
-import { EditUserDialog } from "./EditUserDialog";
-import { PaginationControls } from "../../../../../../../components/common/PaginationControls";
-import { UserTable } from "./UserTable";
-import { Download, Plus } from "lucide-react";
+import { categoryService } from "@/services/categoryService";
+import { Category } from "@/types/category";
+import { Plus, Download } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import { PaginationControls } from "@/components/common/PaginationControls";
+import { CategoryTable } from "./CategoryTable";
+import { EditCategoryDialog } from "./EditCategoryDialog";
+import { CreateCategoryDialog } from "./CreateCategoryDialog";
 
-export default function UserManagement() {
-  const t = useTranslations("admin.users");
-  const [users, setUsers] = useState<User[]>([]);
+export default function CategoryManagement() {
+  const t = useTranslations("admin.category");
+  const [categories, setCategories] = useState<Category[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
-  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalCategories, setTotalCategories] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 
-  const fetchUsers = useCallback(async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       setLoading(true);
-      const { users, meta } = await userService.getUsers({
+      const { categories, meta } = await categoryService.getCategories({
         page: currentPage,
         limit: itemsPerPage,
         search: debouncedSearch,
       });
-      setUsers(users);
+      setCategories(categories);
       setTotalPages(meta.totalPages);
-      setTotalUsers(meta.total);
+      setTotalCategories(meta.total);
     } catch (error) {
-      console.error("Failed to fetch users:", error);
+      console.error("Failed to fetch categories:", error);
     } finally {
       setLoading(false);
     }
   }, [currentPage, itemsPerPage, debouncedSearch]);
 
   useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+    fetchCategories();
+  }, [fetchCategories]);
 
-  const handleDeleteUser = async (userId: string) => {
+  const handleDeleteCategory = async (categoryId: string) => {
     try {
       setLoading(true);
-      await userService.deleteUser(userId);
-      await fetchUsers();
+      await categoryService.deleteCategory(categoryId);
+      await fetchCategories();
     } catch (error) {
-      console.error("Failed to delete user:", error);
+      console.error("Failed to delete category:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleExportUsers = () => {
+  const handleExportCategories = () => {
     downloadExcel(
-      users.map((user) => ({
-        Name: user.name,
-        Email: user.email,
-        Role: user.role,
-        "Created At": user.createdAt,
+      categories.map((category) => ({
+        Name: category.name,
+        Description: category.description || "",
       })),
-      "Users",
+      "Categories",
     );
   };
 
@@ -86,8 +83,8 @@ export default function UserManagement() {
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-base font-semibold">
-            {t("allUsers")}{" "}
-            <span className="text-muted-foreground">{totalUsers}</span>
+            {t("allCategories")}{" "}
+            <span className="text-muted-foreground">{totalCategories}</span>
           </h2>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <div className="w-full sm:w-auto">
@@ -100,7 +97,7 @@ export default function UserManagement() {
             </div>
             <div className="flex gap-2">
               <Button
-                onClick={handleExportUsers}
+                onClick={handleExportCategories}
                 variant="outline"
                 className="gap-2"
               >
@@ -112,7 +109,7 @@ export default function UserManagement() {
                 className="gap-2"
               >
                 <Plus className="h-4 w-4" />
-                <span className="hidden sm:inline">{t("addUser")}</span>
+                <span className="hidden sm:inline">{t("addCategory")}</span>
               </Button>
             </div>
           </div>
@@ -120,11 +117,11 @@ export default function UserManagement() {
 
         {loading ? (
           <TableSkeleton />
-        ) : users && users.length > 0 ? (
-          <UserTable
-            users={users}
-            onEdit={setEditingUser}
-            onDelete={handleDeleteUser}
+        ) : categories && categories.length > 0 ? (
+          <CategoryTable
+            categories={categories}
+            onEdit={setEditingCategory}
+            onDelete={handleDeleteCategory}
           />
         ) : (
           <div className="py-4 text-center">{t("noData")}</div>
@@ -138,20 +135,20 @@ export default function UserManagement() {
           onItemsPerPageChange={setItemsPerPage}
         />
 
-        {editingUser && (
-          <EditUserDialog
-            user={editingUser}
-            open={!!editingUser}
-            onClose={() => setEditingUser(null)}
-            onSuccess={fetchUsers}
+        {editingCategory && (
+          <EditCategoryDialog
+            category={editingCategory}
+            open={!!editingCategory}
+            onClose={() => setEditingCategory(null)}
+            onSuccess={fetchCategories}
           />
         )}
 
         {showCreateDialog && (
-          <CreateUserDialog
+          <CreateCategoryDialog
             open={showCreateDialog}
             onClose={() => setShowCreateDialog(false)}
-            onSuccess={fetchUsers}
+            onSuccess={fetchCategories}
           />
         )}
       </div>

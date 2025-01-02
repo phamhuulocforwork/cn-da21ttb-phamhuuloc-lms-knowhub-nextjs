@@ -3,6 +3,7 @@
     "navigation": {
       "navigation": "Navigation",
       "dashboard": "Dashboard",
+      "category": "Category",
       "home": "Home",
       "users": "Users"
     },
@@ -112,8 +113,61 @@
       },
       "noData": "No users found"
     },
+    "category": {
+      "noData": "No categories found",
+      "title": "Category management",
+      "description": "Manage your categories here.",
+      "allCategories": "All categories",
+      "search": "Search",
+      "export": "Export",
+      "addCategory": "Add category",
+      "createCategory": {
+        "title": "Create category",
+        "name": "Name",
+        "namePlaceholder": "Category name",
+        "description": "Description",
+        "descriptionPlaceholder": "Category description",
+        "submit": "Create category",
+        "submitting": "Creating...",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "editCategory": {
+        "title": "Edit category",
+        "name": "Name",
+        "description": "Description",
+        "save": "Save changes",
+        "saving": "Saving...",
+        "cancel": "Cancel"
+      },
+      "table": {
+        "name": "Name",
+        "description": "Description",
+        "actions": {
+          "edit": "Edit category",
+          "delete": "Delete category"
+        }
+      }
+    },
     "pagination": {
       "itemsPerPage": "Items/page"
+    }
+  },
+  "teacher": {
+    "projects": {
+      "create": {
+        "create": "Create",
+        "title": "Create project",
+        "description": "Create a new project",
+        "submit": "Create project",
+        "submitting": "Creating...",
+        "category": "Category",
+        "categories": "Categories",
+        "selectCategories": "Select categories",
+        "thumbnail": "Thumbnail",
+        "uploadThumbnail": "Upload thumbnail",
+        "uploadThumbnailPlaceholder": "Upload a thumbnail for your project"
+      }
     }
   }
 }

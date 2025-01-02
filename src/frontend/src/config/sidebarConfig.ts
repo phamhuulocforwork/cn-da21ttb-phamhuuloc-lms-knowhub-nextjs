@@ -1,4 +1,4 @@
-import { Home, Users } from "lucide-react";
+import { ChartColumnStacked, Home, Users } from "lucide-react";
 
 export const navigations = {
   GUEST: {
@@ -34,6 +34,11 @@ export const navigations = {
         title: "users",
         url: "/admin/users",
         icon: Users,
+      },
+      {
+        title: "category",
+        url: "/admin/category",
+        icon: ChartColumnStacked,
       },
     ],
   },
