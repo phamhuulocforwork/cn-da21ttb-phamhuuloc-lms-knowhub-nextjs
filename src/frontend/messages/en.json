@@ -1,9 +1,26 @@
 {
-  "navigation": {
-    "navigation": "Navigation",
-    "dashboard": "Dashboard",
-    "home": "Home",
-    "users": "Users"
+  "sidebar": {
+    "navigation": {
+      "navigation": "Navigation",
+      "dashboard": "Dashboard",
+      "home": "Home",
+      "users": "Users"
+    },
+    "menu": {
+      "login": "Login",
+      "register": "Register",
+      "profile": "Profile",
+      "notifications": "Notifications",
+      "logout": "Logout"
+    },
+    "tool": {
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "language": "Language",
+      "english": "English",
+      "vietnamese": "Vietnamese"
+    }
   },
   "auth": {
     "login": {

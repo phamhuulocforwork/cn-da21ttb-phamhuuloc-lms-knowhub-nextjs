@@ -69,7 +69,7 @@ const sidebarConfig = {
 export function AppSidebar() {
   const isMobile = useIsMobile();
   const { user, logout } = useAuth();
-  const t = useTranslations("navigation");
+  const t = useTranslations("sidebar.navigation");
   const pathname = usePathname();
 
   const role = user?.role || "GUEST";

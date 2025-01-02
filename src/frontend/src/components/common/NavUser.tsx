@@ -30,6 +30,25 @@ import {
 import { useTheme } from "next-themes";
 import { User } from "@/types/user";
 import { useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
+const menuConfig = {
+  GUEST: {
+    items: [
+      {
+        icon: LogIn,
+        title: "login",
+        action: (router: AppRouterInstance) => router.push("/login"),
+      },
+      {
+        icon: UserPlus,
+        title: "register",
+        action: (router: AppRouterInstance) => router.push("/register"),
+      },
+    ],
+  },
+};
 
 export function NavUser({
   user,
@@ -41,6 +60,10 @@ export function NavUser({
   const { isMobile } = useSidebar();
   const { theme, setTheme } = useTheme();
   const router = useRouter();
+
+  const t = useTranslations("sidebar");
+  const role = user?.role || "GUEST";
+  const menuItems = menuConfig[role as keyof typeof menuConfig];
 
   return (
     <SidebarMenu>
@@ -67,9 +90,7 @@ export function NavUser({
                     src="assets/images/avatars/guest.png"
                     alt="user-image"
                   />
-                  <AvatarFallback className="rounded-lg">
-                    G
-                  </AvatarFallback>
+                  <AvatarFallback className="rounded-lg">G</AvatarFallback>
                 </Avatar>
               )}
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -108,52 +129,54 @@ export function NavUser({
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <BadgeCheck />
-                    Profile
-                  </DropdownMenuItem>
+                  {menuItems.items.map((item) => (
+                    <DropdownMenuItem
+                      key={item.title}
+                      onClick={() => item.action?.(router)}
+                    >
+                      <item.icon />
+                      {t(`menu.${item.title}`)}
+                    </DropdownMenuItem>
+                  ))}
+
                   <DropdownMenuItem
                     onClick={() =>
                       setTheme(theme === "light" ? "dark" : "light")
                     }
                   >
                     <SunMoon />
-                    {theme === "light" ? "Theme: dark" : "Theme: light"}
+                    {t("tool.theme")}
+                    {theme === "light" ? t("tool.light") : t("tool.dark")}
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Bell />
-                    Notifications
-                  </DropdownMenuItem>
+
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={logout}>
                     <LogOut />
-                    Log out
+                    {t("menu.logout")}
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </>
             ) : (
               <DropdownMenuGroup>
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={() => router.push("/login")}
-                >
-                  <LogIn />
-                  Log In
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={() => router.push("/register")}
-                >
-                  <UserPlus />
-                  Register
-                </DropdownMenuItem>
+                {menuItems.items.map((item) => (
+                  <DropdownMenuItem
+                    key={item.title}
+                    className="cursor-pointer"
+                    onClick={() => item.action?.(router)}
+                  >
+                    <item.icon />
+                    {t(`menu.${item.title}`)}
+                  </DropdownMenuItem>
+                ))}
+
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   className="cursor-pointer"
                   onClick={() => setTheme(theme === "light" ? "dark" : "light")}
                 >
                   <SunMoon />
-                  {theme === "light" ? "Theme: dark" : "Theme: light"}
+                  {t("tool.theme")}:{" "}
+                  {theme === "light" ? t("tool.dark") : t("tool.light")}
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             )}
