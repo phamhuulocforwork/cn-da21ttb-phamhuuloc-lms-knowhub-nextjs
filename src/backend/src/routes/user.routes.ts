@@ -5,6 +5,7 @@ const router = Router();
 
 // Protected routes
 router.get("/me", authMiddleware as any, UserController.getCurrentUser as any);
+router.put("/me", authMiddleware as any, UserController.updateUser as any);
 
 // Admin routes
 router.use(authMiddleware as any);

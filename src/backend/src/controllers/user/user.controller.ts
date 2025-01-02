@@ -5,10 +5,27 @@ import { generateToken } from "../../utils/jwt.utils";
 export default new (class UserController {
   async updateUser(req: Request, res: Response): Promise<Response> {
     try {
-      const { id, name, email, image, role } = req.body;
+      const userId = req.user?.id;
+      
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const { name, email, image } = req.body;
+      
+      if (email) {
+        const existingUser = await db.user.findUnique({
+          where: { email, NOT: { id: userId } },
+        });
+        
+        if (existingUser) {
+          return res.status(400).json({ message: "Email already exists" });
+        }
+      }
+
       const user = await db.user.update({
-        where: { id },
-        data: { name, email, image, role },
+        where: { id: userId },
+        data: { name, email, image },
       });
 
       const token = generateToken(user.id);
@@ -31,8 +48,9 @@ export default new (class UserController {
         token,
       });
     } catch (error) {
+      console.error("Update user error:", error);
       return res.status(500).json({
-        error: "Internal server error",
+        message: "Internal server error",
       });
     }
   }
@@ -62,6 +80,16 @@ export default new (class UserController {
 
       const [users, total] = await Promise.all([
         db.user.findMany({
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            emailVerified: true,
+            image: true,
+            role: true,
+            createdAt: true,
+            updatedAt: true
+          },
           where: {
             OR: [{ name: { contains: search } }, { email: { contains: search } }],
           },
