@@ -15,6 +15,7 @@ import { UserTable } from "./UserTable";
 import { Download, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import { useMinimumLoading } from "@/components/hooks/use-minimum-loading";
 
 export default function UserManagement() {
   const t = useTranslations("admin.users");
@@ -26,27 +27,26 @@ export default function UserManagement() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const { loading, withMinimumLoading } = useMinimumLoading(500);
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 
   const fetchUsers = useCallback(async () => {
     try {
-      setLoading(true);
-      const { users, meta } = await userService.getUsers({
-        page: currentPage,
-        limit: itemsPerPage,
-        search: debouncedSearch,
-      });
+      const { users, meta } = await withMinimumLoading(
+        userService.getUsers({
+          page: currentPage,
+          limit: itemsPerPage,
+          search: debouncedSearch,
+        }),
+      );
       setUsers(users);
       setTotalPages(meta.totalPages);
       setTotalUsers(meta.total);
     } catch (error) {
       console.error("Failed to fetch users:", error);
-    } finally {
-      setLoading(false);
     }
-  }, [currentPage, itemsPerPage, debouncedSearch]);
+  }, [currentPage, itemsPerPage, debouncedSearch, withMinimumLoading]);
 
   useEffect(() => {
     fetchUsers();
@@ -54,13 +54,11 @@ export default function UserManagement() {
 
   const handleDeleteUser = async (userId: string) => {
     try {
-      setLoading(true);
-      await userService.deleteUser(userId);
-      await fetchUsers();
+      await withMinimumLoading(
+        Promise.all([userService.deleteUser(userId), fetchUsers()]),
+      );
     } catch (error) {
       console.error("Failed to delete user:", error);
-    } finally {
-      setLoading(false);
     }
   };
 

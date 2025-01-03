@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import React from "react";
 
 import {
   Sidebar,
@@ -26,15 +27,30 @@ import { useTranslations } from "next-intl";
 import { UserMenu } from "@/components/common/UserMenu";
 import { User } from "@/types/user";
 import { navigations } from "@/config/sidebarConfig";
+import { NavigationSkeleton } from "./NavigationSkeleton";
+import { UserMenuSkeleton } from "./UserMenuSkeleton";
 
 export function AppSidebar() {
   const isMobile = useIsMobile();
-  const { user, logout } = useAuth();
+  const { user, status, logout } = useAuth();
   const t = useTranslations("sidebar.navigation");
   const pathname = usePathname();
 
+  // Thêm state để track việc load auth lần đầu
+  const [initialLoadComplete, setInitialLoadComplete] = React.useState(false);
+
   const role = user?.role || "GUEST";
   const sidebarItems = navigations[role as keyof typeof navigations];
+
+  // Chỉ show loading khi chưa load lần đầu và đang trong trạng thái loading
+  const isLoading = !initialLoadComplete && status === "loading";
+
+  // Effect để đánh dấu đã load xong lần đầu
+  React.useEffect(() => {
+    if (status !== "loading") {
+      setInitialLoadComplete(true);
+    }
+  }, [status]);
 
   return (
     <Sidebar collapsible="icon">
@@ -48,30 +64,38 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>{t("navigation")}</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {sidebarItems.navigations.map((item) => (
-                <SidebarMenuItem
-                  key={item.title}
-                  className="flex items-center justify-center"
-                >
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname.endsWith(item.url)}
+            {isLoading ? (
+              <NavigationSkeleton />
+            ) : (
+              <SidebarMenu>
+                {sidebarItems.navigations.map((item) => (
+                  <SidebarMenuItem
+                    key={item.title}
+                    className="flex items-center justify-center"
                   >
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{t(item.title)}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={pathname.endsWith(item.url)}
+                    >
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{t(item.title)}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            )}
           </SidebarGroupContent>
           <Separator className="my-2" />
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <UserMenu user={user as User | undefined} logout={logout} />
+        {isLoading ? (
+          <UserMenuSkeleton />
+        ) : (
+          <UserMenu user={user as User | undefined} logout={logout} />
+        )}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

@@ -14,6 +14,7 @@ import { PaginationControls } from "@/components/common/PaginationControls";
 import { CategoryTable } from "./CategoryTable";
 import { EditCategoryDialog } from "./EditCategoryDialog";
 import { CreateCategoryDialog } from "./CreateCategoryDialog";
+import { useMinimumLoading } from "@/components/hooks/use-minimum-loading";
 
 export default function CategoryManagement() {
   const t = useTranslations("admin.category");
@@ -25,27 +26,26 @@ export default function CategoryManagement() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
   const [totalCategories, setTotalCategories] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const { loading, withMinimumLoading } = useMinimumLoading(500);
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 
   const fetchCategories = useCallback(async () => {
     try {
-      setLoading(true);
-      const { categories, meta } = await categoryService.getCategories({
-        page: currentPage,
-        limit: itemsPerPage,
-        search: debouncedSearch,
-      });
+      const { categories, meta } = await withMinimumLoading(
+        categoryService.getCategories({
+          page: currentPage,
+          limit: itemsPerPage,
+          search: debouncedSearch,
+        }),
+      );
       setCategories(categories);
       setTotalPages(meta.totalPages);
       setTotalCategories(meta.total);
     } catch (error) {
       console.error("Failed to fetch categories:", error);
-    } finally {
-      setLoading(false);
     }
-  }, [currentPage, itemsPerPage, debouncedSearch]);
+  }, [currentPage, itemsPerPage, debouncedSearch, withMinimumLoading]);
 
   useEffect(() => {
     fetchCategories();
@@ -53,13 +53,14 @@ export default function CategoryManagement() {
 
   const handleDeleteCategory = async (categoryId: string) => {
     try {
-      setLoading(true);
-      await categoryService.deleteCategory(categoryId);
-      await fetchCategories();
+      await withMinimumLoading(
+        Promise.all([
+          categoryService.deleteCategory(categoryId),
+          fetchCategories(),
+        ]),
+      );
     } catch (error) {
       console.error("Failed to delete category:", error);
-    } finally {
-      setLoading(false);
     }
   };
 

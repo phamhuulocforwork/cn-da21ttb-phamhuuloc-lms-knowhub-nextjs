@@ -10,6 +10,7 @@ import {
 } from "react";
 import { userService } from "@/services/userService";
 import { User } from "@/types/user";
+import { useMinimumLoading } from "@/components/hooks/use-minimum-loading";
 
 interface AuthContextType {
   user: User | null;
@@ -29,13 +30,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 }
 
 function AuthContextContent({ children }: { children: ReactNode }) {
-  const { data: session, status } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { loading, withMinimumLoading } = useMinimumLoading(500);
 
   const fetchUser = async () => {
     try {
-      if (status === "authenticated" && session?.user?.accessToken) {
+      if (sessionStatus === "authenticated" && session?.user?.accessToken) {
         const userData = await userService.getCurrentUser();
         setUser(userData);
       } else {
@@ -44,15 +45,14 @@ function AuthContextContent({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error("Error fetching user:", error);
       setUser(null);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUser();
+    if (sessionStatus === "loading") return;
+    withMinimumLoading(fetchUser());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, session]);
+  }, [sessionStatus, session]);
 
   const logout = async () => {
     try {
@@ -64,16 +64,17 @@ function AuthContextContent({ children }: { children: ReactNode }) {
   };
 
   const refreshUser = async () => {
-    await fetchUser();
+    await withMinimumLoading(fetchUser());
   };
 
-  const contextStatus = loading ? "loading" : status;
+  const status =
+    loading || sessionStatus === "loading" ? "loading" : sessionStatus;
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        status: contextStatus,
+        status,
         logout,
         refreshUser,
       }}

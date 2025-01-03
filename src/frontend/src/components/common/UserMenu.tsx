@@ -2,6 +2,8 @@
 
 import { ChevronsUpDown } from "lucide-react";
 
+import * as React from "react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import {
   DropdownMenu,
@@ -24,6 +26,8 @@ import { User } from "@/types/user";
 import { useRouter } from "@/i18n/routing";
 import { menuItems } from "@/config/menuConfig";
 import { menuHandlers } from "@/config/menuHandlers";
+import { UserMenuSkeleton } from "./UserMenuSkeleton";
+import { useAuth } from "@/contexts/AuthProvider";
 
 export function UserMenu({
   user,
@@ -35,8 +39,26 @@ export function UserMenu({
   const { isMobile } = useSidebar();
   const { theme, setTheme } = useTheme();
   const router = useRouter();
+  const { status } = useAuth();
   const role = user?.role || "GUEST";
   const items = menuItems[role];
+
+  // Thêm state để track việc load auth lần đầu
+  const [initialLoadComplete, setInitialLoadComplete] = React.useState(false);
+
+  // Chỉ show loading khi chưa load lần đầu và đang trong trạng thái loading
+  const isLoading = !initialLoadComplete && status === "loading";
+
+  // Effect để đánh dấu đã load xong lần đầu
+  React.useEffect(() => {
+    if (status !== "loading") {
+      setInitialLoadComplete(true);
+    }
+  }, [status]);
+
+  if (isLoading) {
+    return <UserMenuSkeleton />;
+  }
 
   const handleMenuAction = (actionId: string) => {
     const handler = menuHandlers[actionId];

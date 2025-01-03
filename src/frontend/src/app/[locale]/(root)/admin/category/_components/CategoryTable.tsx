@@ -32,7 +32,7 @@ export function CategoryTable({
 
   return (
     <Table>
-      <TableHeader>
+      <TableHeader className="bg-primary text-primary-foreground">
         <TableRow>
           <TableHead className="w-12">#</TableHead>
           <TableHead>{t("name")}</TableHead>
