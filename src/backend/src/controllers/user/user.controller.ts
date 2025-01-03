@@ -6,18 +6,18 @@ export default new (class UserController {
   async updateUser(req: Request, res: Response): Promise<Response> {
     try {
       const userId = req.user?.id;
-      
+
       if (!userId) {
         return res.status(401).json({ message: "Unauthorized" });
       }
 
       const { name, email, image } = req.body;
-      
+
       if (email) {
         const existingUser = await db.user.findUnique({
           where: { email, NOT: { id: userId } },
         });
-        
+
         if (existingUser) {
           return res.status(400).json({ message: "Email already exists" });
         }
@@ -88,7 +88,7 @@ export default new (class UserController {
             image: true,
             role: true,
             createdAt: true,
-            updatedAt: true
+            updatedAt: true,
           },
           where: {
             OR: [{ name: { contains: search } }, { email: { contains: search } }],
@@ -129,7 +129,7 @@ export default new (class UserController {
     return res.status(200).json(user);
   }
 
-  async getCurrentUser(req: Request, res: Response): Promise<Response> {
+  async getProfile(req: Request, res: Response): Promise<Response> {
     try {
       if (!req.user?.id) {
         return res.status(401).json({ message: "Unauthorized" });
@@ -149,9 +149,102 @@ export default new (class UserController {
         email: user.email,
         image: user.image,
         role: user.role,
+        emailVerified: user.emailVerified,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
       });
     } catch (error) {
       console.error("Get current user error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async getProfileStats(req: Request, res: Response): Promise<Response> {
+    try {
+      if (!req.user?.id) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const [projectsCount, coursesEnrolled, quizAttempts, averageScore] = await Promise.all([
+        db.project.count({ where: { authorId: req.user.id } }),
+        db.courseEnrollment.count({ where: { userId: req.user.id } }),
+        db.quizAttempt.count({ where: { userId: req.user.id } }),
+        db.quizAttempt.aggregate({
+          where: { userId: req.user.id },
+          _avg: { score: true },
+        }),
+      ]);
+
+      return res.status(200).json({
+        projectsCount,
+        coursesEnrolled,
+        quizzesAttempted: quizAttempts,
+        averageQuizScore: averageScore._avg.score || 0,
+      });
+    } catch (error) {
+      console.error("Get profile stats error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async getProfileActivity(req: Request, res: Response): Promise<Response> {
+    try {
+      if (!req.user?.id) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const [enrolledCourses, quizAttempts, createdContent] = await Promise.all([
+        db.courseEnrollment.findMany({
+          where: { userId: req.user.id },
+          take: 5,
+          orderBy: { enrolledAt: "desc" },
+          include: {
+            course: {
+              select: {
+                id: true,
+                title: true,
+                thumbnail: true,
+                status: true,
+              },
+            },
+          },
+        }),
+        db.quizAttempt.findMany({
+          where: { userId: req.user.id },
+          take: 5,
+          orderBy: { startedAt: "desc" },
+          include: {
+            quiz: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        }),
+        db.project.findMany({
+          where: { authorId: req.user.id },
+          take: 5,
+          orderBy: { createdAt: "desc" },
+          select: {
+            id: true,
+            title: true,
+            status: true,
+            createdAt: true,
+          },
+        }),
+      ]);
+      return res.status(200).json({
+        enrolledCourses: enrolledCourses.map((e) => e.course),
+        quizAttempts: quizAttempts.map((a) => ({
+          id: a.id,
+          title: a.quiz.title,
+          score: a.score,
+          submittedAt: a.submittedAt,
+        })),
+        createdContent,
+      });
+    } catch (error) {
+      console.error("Get profile activity error:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }

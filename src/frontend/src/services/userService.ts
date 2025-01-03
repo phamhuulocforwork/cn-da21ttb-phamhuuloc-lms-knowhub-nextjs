@@ -26,8 +26,18 @@ export const userService = {
     return response.data;
   },
 
-  async getCurrentUser() {
+  async getProfile() {
     const response = await api.get("/api/user/me");
+    return response.data;
+  },
+
+  async getProfileStats() {
+    const response = await api.get("/api/user/me/stats");
+    return response.data;
+  },
+
+  async getProfileActivity() {
+    const response = await api.get("/api/user/me/activity");
     return response.data;
   },
 

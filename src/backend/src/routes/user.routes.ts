@@ -4,8 +4,10 @@ import { adminMiddleware, authMiddleware } from "../middleware/auth.middleware";
 const router = Router();
 
 // Protected routes
-router.get("/me", authMiddleware as any, UserController.getCurrentUser as any);
+router.get("/me", authMiddleware as any, UserController.getProfile as any);
 router.put("/me", authMiddleware as any, UserController.updateUser as any);
+router.get("/me/stats", authMiddleware as any, UserController.getProfileStats as any);
+router.get("/me/activity", authMiddleware as any, UserController.getProfileActivity as any);
 
 // Admin routes
 router.use(authMiddleware as any);

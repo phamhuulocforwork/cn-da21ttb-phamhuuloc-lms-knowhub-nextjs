@@ -37,7 +37,7 @@ function AuthContextContent({ children }: { children: ReactNode }) {
   const fetchUser = async () => {
     try {
       if (sessionStatus === "authenticated" && session?.user?.accessToken) {
-        const userData = await userService.getCurrentUser();
+        const userData = await userService.getProfile();
         setUser(userData);
       } else {
         setUser(null);
