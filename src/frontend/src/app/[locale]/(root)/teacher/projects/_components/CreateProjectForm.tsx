@@ -14,9 +14,10 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { MultiSelect } from "@/components/ui/MultiSelect";
+import { categoryService } from "@/services/categoryService";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -39,16 +40,20 @@ interface Category {
 export function CreateProjectForm() {
   const t = useTranslations("teacher.projects.create");
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([
-    {
-      id: "1",
-      name: "Category 1",
-    },
-    {
-      id: "2",
-      name: "Category 2",
-    },
-  ]);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  const fetchCategories = useCallback(async () => {
+    const { categories } = await categoryService.getCategories({
+      page: 1,
+      limit: 100,
+      search: "",
+    });
+    setCategories(categories);
+  }, []);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
   const form = useForm<CreateProjectFormValues>({
     resolver: zodResolver(formSchema),

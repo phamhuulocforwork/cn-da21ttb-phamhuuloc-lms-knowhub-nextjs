@@ -10,7 +10,7 @@ import { User } from "@/types/user";
 
 import { CreateUserDialog } from "./CreateUserDialog";
 import { EditUserDialog } from "./EditUserDialog";
-import { PaginationControls } from "../../../../../../../components/common/PaginationControls";
+import { PaginationControls } from "@/components/common/PaginationControls";
 import { UserTable } from "./UserTable";
 import { Download, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
