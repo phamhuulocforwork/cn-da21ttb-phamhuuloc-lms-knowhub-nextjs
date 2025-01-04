@@ -8,6 +8,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { AuthProvider } from "@/contexts/AuthProvider";
+import { Toaster } from "@/components/ui/Toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,6 +36,7 @@ export default async function LocaleLayout({
           <NextIntlClientProvider messages={messages}>
             <ThemeProvider defaultTheme="light" attribute="class">
               {children}
+              <Toaster />
             </ThemeProvider>
           </NextIntlClientProvider>
         </AuthProvider>
