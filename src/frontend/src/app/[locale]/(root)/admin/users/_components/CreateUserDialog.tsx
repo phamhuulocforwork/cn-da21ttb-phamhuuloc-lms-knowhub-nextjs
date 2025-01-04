@@ -51,11 +51,9 @@ export function CreateUserDialog({
     name: z.string().min(1, {
       message: tValidation("invalidName"),
     }),
-    email: z
-      .string()
-      .regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
-        message: tValidation("invalidEmail"),
-      }),
+    email: z.string().regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
+      message: tValidation("invalidEmail"),
+    }),
     password: z
       .string()
       .min(8, {
@@ -71,7 +69,8 @@ export function CreateUserDialog({
         message: tValidation("passwordNumber"),
       }),
     confirmPassword: z.string(),
-  })
+    role: z.nativeEnum(Role),
+  });
 
   type FormData = z.infer<typeof formSchema>;
 

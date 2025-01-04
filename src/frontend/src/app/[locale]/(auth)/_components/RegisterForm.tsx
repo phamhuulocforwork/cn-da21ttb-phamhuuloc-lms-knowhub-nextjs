@@ -21,6 +21,7 @@ import { ParentFormMessage } from "@/components/ui/ParentFormMessage";
 import { authService } from "@/services/authService";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { z } from "zod";
+import { Role } from "@/types/user";
 
 export const RegisterForm = () => {
   const [loading, setLoading] = useTransition();
@@ -83,8 +84,9 @@ export const RegisterForm = () => {
     setError("");
     setSuccess("");
     setLoading(() => {
-      authService.register(values).then((res) => {
-        console.log(res);
+      authService.register({
+        ...values,
+        role: Role.STUDENT,
       });
     });
   };
