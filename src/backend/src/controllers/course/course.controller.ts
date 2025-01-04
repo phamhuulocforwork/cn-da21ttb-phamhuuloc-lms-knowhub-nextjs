@@ -9,15 +9,12 @@ export default new (class CourseController {
       const search = (req.query.search as string) || "";
       const categoryId = req.query.categoryId as string;
       const projectId = req.query.projectId as string;
-      const view = req.query.view as "list" | "gallery" || "list";
+      const view = (req.query.view as "list" | "gallery") || "list";
 
       const skip = (page - 1) * limit;
 
       const where = {
-        OR: [
-          { title: { contains: search } },
-          { description: { contains: search } },
-        ],
+        OR: [{ title: { contains: search } }, { description: { contains: search } }],
         status: "PUBLISHED",
         ...(categoryId && {
           categories: {
@@ -99,9 +96,11 @@ export default new (class CourseController {
           content: {
             orderBy: { order: "asc" },
           },
-          enrollments: userId ? {
-            where: { userId },
-          } : false,
+          enrollments: userId
+            ? {
+                where: { userId },
+              }
+            : false,
           _count: {
             select: {
               enrollments: true,
@@ -140,15 +139,7 @@ export default new (class CourseController {
 
   async createCourse(req: Request, res: Response): Promise<Response> {
     try {
-      const {
-        title,
-        description,
-        thumbnail,
-        videoUrl,
-        categoryIds,
-        projectId,
-        content,
-      } = req.body;
+      const { title, description, thumbnail, videoUrl, categoryIds, projectId, content } = req.body;
       const userId = req.user?.id;
 
       const course = await db.course.create({
@@ -186,15 +177,7 @@ export default new (class CourseController {
   async updateCourse(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const {
-        title,
-        description,
-        thumbnail,
-        videoUrl,
-        categoryIds,
-        status,
-        content,
-      } = req.body;
+      const { title, description, thumbnail, videoUrl, categoryIds, status, content } = req.body;
       const userId = req.user?.id;
 
       const course = await db.course.findUnique({

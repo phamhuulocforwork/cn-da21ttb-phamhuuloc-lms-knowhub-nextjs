@@ -16,8 +16,10 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { MultiSelect } from "@/components/ui/MultiSelect";
 import { categoryService } from "@/services/categoryService";
+import { projectService } from "@/services/projectService";
+
+import MultipleSelector, { Option } from "@/components/ui/MultipleSelector";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -32,23 +34,25 @@ const formSchema = z.object({
 
 type CreateProjectFormValues = z.infer<typeof formSchema>;
 
-interface Category {
-  id: string;
-  name: string;
-}
-
 export function CreateProjectForm() {
   const t = useTranslations("teacher.projects.create");
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Option[]>([]);
 
-  const fetchCategories = useCallback(async () => {
+  const fetchCategories = useCallback(async (search: string = "") => {
     const { categories } = await categoryService.getCategories({
       page: 1,
-      limit: 100,
-      search: "",
+      limit: 10,
+      search,
     });
-    setCategories(categories);
+
+    const mappedCategories = categories.map((category) => ({
+      label: category.name,
+      value: category.id,
+    }));
+
+    setCategories(mappedCategories);
+    return mappedCategories;
   }, []);
 
   useEffect(() => {
@@ -60,7 +64,7 @@ export function CreateProjectForm() {
     defaultValues: {
       title: "",
       description: "",
-      thumbnail: "",
+      thumbnail: "https://placehold.co/600x400",
       categoryIds: [],
     },
   });
@@ -68,17 +72,7 @@ export function CreateProjectForm() {
   const onSubmit = async (values: CreateProjectFormValues) => {
     try {
       setLoading(true);
-      const response = await fetch("/api/projects", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create project");
-      }
+      await projectService.createProject(values);
     } catch (error) {
       console.error(error);
     } finally {
@@ -89,23 +83,7 @@ export function CreateProjectForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        {/* <FormField
-          control={form.control}
-          name="thumbnail"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("thumbnail")}</FormLabel>
-              <FormControl>
-                <ImageUpload
-                  value={field.value}
-                  onChange={field.onChange}
-                  disabled={loading}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
+        {/* //TODO: add thumbnail */}
 
         <FormField
           control={form.control}
@@ -142,14 +120,22 @@ export function CreateProjectForm() {
             <FormItem>
               <FormLabel>{t("categories")}</FormLabel>
               <FormControl>
-                <MultiSelect
+                <MultipleSelector
                   disabled={loading}
-                  options={categories.map((category) => ({
-                    label: category.name,
-                    value: category.id,
-                  }))}
-                  value={field.value}
-                  onChange={field.onChange}
+                  defaultOptions={categories}
+                  onSearch={fetchCategories}
+                  triggerSearchOnFocus={true}
+                  value={
+                    field.value
+                      .map((id) => categories.find((cat) => cat.value === id))
+                      .filter(Boolean) as Option[]
+                  }
+                  onChange={(selected) => {
+                    field.onChange(selected.map((opt) => opt.value));
+                  }}
+                  placeholder={t("categories")}
+                  emptyIndicator={t("no_results")}
+                  options={categories}
                 />
               </FormControl>
               <FormMessage />

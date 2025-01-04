@@ -1,5 +1,4 @@
 import { api } from "@/config/axios";
-import { LoginBodyType, RegisterBodyType } from "~/schemas";
 import { User } from "@/types/user";
 
 interface AuthResponse {
@@ -8,12 +7,20 @@ interface AuthResponse {
 }
 
 export const authService = {
-  async login(credentials: LoginBodyType): Promise<AuthResponse> {
+  async login(credentials: {
+    email: string;
+    password: string;
+  }): Promise<AuthResponse> {
     const response = await api.post("/api/auth/login", credentials);
     return response.data;
   },
 
-  async register(userData: RegisterBodyType): Promise<AuthResponse> {
+  async register(userData: {
+    email: string;
+    password: string;
+    name: string;
+    role: string;
+  }): Promise<AuthResponse> {
     const response = await api.post("/api/auth/register", userData);
     return response.data;
   },
