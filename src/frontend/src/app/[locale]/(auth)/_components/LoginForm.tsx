@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginBody, LoginBodyType } from "~/schemas";
+import { z } from "zod";
 
 import {
   Form,
@@ -35,15 +35,24 @@ export const LoginForm = () => {
   const tValidation = useTranslations("auth.validation");
   const tServerMessages = useTranslations("auth.serverMessages");
 
-  const form = useForm<LoginBodyType>({
-    resolver: zodResolver(LoginBody(tValidation)),
+  const formSchema = z.object({
+    email: z.string().regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
+      message: tValidation("invalidEmail"),
+    }),
+    password: z.string().min(1, { message: tValidation("invalidPassword") }),
+  });
+
+  type FormData = z.infer<typeof formSchema>;
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: LoginBodyType) => {
+  const onSubmit = async (values: FormData) => {
     try {
       setLoading(true);
       setError("");
@@ -90,7 +99,7 @@ export const LoginForm = () => {
                     <Input
                       {...field}
                       disabled={loading}
-                      type="email"
+                      type="text"
                       placeholder={t("emailPlaceholder")}
                     />
                   </FormControl>

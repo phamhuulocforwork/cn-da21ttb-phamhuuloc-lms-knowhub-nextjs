@@ -3,7 +3,6 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterBody, RegisterBodyType } from "~/schemas";
 
 import {
   Form,
@@ -21,6 +20,7 @@ import { Button } from "@/components/ui/Button";
 import { ParentFormMessage } from "@/components/ui/ParentFormMessage";
 import { authService } from "@/services/authService";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { z } from "zod";
 
 export const RegisterForm = () => {
   const [loading, setLoading] = useTransition();
@@ -30,8 +30,47 @@ export const RegisterForm = () => {
   const t = useTranslations("auth.register");
   const tValidation = useTranslations("auth.validation");
 
-  const form = useForm<RegisterBodyType>({
-    resolver: zodResolver(RegisterBody(tValidation)),
+  const formSchema = z
+    .object({
+      name: z.string().min(1, {
+        message: tValidation("invalidName"),
+      }),
+      email: z
+        .string()
+        .regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
+          message: tValidation("invalidEmail"),
+        }),
+      password: z
+        .string()
+        .min(8, {
+          message: tValidation("passwordMin"),
+        })
+        .regex(/[a-z]/, {
+          message: tValidation("passwordLowercase"),
+        })
+        .regex(/[A-Z]/, {
+          message: tValidation("passwordUppercase"),
+        })
+        .regex(/[0-9]/, {
+          message: tValidation("passwordNumber"),
+        }),
+      confirmPassword: z.string(),
+    })
+    .strict()
+    .superRefine(({ confirmPassword, password }, ctx) => {
+      if (confirmPassword !== password) {
+        ctx.addIssue({
+          code: "custom",
+          message: tValidation("passwordNotMatch"),
+          path: ["confirmPassword"],
+        });
+      }
+    });
+
+  type FormData = z.infer<typeof formSchema>;
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -40,7 +79,7 @@ export const RegisterForm = () => {
     },
   });
 
-  const onSubmit = (values: RegisterBodyType) => {
+  const onSubmit = (values: FormData) => {
     setError("");
     setSuccess("");
     setLoading(() => {

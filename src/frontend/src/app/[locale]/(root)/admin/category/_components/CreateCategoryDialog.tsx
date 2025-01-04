@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { categoryService } from "@/services/categoryService";
+import { useToast } from "@/components/hooks/use-toast";
 
 interface CreateCategoryDialogProps {
   open: boolean;
@@ -42,7 +43,9 @@ export function CreateCategoryDialog({
   onSuccess,
 }: CreateCategoryDialogProps) {
   const t = useTranslations("admin.category.createCategory");
+  const tToast = useTranslations("toast");
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -59,7 +62,15 @@ export function CreateCategoryDialog({
       onSuccess();
       onClose();
       form.reset();
+      toast({
+        variant: "success",
+        title: tToast("addSuccess"),
+      });
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: tToast("addError"),
+      });
       console.error("Failed to create category:", error);
     } finally {
       setLoading(false);

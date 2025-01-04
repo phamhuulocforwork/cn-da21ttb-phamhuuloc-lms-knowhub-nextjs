@@ -16,6 +16,17 @@ import { Download, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useMinimumLoading } from "@/components/hooks/use-minimum-loading";
+import { useToast } from "@/components/hooks/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/AlertDialog";
 
 export default function UserManagement() {
   const t = useTranslations("admin.users");
@@ -28,6 +39,9 @@ export default function UserManagement() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
   const { loading, withMinimumLoading } = useMinimumLoading(500);
+  const { toast } = useToast();
+  const tToast = useTranslations("toast");
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 
@@ -53,12 +67,31 @@ export default function UserManagement() {
   }, [fetchUsers]);
 
   const handleDeleteUser = async (userId: string) => {
+    const user = users.find((u) => u.id === userId);
+    if (user) {
+      setUserToDelete(user);
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!userToDelete) return;
+
     try {
       await withMinimumLoading(
-        Promise.all([userService.deleteUser(userId), fetchUsers()]),
+        Promise.all([userService.deleteUser(userToDelete.id), fetchUsers()]),
       );
+      toast({
+        variant: "success",
+        title: tToast("deleteSuccess"),
+      });
     } catch (error) {
       console.error("Failed to delete user:", error);
+      toast({
+        variant: "destructive",
+        title: tToast("deleteError"),
+      });
+    } finally {
+      setUserToDelete(null);
     }
   };
 
@@ -152,6 +185,31 @@ export default function UserManagement() {
             onSuccess={fetchUsers}
           />
         )}
+
+        <AlertDialog
+          open={!!userToDelete}
+          onOpenChange={() => setUserToDelete(null)}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t("deleteUser.title")}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {t("deleteUser.description", {
+                  name: userToDelete?.name,
+                })}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-destructive-500 hover:bg-destructive-600"
+                onClick={handleConfirmDelete}
+              >
+                {t("confirm")}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

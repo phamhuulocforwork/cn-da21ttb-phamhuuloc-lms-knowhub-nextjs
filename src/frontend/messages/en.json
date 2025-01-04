@@ -1,26 +1,98 @@
 {
-  "sidebar": {
-    "navigation": {
-      "navigation": "Navigation",
-      "dashboard": "Dashboard",
-      "category": "Category",
-      "home": "Home",
-      "users": "Users"
+  "admin": {
+    "category": {
+      "addCategory": "Add category",
+      "allCategories": "All categories",
+      "createCategory": {
+        "cancel": "Cancel",
+        "description": "Description",
+        "descriptionPlaceholder": "Category description",
+        "name": "Name",
+        "namePlaceholder": "Category name",
+        "save": "Save",
+        "submit": "Create category",
+        "submitting": "Creating...",
+        "title": "Create category"
+      },
+      "deleteCategory": {
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "description": "Are you sure you want to delete {{name}} category?",
+        "title": "Delete category"
+      },
+      "description": "Manage your categories here.",
+      "editCategory": {
+        "cancel": "Cancel",
+        "description": "Description",
+        "name": "Name",
+        "save": "Save changes",
+        "saving": "Saving...",
+        "title": "Edit category"
+      },
+      "export": "Export",
+      "noData": "No categories found",
+      "search": "Search",
+      "table": {
+        "actions": {
+          "delete": "Delete category",
+          "edit": "Edit category"
+        },
+        "description": "Description",
+        "name": "Name"
+      },
+      "title": "Category management"
     },
-    "menu": {
-      "login": "Login",
-      "register": "Register",
-      "profile": "Profile",
-      "notifications": "Notifications",
-      "logout": "Logout"
+    "pagination": {
+      "itemsPerPage": "Items/page"
     },
-    "tool": {
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "language": "Language",
-      "english": "English",
-      "vietnamese": "Vietnamese"
+    "users": {
+      "addUser": "Add user",
+      "allUsers": "All users",
+      "createUser": {
+        "cancel": "Cancel",
+        "email": "Email",
+        "name": "Name",
+        "password": "Password",
+        "role": "Role",
+        "selectRole": "Select a role",
+        "submit": "Create user",
+        "submitting": "Creating...",
+        "title": "Create User",
+        "validation": {
+          "invalidCredentials": "Invalid email or password",
+          "invalidEmail": "Invalid email",
+          "invalidName": "Invalid name",
+          "invalidPassword": "Please enter a password",
+          "passwordLowercase": "Password must contain at least one lowercase letter",
+          "passwordMin": "Password must be at least 8 characters",
+          "passwordNumber": "Password must contain at least one number",
+          "passwordUppercase": "Password must contain at least one uppercase letter",
+          "passwordsDoNotMatch": "Passwords do not match"
+        }
+      },
+      "description": "Manage your team members and their account permissions here.",
+      "editUser": {
+        "cancel": "Cancel",
+        "email": "Email",
+        "name": "Name",
+        "role": "Role",
+        "save": "Save changes",
+        "saving": "Saving...",
+        "title": "Edit User"
+      },
+      "export": "Export",
+      "noData": "No users found",
+      "search": "Search",
+      "table": {
+        "actions": {
+          "delete": "Delete user",
+          "edit": "Edit user"
+        },
+        "createdAt": "Created at",
+        "role": "Role",
+        "userName": "User name"
+      },
+      "title": "User management"
     }
   },
   "auth": {
@@ -38,136 +110,93 @@
     },
     "register": {
       "backButtonLabel": "Already have an account? ",
+      "backButtonLinkText": "Login",
+      "confirmPassword": "Confirm Password",
       "email": "Email",
       "emailPlaceholder": "example@gmail.com",
+      "headerLabel": "Register",
       "name": "Name",
       "namePlaceholder": "John Doe",
       "password": "Password",
-      "confirmPassword": "Confirm Password",
-      "backButtonLinkText": "Login",
-      "headerLabel": "Register",
       "submit": "Register",
       "submitLoading": "Registering..."
-    },
-    "validation": {
-      "invalidCredentials": "Invalid email or password",
-      "invalidEmail": "Invalid email",
-      "invalidName": "Invalid name",
-      "invalidPassword": "Please enter a password",
-      "passwordMin": "Password must be at least 8 characters",
-      "passwordLowercase": "Password must contain at least one lowercase letter",
-      "passwordUppercase": "Password must contain at least one uppercase letter",
-      "passwordNumber": "Password must contain at least one number",
-      "passwordsDoNotMatch": "Passwords do not match"
     },
     "serverMessages": {
       "error": {
         "emailExists": "Email already registered",
         "invalidCredentials": "Invalid email or password",
         "loginFailed": "Login failed. Please try again",
-        "tooManyRequests": "Too many attempts. Please try again later",
-        "registrationFailed": "Registration failed. Please try again"
+        "registrationFailed": "Registration failed. Please try again",
+        "tooManyRequests": "Too many attempts. Please try again later"
       },
       "success": {
         "login": "Login successful. Redirecting...",
         "register": "Registration successful. Redirecting..."
       }
+    },
+    "validation": {
+      "invalidCredentials": "Invalid email or password",
+      "invalidEmail": "Invalid email",
+      "invalidName": "Invalid name",
+      "invalidPassword": "Please enter a password",
+      "passwordLowercase": "Password must contain at least one lowercase letter",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordNumber": "Password must contain at least one number",
+      "passwordUppercase": "Password must contain at least one uppercase letter",
+      "passwordsDoNotMatch": "Passwords do not match"
     }
   },
-  "admin": {
-    "users": {
-      "title": "User management",
-      "description": "Manage your team members and their account permissions here.",
-      "allUsers": "All users",
-      "search": "Search",
-      "export": "Export",
-      "addUser": "Add user",
-      "createUser": {
-        "title": "Create User",
-        "name": "Name",
-        "email": "Email",
-        "password": "Password",
-        "role": "Role",
-        "selectRole": "Select a role",
-        "cancel": "Cancel",
-        "submit": "Create user",
-        "submitting": "Creating..."
-      },
-      "editUser": {
-        "title": "Edit User",
-        "name": "Name",
-        "email": "Email",
-        "role": "Role",
-        "save": "Save changes",
-        "cancel": "Cancel",
-        "saving": "Saving..."
-      },
-      "table": {
-        "userName": "User name",
-        "role": "Role",
-        "createdAt": "Created at",
-        "actions": {
-          "edit": "Edit user",
-          "delete": "Delete user"
-        }
-      },
-      "noData": "No users found"
+  "sidebar": {
+    "menu": {
+      "login": "Login",
+      "logout": "Logout",
+      "notifications": "Notifications",
+      "profile": "Profile",
+      "register": "Register"
     },
-    "category": {
-      "noData": "No categories found",
-      "title": "Category management",
-      "description": "Manage your categories here.",
-      "allCategories": "All categories",
-      "search": "Search",
-      "export": "Export",
-      "addCategory": "Add category",
-      "createCategory": {
-        "title": "Create category",
-        "name": "Name",
-        "namePlaceholder": "Category name",
-        "description": "Description",
-        "descriptionPlaceholder": "Category description",
-        "submit": "Create category",
-        "submitting": "Creating...",
-        "cancel": "Cancel",
-        "save": "Save"
-      },
-      "editCategory": {
-        "title": "Edit category",
-        "name": "Name",
-        "description": "Description",
-        "save": "Save changes",
-        "saving": "Saving...",
-        "cancel": "Cancel"
-      },
-      "table": {
-        "name": "Name",
-        "description": "Description",
-        "actions": {
-          "edit": "Edit category",
-          "delete": "Delete category"
-        }
-      }
+    "navigation": {
+      "category": "Category",
+      "dashboard": "Dashboard",
+      "home": "Home",
+      "navigation": "Navigation",
+      "users": "Users"
     },
-    "pagination": {
-      "itemsPerPage": "Items/page"
+    "tool": {
+      "dark": "Dark",
+      "english": "English",
+      "language": "Language",
+      "light": "Light",
+      "theme": "Theme",
+      "vietnamese": "Vietnamese"
     }
   },
   "teacher": {
     "projects": {
       "create": {
+        "categories": "Categories",
+        "category": "Category",
         "create": "Create",
-        "title": "Create project",
         "description": "Create a new project",
+        "selectCategories": "Select categories",
         "submit": "Create project",
         "submitting": "Creating...",
-        "category": "Category",
-        "categories": "Categories",
-        "selectCategories": "Select categories",
         "thumbnail": "Thumbnail",
+        "title": "Create project",
         "uploadThumbnail": "Upload thumbnail",
         "uploadThumbnailPlaceholder": "Upload a thumbnail for your project"
       }
     }
+  },
+  "toast": {
+    "addError": "Failed to add",
+    "addSuccess": "Added successfully",
+    "deleteError": "Failed to delete",
+    "deleteSuccess": "Deleted successfully",
+    "editError": "Failed to edit",
+    "editSuccess": "Edited successfully"
+  },
+  "alertDialog": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
 }

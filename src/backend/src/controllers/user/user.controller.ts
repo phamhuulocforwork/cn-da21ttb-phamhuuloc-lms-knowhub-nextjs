@@ -5,27 +5,10 @@ import { generateToken } from "../../utils/jwt.utils";
 export default new (class UserController {
   async updateUser(req: Request, res: Response): Promise<Response> {
     try {
-      const userId = req.user?.id;
-
-      if (!userId) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-
-      const { name, email, image } = req.body;
-
-      if (email) {
-        const existingUser = await db.user.findUnique({
-          where: { email, NOT: { id: userId } },
-        });
-
-        if (existingUser) {
-          return res.status(400).json({ message: "Email already exists" });
-        }
-      }
-
+      const { id, name, email, image, role } = req.body;
       const user = await db.user.update({
-        where: { id: userId },
-        data: { name, email, image },
+        where: { id },
+        data: { name, email, image, role },
       });
 
       const token = generateToken(user.id);
@@ -48,26 +31,95 @@ export default new (class UserController {
         token,
       });
     } catch (error) {
-      console.error("Update user error:", error);
+      return res.status(500).json({
+        error: "Internal server error",
+      });
+    }
+  }
+
+  async deleteUser(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id } = req.params;
+
+      // Kiểm tra user tồn tại
+      const user = await db.user.findUnique({
+        where: { id },
+      });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Xóa theo thứ tự từ các bảng con đến bảng cha
+      await Promise.all([
+        // 1. Xóa QuestionAttempt trước (vì nó phụ thuộc vào QuizAttempt)
+        db.questionAttempt.deleteMany({
+          where: {
+            attempt: {
+              userId: id,
+            },
+          },
+        }),
+
+        // 2. Xóa CourseEnrollment và QuizAttempt
+        db.courseEnrollment.deleteMany({
+          where: { userId: id },
+        }),
+        db.quizAttempt.deleteMany({
+          where: { userId: id },
+        }),
+
+        // 3. Xóa Content của Course và Wiki
+        db.content.deleteMany({
+          where: {
+            OR: [{ course: { authorId: id } }, { wiki: { authorId: id } }],
+          },
+        }),
+
+        // 4. Cập nhật status các bảng chính
+        db.project.updateMany({
+          where: { authorId: id },
+          data: { status: "DELETED" },
+        }),
+        db.course.updateMany({
+          where: { authorId: id },
+          data: { status: "DELETED" },
+        }),
+        db.quiz.updateMany({
+          where: { authorId: id },
+          data: { status: "DELETED" },
+        }),
+        db.wiki.updateMany({
+          where: { authorId: id },
+          data: { status: "DELETED" },
+        }),
+      ]);
+
+      // 5. Cuối cùng xóa user
+      await db.user.delete({
+        where: { id },
+      });
+
+      return res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+      console.error("Delete user error:", error);
       return res.status(500).json({
         message: "Internal server error",
       });
     }
   }
 
-  async deleteUser(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-    const user = await db.user.delete({ where: { id } });
-    return res.status(200).json(user);
-  }
-
   async getUser(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-    const user = await db.user.findUnique({ where: { id } });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    try {
+      const { id } = req.params;
+      const user = await db.user.findUnique({ where: { id } });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(500).json({ message: "Internal server error" });
     }
-    return res.status(200).json(user);
   }
 
   async getUsers(req: Request, res: Response): Promise<Response> {
@@ -121,12 +173,17 @@ export default new (class UserController {
   }
 
   async getUserByEmail(req: Request, res: Response): Promise<Response> {
-    const { email } = req.params;
-    const user = await db.user.findUnique({ where: { email } });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    try {
+      const { email } = req.params;
+      const user = await db.user.findUnique({ where: { email } });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.status(200).json(user);
+    } catch (error) {
+      console.error("Get user by email error:", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
-    return res.status(200).json(user);
   }
 
   async getProfile(req: Request, res: Response): Promise<Response> {

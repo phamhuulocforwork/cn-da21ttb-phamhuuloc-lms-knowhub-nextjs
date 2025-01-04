@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { categoryService } from "@/services/categoryService";
 import { Category } from "@/types/category";
+import { useToast } from "@/components/hooks/use-toast";
 
 interface EditCategoryDialogProps {
   category: Category;
@@ -45,7 +46,9 @@ export function EditCategoryDialog({
   onSuccess,
 }: EditCategoryDialogProps) {
   const t = useTranslations("admin.category.editCategory");
+  const tToast = useTranslations("toast");
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -62,9 +65,17 @@ export function EditCategoryDialog({
         id: category.id,
         ...data,
       });
+      toast({
+        variant: "success",
+        title: tToast("editSuccess"),
+      });
       onSuccess();
       onClose();
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: tToast("editError"),
+      });
       console.error("Failed to update category:", error);
     } finally {
       setLoading(false);

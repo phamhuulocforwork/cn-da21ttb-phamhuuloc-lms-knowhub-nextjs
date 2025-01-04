@@ -28,6 +28,7 @@ import {
 import { Role, User } from "@/types/user";
 import { userService } from "@/services/userService";
 import { useTranslations } from "next-intl";
+import { useToast } from "@/components/hooks/use-toast";
 
 const editUserSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -51,7 +52,9 @@ export function EditUserDialog({
   onSuccess,
 }: EditUserDialogProps) {
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
   const t = useTranslations("admin.users.editUser");
+  const tToast = useTranslations("toast");
 
   const form = useForm<EditUserFormData>({
     resolver: zodResolver(editUserSchema),
@@ -71,8 +74,16 @@ export function EditUserDialog({
       });
       onSuccess();
       onClose();
+      toast({
+        variant: "success",
+        title: tToast("updateSuccess"),
+      });
     } catch (error) {
       console.error("Failed to update user:", error);
+      toast({
+        variant: "destructive",
+        title: tToast("updateError"),
+      });
     } finally {
       setLoading(false);
     }

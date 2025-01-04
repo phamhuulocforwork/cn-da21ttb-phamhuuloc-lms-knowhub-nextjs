@@ -15,9 +15,21 @@ import { CategoryTable } from "./CategoryTable";
 import { EditCategoryDialog } from "./EditCategoryDialog";
 import { CreateCategoryDialog } from "./CreateCategoryDialog";
 import { useMinimumLoading } from "@/components/hooks/use-minimum-loading";
+import { useToast } from "@/components/hooks/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/AlertDialog";
 
 export default function CategoryManagement() {
   const t = useTranslations("admin.category");
+  const tToast = useTranslations("toast");
   const [categories, setCategories] = useState<Category[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
@@ -27,6 +39,10 @@ export default function CategoryManagement() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalCategories, setTotalCategories] = useState(0);
   const { loading, withMinimumLoading } = useMinimumLoading(500);
+  const { toast } = useToast();
+  const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(
+    null,
+  );
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 
@@ -52,15 +68,34 @@ export default function CategoryManagement() {
   }, [fetchCategories]);
 
   const handleDeleteCategory = async (categoryId: string) => {
+    const category = categories.find((c) => c.id === categoryId);
+    if (category) {
+      setCategoryToDelete(category);
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!categoryToDelete) return;
+
     try {
       await withMinimumLoading(
         Promise.all([
-          categoryService.deleteCategory(categoryId),
+          categoryService.deleteCategory(categoryToDelete.id),
           fetchCategories(),
         ]),
       );
+      toast({
+        variant: "success",
+        title: tToast("deleteSuccess"),
+      });
     } catch (error) {
       console.error("Failed to delete category:", error);
+      toast({
+        variant: "destructive",
+        title: tToast("deleteError"),
+      });
+    } finally {
+      setCategoryToDelete(null);
     }
   };
 
@@ -152,6 +187,31 @@ export default function CategoryManagement() {
             onSuccess={fetchCategories}
           />
         )}
+
+        <AlertDialog
+          open={!!categoryToDelete}
+          onOpenChange={() => setCategoryToDelete(null)}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t("deleteCategory.title")}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {t("deleteCategory.description", {
+                  name: categoryToDelete?.name,
+                })}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-destructive-500 hover:bg-destructive-600"
+                onClick={handleConfirmDelete}
+              >
+                {t("confirm")}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
