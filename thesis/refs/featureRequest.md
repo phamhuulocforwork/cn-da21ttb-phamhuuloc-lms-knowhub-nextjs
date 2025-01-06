@@ -1,6 +1,6 @@
 # Feature Request
 
-## Chức năng chính: project, course, quiz, wiki
+## Chức năng chính: project, course, quiz
 
 - Mỗi course, quiz, wiki đều có các thuộc tính: thumbnail, title, description, timestamp created, timestamp edited, timestamp published, timestamp deleted, status (draft, published, deleted), author, categories, content (file, link, text, image, video, audio, code, math, table, chart, diagram, graph, etc.).
 - Mỗi course, quiz, wiki có thể độc lập hoặc thuộc về một project nào đó.
@@ -65,23 +65,3 @@
   - Điểm mỗi câu
 - Chỉnh sửa quiz
 - Xóa quiz
-
-## 3. Wiki
-
-### 3.1 Chức năng hiển thị
-
-- 2 chế độ hiện thị: list hoặc gallery
-- Danh sách các wiki
-- Tìm kiếm theo tên, chủ đề, người tạo,...
-- Lọc theo chủ đề
-
-### 3.2 CRUD wiki
-
-- Tạo wiki mới:
-  - Chọn thumbnail
-  - Tên wiki
-  - Chọn chủ đề
-  - Mô tả
-  - Nội dung
-- Chỉnh sửa wiki
-- Xóa wiki

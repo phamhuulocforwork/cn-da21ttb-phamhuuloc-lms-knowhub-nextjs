@@ -134,30 +134,6 @@ async function main() {
     },
   });
 
-  // WIKI
-  await prisma.wiki.create({
-    data: {
-      title: "UI/UX Design Principles Wiki",
-      description: "Comprehensive wiki about UI/UX design principles",
-      status: "PUBLISHED",
-      authorId: (await prisma.user.findFirst({ where: { role: "TEACHER" } }))!.id,
-      projectId: designProject.id,
-      categories: {
-        connect: [{ id: uiuxCategory.id }],
-      },
-      content: {
-        create: [
-          {
-            type: "TEXT",
-            value:
-              "# UI/UX Design Principles\n\nThis wiki covers fundamental principles of UI/UX design...",
-            order: 1,
-          },
-        ],
-      },
-    },
-  });
-
   // COURSE ENROLLMENT
   await prisma.courseEnrollment.create({
     data: {

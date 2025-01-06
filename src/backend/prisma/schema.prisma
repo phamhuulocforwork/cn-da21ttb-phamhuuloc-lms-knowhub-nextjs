@@ -56,7 +56,6 @@ model User {
   projects      Project[]
   courses       Course[]
   quizzes       Quiz[]
-  wikis         Wiki[]
   enrolledCourses CourseEnrollment[]
   quizAttempts  QuizAttempt[]
 }
@@ -77,7 +76,6 @@ model Project {
   authorId    String
   courses     Course[]
   quizzes     Quiz[]
-  wikis       Wiki[]
   categories  Category[]
 }
 
@@ -128,26 +126,6 @@ model Quiz {
   attempts        QuizAttempt[]
 }
 
-model Wiki {
-  id          String    @id @default(cuid())
-  title       String
-  description String?
-  thumbnail   String?
-  content     Content[]
-  status      Status    @default(DRAFT)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  publishedAt DateTime?
-  deletedAt   DateTime?
-
-  // Relations
-  author      User      @relation(fields: [authorId], references: [id])
-  authorId    String
-  project     Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId   String?
-  categories  Category[]
-}
-
 model Category {
   id          String    @id @default(cuid())
   name        String    @unique
@@ -157,7 +135,6 @@ model Category {
   projects    Project[]
   courses     Course[]
   quizzes     Quiz[]
-  wikis       Wiki[]
 }
 
 model Content {
@@ -169,8 +146,6 @@ model Content {
   // Relations
   course      Course?     @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    String?
-  wiki        Wiki?       @relation(fields: [wikiId], references: [id], onDelete: Cascade)
-  wikiId      String?
 }
 
 model Question {
