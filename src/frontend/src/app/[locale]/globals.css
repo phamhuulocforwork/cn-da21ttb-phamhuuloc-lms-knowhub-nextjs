@@ -12,6 +12,10 @@
   ::-webkit-scrollbar-thumb {
     @apply rounded-full bg-slate-300;
   }
+  :root {
+
+    --radius: 0.5rem
+  }
 }
 
 @layer base {
