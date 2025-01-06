@@ -77,9 +77,6 @@ export default new (class ProjectController {
           quizzes: {
             where: { status: "PUBLISHED" },
           },
-          wikis: {
-            where: { status: "PUBLISHED" },
-          },
         },
       });
 

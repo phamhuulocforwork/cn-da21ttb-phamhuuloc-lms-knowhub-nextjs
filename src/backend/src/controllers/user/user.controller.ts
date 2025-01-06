@@ -72,7 +72,7 @@ export default new (class UserController {
         // 3. Xóa Content của Course và Wiki
         db.content.deleteMany({
           where: {
-            OR: [{ course: { authorId: id } }, { wiki: { authorId: id } }],
+            OR: [{ course: { authorId: id } }],
           },
         }),
 
@@ -86,10 +86,6 @@ export default new (class UserController {
           data: { status: "DELETED" },
         }),
         db.quiz.updateMany({
-          where: { authorId: id },
-          data: { status: "DELETED" },
-        }),
-        db.wiki.updateMany({
           where: { authorId: id },
           data: { status: "DELETED" },
         }),
