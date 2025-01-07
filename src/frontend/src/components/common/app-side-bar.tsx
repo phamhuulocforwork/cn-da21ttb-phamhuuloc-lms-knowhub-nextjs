@@ -101,7 +101,7 @@ export function AppSidebar() {
                   </span>
                 </div>
                 <Link
-                  href="/teacher/projects/create"
+                  href="/teacher/project/create"
                   className="rounded-full border bg-background p-1"
                 >
                   <Plus className="h-3 w-3" />

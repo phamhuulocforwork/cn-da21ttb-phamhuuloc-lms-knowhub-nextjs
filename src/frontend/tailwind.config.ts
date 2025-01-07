@@ -37,7 +37,7 @@ const config = {
           "950": "#0d1117",
         },
         primary: {
-          DEFAULT: "#70d5f0",
+          DEFAULT: "#1faed8",
           "50": "#edfbfe",
           "100": "#d2f4fb",
           "200": "#aae8f7",

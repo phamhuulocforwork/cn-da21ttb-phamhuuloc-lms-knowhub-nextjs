@@ -1,4 +1,4 @@
-import { ChartColumnStacked, Home, Users, FolderKanban } from "lucide-react";
+import { ChartColumnStacked, Home, Users, SquareMinus } from "lucide-react";
 
 type NavigationItem = {
   title: string;
@@ -42,7 +42,7 @@ export const navigations: Record<string, NavigationConfig> = {
       {
         title: "projects",
         url: "/teacher/projects",
-        icon: FolderKanban,
+        icon: SquareMinus,
       },
     ],
   },

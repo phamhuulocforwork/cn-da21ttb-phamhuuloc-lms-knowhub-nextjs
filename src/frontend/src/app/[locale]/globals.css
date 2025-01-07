@@ -13,8 +13,7 @@
     @apply rounded-full bg-slate-300;
   }
   :root {
-
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
 }
 
@@ -24,5 +23,41 @@
   }
   body {
     @apply bg-background text-foreground dark:bg-foreground dark:text-background;
+  }
+}
+
+@layer components {
+  .scroll-text {
+    display: inline-block;
+    animation-name: scroll-text;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    animation-delay: 300ms;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+  }
+
+  @keyframes scroll-text {
+    0% {
+      transform: translateX(0%);
+    }
+    90% {
+      transform: translateX(-100%);
+    }
+    95% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
