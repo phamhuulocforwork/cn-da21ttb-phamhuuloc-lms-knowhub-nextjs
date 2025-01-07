@@ -3,7 +3,7 @@
 import { X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "@/i18n/routing";
-import { RegisterForm } from "@/app/[locale]/(auth)/_components/RegisterForm";
+import { RegisterForm } from "@/app/[locale]/(auth)/_components/register-form";
 
 export default function RegisterPage() {
   const router = useRouter();

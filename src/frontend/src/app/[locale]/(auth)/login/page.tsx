@@ -3,7 +3,7 @@
 import { X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "@/i18n/routing";
-import { LoginForm } from "@/app/[locale]/(auth)/_components/LoginForm";
+import { LoginForm } from "@/app/[locale]/(auth)/_components/login-form";
 
 export default function LoginPage() {
   const router = useRouter();

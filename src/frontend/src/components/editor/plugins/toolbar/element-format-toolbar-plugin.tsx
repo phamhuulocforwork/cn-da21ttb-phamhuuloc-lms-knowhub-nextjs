@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import { $isLinkNode } from '@lexical/link'
-import { $findMatchingParent } from '@lexical/utils'
+import { $isLinkNode } from "@lexical/link";
+import { $findMatchingParent } from "@lexical/utils";
 import {
   $isElementNode,
   $isRangeSelection,
@@ -10,94 +10,94 @@ import {
   FORMAT_ELEMENT_COMMAND,
   INDENT_CONTENT_COMMAND,
   OUTDENT_CONTENT_COMMAND,
-} from 'lexical'
-import { IndentIncreaseIcon } from 'lucide-react'
-import { IndentDecreaseIcon } from 'lucide-react'
-import { AlignLeftIcon } from 'lucide-react'
-import { AlignJustifyIcon } from 'lucide-react'
-import { AlignCenterIcon, AlignRightIcon } from 'lucide-react'
+} from "lexical";
+import { IndentIncreaseIcon } from "lucide-react";
+import { IndentDecreaseIcon } from "lucide-react";
+import { AlignLeftIcon } from "lucide-react";
+import { AlignJustifyIcon } from "lucide-react";
+import { AlignCenterIcon, AlignRightIcon } from "lucide-react";
 
-import { Separator } from '@/components/ui/Separator'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/ToggleGroup'
+import { Separator } from "@/components/ui/separator";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-import { useToolbarContext } from '../../context/toolbar-context'
-import { useUpdateToolbarHandler } from '../../hooks/use-update-toolbar'
-import { getSelectedNode } from '../../utils/get-selected-node'
+import { useToolbarContext } from "../../context/toolbar-context";
+import { useUpdateToolbarHandler } from "../../hooks/use-update-toolbar";
+import { getSelectedNode } from "../../utils/get-selected-node";
 
 const ELEMENT_FORMAT_OPTIONS: {
-  [key in Exclude<ElementFormatType, 'start' | 'end' | ''>]: {
-    icon: React.ReactNode
-    iconRTL: string
-    name: string
-  }
+  [key in Exclude<ElementFormatType, "start" | "end" | "">]: {
+    icon: React.ReactNode;
+    iconRTL: string;
+    name: string;
+  };
 } = {
   left: {
     icon: <AlignLeftIcon className="size-4" />,
-    iconRTL: 'left-align',
-    name: 'Left Align',
+    iconRTL: "left-align",
+    name: "Left Align",
   },
   center: {
     icon: <AlignCenterIcon className="size-4" />,
-    iconRTL: 'center-align',
-    name: 'Center Align',
+    iconRTL: "center-align",
+    name: "Center Align",
   },
   right: {
     icon: <AlignRightIcon className="size-4" />,
-    iconRTL: 'right-align',
-    name: 'Right Align',
+    iconRTL: "right-align",
+    name: "Right Align",
   },
   justify: {
     icon: <AlignJustifyIcon className="size-4" />,
-    iconRTL: 'justify-align',
-    name: 'Justify Align',
+    iconRTL: "justify-align",
+    name: "Justify Align",
   },
-} as const
+} as const;
 
 export function ElementFormatToolbarPlugin() {
-  const { activeEditor } = useToolbarContext()
-  const [elementFormat, setElementFormat] = useState<ElementFormatType>('left')
+  const { activeEditor } = useToolbarContext();
+  const [elementFormat, setElementFormat] = useState<ElementFormatType>("left");
 
   const $updateToolbar = (selection: BaseSelection) => {
     if ($isRangeSelection(selection)) {
-      const node = getSelectedNode(selection)
-      const parent = node.getParent()
+      const node = getSelectedNode(selection);
+      const parent = node.getParent();
 
-      let matchingParent
+      let matchingParent;
       if ($isLinkNode(parent)) {
         // If node is a link, we need to fetch the parent paragraph node to set format
         matchingParent = $findMatchingParent(
           node,
-          (parentNode) => $isElementNode(parentNode) && !parentNode.isInline()
-        )
+          (parentNode) => $isElementNode(parentNode) && !parentNode.isInline(),
+        );
       }
       setElementFormat(
         $isElementNode(matchingParent)
           ? matchingParent.getFormatType()
           : $isElementNode(node)
             ? node.getFormatType()
-            : parent?.getFormatType() || 'left'
-      )
+            : parent?.getFormatType() || "left",
+      );
     }
-  }
+  };
 
-  useUpdateToolbarHandler($updateToolbar)
+  useUpdateToolbarHandler($updateToolbar);
 
   const handleValueChange = (value: string) => {
-    if (!value) return // Prevent unselecting current value
+    if (!value) return; // Prevent unselecting current value
 
-    setElementFormat(value as ElementFormatType)
+    setElementFormat(value as ElementFormatType);
 
-    if (value === 'indent') {
-      activeEditor.dispatchCommand(INDENT_CONTENT_COMMAND, undefined)
-    } else if (value === 'outdent') {
-      activeEditor.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined)
+    if (value === "indent") {
+      activeEditor.dispatchCommand(INDENT_CONTENT_COMMAND, undefined);
+    } else if (value === "outdent") {
+      activeEditor.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined);
     } else {
       activeEditor.dispatchCommand(
         FORMAT_ELEMENT_COMMAND,
-        value as ElementFormatType
-      )
+        value as ElementFormatType,
+      );
     }
-  }
+  };
 
   return (
     <ToggleGroup
@@ -112,7 +112,7 @@ export function ElementFormatToolbarPlugin() {
         <ToggleGroupItem
           key={value}
           value={value}
-          variant={'outline'}
+          variant={"outline"}
           aria-label={option.name}
           className="size-8 p-0"
         >
@@ -125,7 +125,7 @@ export function ElementFormatToolbarPlugin() {
       <ToggleGroupItem
         value="outdent"
         aria-label="Outdent"
-        variant={'outline'}
+        variant={"outline"}
         className="size-8 p-0"
       >
         <IndentDecreaseIcon className="size-4" />
@@ -133,12 +133,12 @@ export function ElementFormatToolbarPlugin() {
 
       <ToggleGroupItem
         value="indent"
-        variant={'outline'}
+        variant={"outline"}
         aria-label="Indent"
         className="size-8 p-0"
       >
         <IndentIncreaseIcon className="size-4" />
       </ToggleGroupItem>
     </ToggleGroup>
-  )
+  );
 }

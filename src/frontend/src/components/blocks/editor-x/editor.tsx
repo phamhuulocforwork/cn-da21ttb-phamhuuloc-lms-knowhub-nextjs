@@ -10,7 +10,7 @@ import { EditorState, SerializedEditorState } from "lexical";
 import { FloatingLinkContext } from "@/components/editor/context/floating-link-context";
 import { SharedAutocompleteContext } from "@/components/editor/context/shared-autocomplete-context";
 import { editorTheme } from "@/components/editor/themes/editor-theme";
-import { TooltipProvider } from "@/components/ui/Tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { nodes } from "./nodes";
 import { Plugins } from "./plugins";

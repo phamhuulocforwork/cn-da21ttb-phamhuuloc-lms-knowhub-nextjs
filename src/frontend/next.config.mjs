@@ -12,6 +12,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "placewaifu.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

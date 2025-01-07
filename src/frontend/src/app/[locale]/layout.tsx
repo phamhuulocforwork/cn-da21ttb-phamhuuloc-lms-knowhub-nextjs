@@ -7,8 +7,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { AuthProvider } from "@/contexts/AuthProvider";
-import { Toaster } from "@/components/ui/Toaster";
+import { AuthProvider } from "@/contexts/auth-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 

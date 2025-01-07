@@ -3,14 +3,14 @@
 import * as React from "react";
 import config from "@/tailwind.config";
 import { cn } from "@/lib/utils";
-import { Label } from "@/components/ui/Label";
+import { Label } from "@/components/ui/label";
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/Tooltip";
+} from "@/components/ui/tooltip";
 
 interface ColorShadeProps extends React.HTMLAttributes<HTMLDivElement> {
   shade?: string;

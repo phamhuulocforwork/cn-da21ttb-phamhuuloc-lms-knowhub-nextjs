@@ -17,7 +17,7 @@ import {
 
 import { useToolbarContext } from '@/components/editor/context/toolbar-context'
 import { useUpdateToolbarHandler } from '@/components/editor/hooks/use-update-toolbar'
-import { Toggle } from '@/components/ui/Toggle'
+import { Toggle } from '@/components/ui/toggle'
 
 const Icons: Partial<Record<TextFormatType, React.ElementType>> = {
   bold: BoldIcon,
