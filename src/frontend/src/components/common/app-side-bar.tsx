@@ -29,7 +29,7 @@ import { User } from "@/types/user";
 import { navigations } from "@/config/sidebarConfig";
 import { NavigationSkeleton } from "./navigation-skeleton";
 import { UserMenuSkeleton } from "./user-menu-skeleton";
-import { Plus } from "lucide-react";
+import { Plus, SquareMinus } from "lucide-react";
 import { Link } from "@/i18n/routing";
 
 export function AppSidebar() {
@@ -43,6 +43,13 @@ export function AppSidebar() {
 
   const role = user?.role || "GUEST";
   const sidebarItems = navigations[role as keyof typeof navigations];
+
+  const projects = [
+    {
+      title: "Become a professional web programmer👌",
+      url: "/teacher/project",
+    },
+  ];
 
   // Chỉ show loading khi chưa load lần đầu và đang trong trạng thái loading
   const isLoading = !initialLoadComplete && status === "loading";
@@ -90,14 +97,14 @@ export function AppSidebar() {
             )}
           </SidebarGroupContent>
 
-          {role === "TEACHER" && sidebarItems.projects && (
+          {role === "TEACHER" && projects && (
             <>
               <Separator className="my-2" />
               <SidebarGroupLabel className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   {t("projects")}
-                  <span className="rounded-sm bg-muted px-2 py-0.5 text-xs">
-                    {sidebarItems.projects?.length || 0}
+                  <span className="rounded-sm bg-slate-200 px-2 py-0.5 text-xs">
+                    {projects.length || 0}
                   </span>
                 </div>
                 <Link
@@ -109,15 +116,15 @@ export function AppSidebar() {
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {sidebarItems.projects.map((item) => (
+                  {projects.map((project) => (
                     <SidebarMenuItem
-                      key={item.title}
+                      key={project.title}
                       className="flex items-center justify-center"
                     >
                       <SidebarMenuButton asChild>
-                        <a href={item.url}>
-                          <item.icon />
-                          <span>adasa</span>
+                        <a href={project.url}>
+                          <SquareMinus />
+                          <span>{project.title}</span>
                         </a>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

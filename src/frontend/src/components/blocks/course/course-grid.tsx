@@ -28,6 +28,22 @@ export default function CourseGrid() {
           description:
             "User Interface and User Experience Design principles and practices",
         },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr2",
+          name: "Web Development",
+          description:
+            "Learn modern web development technologies and practices",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr9",
+          name: "Design Tools",
+          description: "Modern design tools and software",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr10",
+          name: "User Research",
+          description: "Methods and techniques for user research",
+        },
       ],
       project: {
         id: "cm5lfpr0r0006ushwe6zjjjbo",
@@ -79,6 +95,16 @@ export default function CourseGrid() {
           description:
             "Learn modern web development technologies and practices",
         },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr11",
+          name: "HTML5",
+          description: "Modern HTML5 features and semantics",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr12",
+          name: "CSS3",
+          description: "Advanced CSS3 styling and layouts",
+        },
       ],
       project: {
         id: "cm5lfpr0r0006ushwe6zjjjbo",
@@ -121,6 +147,16 @@ export default function CourseGrid() {
           id: "cm5lfpr0g0003ushwxg6jctr3",
           name: "JavaScript",
           description: "Modern JavaScript programming",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr13",
+          name: "ES6+",
+          description: "Modern JavaScript features and syntax",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr14",
+          name: "Async Programming",
+          description: "Asynchronous JavaScript programming",
         },
       ],
       project: {
@@ -165,6 +201,16 @@ export default function CourseGrid() {
           name: "React",
           description: "React.js framework and ecosystem",
         },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr15",
+          name: "Frontend Framework",
+          description: "Modern frontend frameworks",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr16",
+          name: "State Management",
+          description: "State management in React applications",
+        },
       ],
       project: {
         id: "cm5lfpr0r0006ushwe6zjjjbo",
@@ -207,6 +253,16 @@ export default function CourseGrid() {
           id: "cm5lfpr0g0003ushwxg6jctr5",
           name: "Backend",
           description: "Backend development with Node.js",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr17",
+          name: "Express.js",
+          description: "Web application framework for Node.js",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr18",
+          name: "API Development",
+          description: "RESTful API development",
         },
       ],
       project: {
@@ -251,6 +307,16 @@ export default function CourseGrid() {
           name: "Database",
           description: "Database design and management",
         },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr19",
+          name: "SQL",
+          description: "SQL database management",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr20",
+          name: "NoSQL",
+          description: "NoSQL database systems",
+        },
       ],
       project: {
         id: "cm5lfpr0r0006ushwe6zjjjbo",
@@ -294,6 +360,16 @@ export default function CourseGrid() {
           name: "DevOps",
           description: "DevOps methodologies and tools",
         },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr21",
+          name: "CI/CD",
+          description: "Continuous Integration and Deployment",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr22",
+          name: "Docker",
+          description: "Container technology",
+        },
       ],
       project: {
         id: "cm5lfpr0r0006ushwe6zjjjbo",
@@ -316,7 +392,8 @@ export default function CourseGrid() {
       id: "cm5lfpr120008ushw39w16505",
       title: "Cloud Computing",
       description: "AWS cloud services and architecture",
-      thumbnail: "https://plus.unsplash.com/premium_photo-1733306493254-52b143296396?q=80&w=1993&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      thumbnail:
+        "https://plus.unsplash.com/premium_photo-1733306493254-52b143296396?q=80&w=1993&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       videoUrl: null,
       status: "PUBLISHED",
       createdAt: "2025-01-06T19:28:27.158Z",
@@ -335,6 +412,16 @@ export default function CourseGrid() {
           id: "cm5lfpr0g0003ushwxg6jctr8",
           name: "Cloud",
           description: "Cloud computing and services",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr23",
+          name: "AWS",
+          description: "Amazon Web Services",
+        },
+        {
+          id: "cm5lfpr0g0003ushwxg6jctr24",
+          name: "Cloud Architecture",
+          description: "Cloud infrastructure design",
         },
       ],
       project: {

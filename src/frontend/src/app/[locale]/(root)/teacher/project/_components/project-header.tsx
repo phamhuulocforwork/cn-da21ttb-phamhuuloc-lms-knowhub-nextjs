@@ -30,13 +30,17 @@ export function ProjectHeader() {
     <div className="mb-4 mt-8 space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="rounded-md bg-accent p-2 text-accent-foreground">
-            <FolderKanban className="h-6 w-6" />
+          <div className="flex items-center gap-2">
+            <div className="hidden rounded-md bg-accent p-2 text-accent-foreground md:block">
+              <FolderKanban className="h-6 w-6" />
+            </div>
+            <h1 className="text-xl font-bold md:text-2xl">
+              Become a professional web programmer👌
+            </h1>
           </div>
-          <h1 className="text-2xl font-bold">
-            Become a professional web programmer👌
-          </h1>
-          <AnimatedTooltip items={people} />
+          <div className="hidden md:flex">
+            <AnimatedTooltip items={people} />
+          </div>
         </div>
 
         <Button>

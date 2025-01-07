@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreVertical, Users } from "lucide-react";
+import { Album, MoreVertical, Users } from "lucide-react";
 
 interface CourseListItemProps {
   title: string;
@@ -33,9 +33,9 @@ export function CourseListItem({
   const lastEdited = new Date(updatedAt).toLocaleDateString();
 
   return (
-    <div className="flex gap-4 rounded-lg border p-4 hover:bg-accent/50">
+    <div className="flex flex-col gap-4 rounded-lg border p-4 hover:bg-accent/50 md:flex-row md:p-1">
       {/* Thumbnail */}
-      <div className="relative h-32 w-48 flex-shrink-0">
+      <div className="relative h-48 w-full flex-shrink-0 md:h-32 md:w-48">
         <img
           src={thumbnail}
           alt={title}
@@ -50,37 +50,53 @@ export function CourseListItem({
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col">
-        <div className="mb-2 flex items-start justify-between">
-          <h3 className="font-semibold hover:text-primary-500">{title}</h3>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 rounded-full p-0">
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>Edit</DropdownMenuItem>
-              <DropdownMenuItem>Delete</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <div className="flex flex-1 flex-col justify-between">
+        <div className="space-y-2">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <h3 className="line-clamp-2 font-semibold hover:text-primary-500 md:line-clamp-1">
+                {title}
+              </h3>
+              <p className="text-muted-foreground mt-1 line-clamp-2 text-sm">
+                {description}
+              </p>
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 rounded-full p-0">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>Edit</DropdownMenuItem>
+                <DropdownMenuItem>Delete</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="flex flex-wrap gap-1">
+            {categories.slice(0, 2).map((category) => (
+              <Badge key={category.id} variant="tag" className="text-xs">
+                {category.name}
+              </Badge>
+            ))}
+            {categories.length > 2 && (
+              <Badge variant="tag" className="text-xs">
+                +{categories.length - 2} more
+              </Badge>
+            )}
+          </div>
         </div>
 
-        <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">
-          {description}
-        </p>
-
-        <div className="mb-4 flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <Badge key={category.id} variant="tag">
-              {category.name}
-            </Badge>
-          ))}
-        </div>
-
-        <div className="text-muted-foreground mt-auto flex items-center justify-between text-sm">
-          <div>Edited {lastEdited}</div>
-          <div>{content.length} Contents</div>
+        <div className="mt-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-2 text-sm font-medium">
+            <div className="text-slate-500">Edited {lastEdited}</div>
+            <div className="hidden text-slate-500 md:block">•</div>
+            <div className="flex items-center gap-1">
+              <Album className="h-4 w-4" />
+              {content.length} Chapters
+            </div>
+          </div>
         </div>
       </div>
     </div>

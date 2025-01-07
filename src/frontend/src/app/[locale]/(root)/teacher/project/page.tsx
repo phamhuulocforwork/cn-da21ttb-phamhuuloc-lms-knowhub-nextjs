@@ -44,11 +44,10 @@ export default function TeacherProjectsPage() {
         <TabsContent value="course">
           <div className="mt-4 flex flex-col gap-4">
             <div className="flex items-center justify-between">
-                <h2 className="text-base font-semibold">
-                  All course{" "}
-                  <span className="text-muted-foreground">8</span>
-                </h2>
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <h2 className="text-base font-semibold">
+                All course <span className="text-muted-foreground">8</span>
+              </h2>
+              <div className="flex gap-2">
                 <Input
                   placeholder="Search..."
                   className="w-full sm:w-[300px]"

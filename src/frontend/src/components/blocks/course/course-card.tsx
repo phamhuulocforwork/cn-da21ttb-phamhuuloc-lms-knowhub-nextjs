@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MoreVertical, Users } from "lucide-react";
+import { Album, MoreVertical, Users } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,7 +40,7 @@ export function CourseCard({
   const lastEdited = new Date(updatedAt).toLocaleDateString();
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="flex h-full flex-col overflow-hidden">
       <CardHeader className="relative p-0">
         <div className="relative">
           <img
@@ -70,27 +70,37 @@ export function CourseCard({
           </DropdownMenuContent>
         </DropdownMenu>
       </CardHeader>
-      <CardContent className="p-4">
-        <div className="mb-4">
+      <CardContent className="flex flex-1 flex-col p-4">
+        <div className="mb-4 flex-1">
           <h3
             className={`${isOverflowing && "hover:scroll-text truncate hover:overflow-visible"} cursor-pointer font-semibold hover:text-primary-500`}
           >
             {title}
           </h3>
-          <p className="text-muted-foreground text-sm">{description}</p>
+          <p className="text-muted-foreground line-clamp-2 text-sm">
+            {description}
+          </p>
         </div>
-        <div className="mb-4 flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <Badge key={category.id} variant="tag">
+        <div className="flex flex-wrap gap-1">
+          {categories.slice(0, 2).map((category) => (
+            <Badge key={category.id} variant="tag" className="text-xs">
               {category.name}
             </Badge>
           ))}
+          {categories.length > 2 && (
+            <Badge variant="tag" className="text-xs">
+              +{categories.length - 2} more
+            </Badge>
+          )}
         </div>
       </CardContent>
-      <CardFooter className="border-t p-4">
-        <div className="text-muted-foreground flex w-full items-center justify-between text-sm">
-          <div>Edited {lastEdited}</div>
-          <div>{content.length} Contents</div>
+      <CardFooter>
+        <div className="flex items-center gap-2 text-sm font-medium">
+          <div className="text-slate-500">Edited {lastEdited} •</div>
+          <div className="flex items-center gap-1">
+            <Album className="h-4 w-4" />
+            {content.length} Chapters
+          </div>
         </div>
       </CardFooter>
     </Card>
