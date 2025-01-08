@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import { ParentFormMessage } from "@/components/ui/parentFormMessage";
+import { ParentFormMessage } from "@/components/ui/parent-form-message";
 import { signIn } from "next-auth/react";
 import { useRouter } from "@/i18n/routing";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";

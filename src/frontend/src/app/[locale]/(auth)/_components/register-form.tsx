@@ -17,7 +17,7 @@ import { CardWrapper } from "@/app/[locale]/(auth)/_components/card-wrapper";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ParentFormMessage } from "@/components/ui/parentFormMessage";
+import { ParentFormMessage } from "@/components/ui/parent-form-message";
 import { authService } from "@/services/authService";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { z } from "zod";
