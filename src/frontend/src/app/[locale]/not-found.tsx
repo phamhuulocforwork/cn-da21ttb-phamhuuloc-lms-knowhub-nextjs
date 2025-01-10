@@ -13,7 +13,7 @@ export default function NotFound() {
         alt="logo-sketch"
         width={1156}
         height={330}
-        className="w-1/3"
+        className="md:w-1/2"
       />
       <h1 className="text-9xl font-black text-white">404</h1>
       <p className="text-white">{t("404")}</p>
