@@ -1,14 +1,13 @@
-import { Album, MoreVertical, Users } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Category } from "@/types/category";
+import { Album, MoreVertical, Users } from "lucide-react";
 
 interface CourseListItemProps {
   title: string;
@@ -40,7 +39,7 @@ export function CourseListItem({
         />
         <div className="absolute left-2 top-2 rounded-md bg-black/50">
           <div className="flex items-center gap-1 px-2 py-0.5 text-sm text-white">
-            {enrollments > 0 ? `${enrollments} Enrolled` : "No enrollments"}
+            <span>{enrollments} Enrolled</span>
             <Users className="h-4 w-4" />
           </div>
         </div>

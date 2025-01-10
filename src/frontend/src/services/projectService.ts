@@ -1,5 +1,5 @@
-import { api } from "@/config/axios";
 import { Project } from "@/types/project";
+import { api } from "@/config/axios";
 
 interface GetProjectsParams {
   page?: number;
@@ -29,6 +29,11 @@ export const projectService = {
 
   async getProject(id: string) {
     const response = await api.get(`/api/project/${id}`);
+    return response.data;
+  },
+
+  async getMyProjects() {
+    const response = await api.get("/api/project/teacher/my-projects");
     return response.data;
   },
 

@@ -15,24 +15,27 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Category } from "@/types/category";
+import { Question } from "../../../types/quiz";
 
-interface CourseCardProps {
+interface QuizCardProps {
   title: string;
   description: string;
   thumbnail: string;
   categories: Category[];
   updatedAt: Date;
   enrollments: number;
+  questions: number;
 }
 
-export function CourseCard({
+export function QuizCard({
   title,
   description,
   thumbnail,
   categories,
   updatedAt,
   enrollments,
-}: CourseCardProps) {
+  questions,
+}: QuizCardProps) {
   const isOverflowing = title.length > 50;
   const lastEdited = new Date(updatedAt).toLocaleDateString();
 
@@ -98,7 +101,7 @@ export function CourseCard({
           <div className="text-slate-500">Edited {lastEdited} •</div>
           <div className="flex items-center gap-1">
             <Album className="h-4 w-4" />
-            {/* TODO: Hiện thị số lượng bài học */}
+            {questions} questions
           </div>
         </div>
       </CardFooter>

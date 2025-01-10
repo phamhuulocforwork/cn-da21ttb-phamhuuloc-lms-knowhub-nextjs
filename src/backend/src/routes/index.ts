@@ -1,10 +1,10 @@
 import { Router } from "express";
 import authRoutes from "./auth.routes";
-import userRoutes from "./user.routes";
 import categoryRoutes from "./category.routes";
-import projectRoutes from "./project.routes";
 import courseRoutes from "./course.routes";
+import projectRoutes from "./project.routes";
 import quizRoutes from "./quiz.routes";
+import userRoutes from "./user.routes";
 
 const router = Router();
 

@@ -1,5 +1,6 @@
-import { db } from "../../config/db";
 import { Request, Response } from "express";
+
+import { db } from "../../config/db";
 import { generateToken } from "../../utils/jwt.utils";
 
 export default new (class UserController {

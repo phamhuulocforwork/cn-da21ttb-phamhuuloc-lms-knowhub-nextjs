@@ -33,18 +33,53 @@ async function main() {
     },
   });
   // CATEGORIES
-  const uiuxCategory = await prisma.category.create({
-    data: {
-      name: "UI/UX Design",
-      description: "User Interface and User Experience Design principles and practices",
-    },
+  await prisma.category.createMany({
+    data: [
+      {
+        name: "UI/UX Design",
+        description: "User Interface and User Experience Design principles and practices",
+      },
+      {
+        name: "Frontend Development",
+        description: "Building user interfaces with HTML, CSS, JavaScript and modern frameworks",
+      },
+      {
+        name: "Backend Development",
+        description: "Server-side programming, APIs, databases and system architecture",
+      },
+      {
+        name: "Mobile Development",
+        description: "Creating apps for iOS, Android and cross-platform development",
+      },
+      {
+        name: "DevOps",
+        description: "Development operations, CI/CD, cloud infrastructure and deployment",
+      },
+      {
+        name: "Data Science",
+        description: "Data analysis, machine learning, statistics and visualization",
+      },
+      {
+        name: "Cybersecurity",
+        description: "Network security, cryptography, ethical hacking and security best practices",
+      },
+      {
+        name: "Game Development",
+        description: "Game design, programming, graphics and game engines",
+      },
+      {
+        name: "Artificial Intelligence",
+        description: "Machine learning, deep learning, neural networks and AI applications",
+      },
+      {
+        name: "Cloud Computing",
+        description: "Cloud platforms, services, architecture and deployment",
+      },
+    ],
   });
 
-  const webDevCategory = await prisma.category.create({
-    data: {
-      name: "Web Development",
-      description: "Web development technologies and frameworks",
-    },
+  const uiuxCategory = await prisma.category.findFirst({
+    where: { name: "UI/UX Design" },
   });
 
   // PROJECTS
@@ -52,26 +87,26 @@ async function main() {
     data: {
       title: "Design Learning Path",
       description: "Complete learning path for UI/UX designers",
-      thumbnail: "https://placehold.co/400x400",
+      thumbnail: "https://images.unsplash.com/photo-1561070791-2526d30994b5",
       status: "PUBLISHED",
       authorId: (await prisma.user.findFirst({ where: { role: "TEACHER" } }))!.id,
       categories: {
-        connect: [{ id: uiuxCategory.id }],
+        connect: [{ id: uiuxCategory?.id }],
       },
     },
   });
 
   // COURSES
-  const uiuxCourse = await prisma.course.create({
+  const uiuxCourse1 = await prisma.course.create({
     data: {
       title: "Mastering UI/UX Design: A Guide",
       description: "Comprehensive guide to master UI/UX design principles",
-      thumbnail: "https://placehold.co/400x400",
+      thumbnail: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c",
       status: "PUBLISHED",
       authorId: (await prisma.user.findFirst({ where: { role: "TEACHER" } }))!.id,
       projectId: designProject.id,
       categories: {
-        connect: [{ id: uiuxCategory.id }],
+        connect: [{ id: uiuxCategory?.id }],
       },
       content: {
         create: [
@@ -90,17 +125,76 @@ async function main() {
     },
   });
 
+  const uiuxCourse2 = await prisma.course.create({
+    data: {
+      title: "User Research and Testing",
+      description: "Learn effective user research methods and usability testing techniques",
+      thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
+      status: "PUBLISHED",
+      authorId: (await prisma.user.findFirst({ where: { role: "TEACHER" } }))!.id,
+      projectId: designProject.id,
+      categories: {
+        connect: [{ id: uiuxCategory?.id }],
+      },
+      content: {
+        create: [
+          {
+            type: "TEXT",
+            value: "Introduction to User Research",
+            order: 1,
+          },
+          {
+            type: "VIDEO",
+            value: "https://example.com/research-video",
+            order: 2,
+          },
+        ],
+      },
+    },
+  });
+
+  const uiuxCourse3 = await prisma.course.create({
+    data: {
+      title: "UI Design Fundamentals",
+      description: "Master the core principles of user interface design",
+      thumbnail: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e",
+      status: "PUBLISHED",
+      authorId: (await prisma.user.findFirst({ where: { role: "TEACHER" } }))!.id,
+      projectId: designProject.id,
+      categories: {
+        connect: [{ id: uiuxCategory?.id }],
+      },
+      content: {
+        create: [
+          {
+            type: "TEXT",
+            value: "Design Elements and Principles",
+            order: 1,
+          },
+          {
+            type: "VIDEO",
+            value: "https://example.com/ui-fundamentals",
+            order: 2,
+          },
+        ],
+      },
+    },
+  });
+
+  const uiuxCourse = uiuxCourse1;
+
   // QUIZ
   const designQuiz = await prisma.quiz.create({
     data: {
       title: "UI/UX Design Principles Quiz",
       description: "Test your knowledge of UI/UX design principles",
+      thumbnail: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e",
       duration: 30,
       status: "PUBLISHED",
       authorId: (await prisma.user.findFirst({ where: { role: "TEACHER" } }))!.id,
       projectId: designProject.id,
       categories: {
-        connect: [{ id: uiuxCategory.id }],
+        connect: [{ id: uiuxCategory?.id }],
       },
       questions: {
         create: [

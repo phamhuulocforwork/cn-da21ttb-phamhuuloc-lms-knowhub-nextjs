@@ -1,5 +1,5 @@
+import { AppSidebar } from "@/components/blocks/side-bar/app-side-bar";
 import { SidebarProvider } from "@/components/ui/side-bar";
-import { AppSidebar } from "@/components/common/app-side-bar";
 
 export default async function LocaleLayout({
   children,

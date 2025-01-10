@@ -1,5 +1,6 @@
-import { db } from "../../config/db";
 import { Request, Response } from "express";
+
+import { db } from "../../config/db";
 
 export default new (class CourseController {
   async getCourses(req: Request, res: Response): Promise<Response> {
@@ -74,7 +75,6 @@ export default new (class CourseController {
   async getCourse(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const userId = req.user?.id;
 
       const course = await db.course.findUnique({
         where: { id },
@@ -96,11 +96,6 @@ export default new (class CourseController {
           content: {
             orderBy: { order: "asc" },
           },
-          enrollments: userId
-            ? {
-                where: { userId },
-              }
-            : false,
           _count: {
             select: {
               enrollments: true,
@@ -111,23 +106,6 @@ export default new (class CourseController {
 
       if (!course) {
         return res.status(404).json({ error: "Course not found" });
-      }
-
-      // Check if course belongs to a project and if user has access
-      if (course.projectId) {
-        const hasAccess = await db.project.findFirst({
-          where: {
-            id: course.projectId,
-            OR: [
-              { authorId: userId },
-              { courses: { some: { enrollments: { some: { userId } } } } },
-            ],
-          },
-        });
-
-        if (!hasAccess) {
-          return res.status(403).json({ error: "Not authorized" });
-        }
       }
 
       return res.status(200).json(course);
