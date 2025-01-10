@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
 import "./globals.css";
-import { Inter } from "next/font/google";
 
-import { ThemeProvider } from "next-themes";
+import { AuthProvider } from "@/contexts/auth-provider";
+import { Inter } from "next/font/google";
+import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/toaster";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { AuthProvider } from "@/contexts/auth-provider";
-import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 

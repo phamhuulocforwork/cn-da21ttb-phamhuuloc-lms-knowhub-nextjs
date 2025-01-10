@@ -95,6 +95,10 @@
       "title": "User management"
     }
   },
+  "alertDialog": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
   "auth": {
     "login": {
       "backButtonLabel": "Don't have an account? ",
@@ -146,6 +150,11 @@
       "passwordsDoNotMatch": "Passwords do not match"
     }
   },
+  "errorPage": {
+    "403": "Oops, You are not authorized to access this page!",
+    "404": "Oops, This Page Not Found!",
+    "returnHome": "Return to home"
+  },
   "sidebar": {
     "menu": {
       "login": "Login",
@@ -195,9 +204,5 @@
     "deleteSuccess": "Deleted successfully",
     "editError": "Failed to edit",
     "editSuccess": "Edited successfully"
-  },
-  "alertDialog": {
-    "cancel": "Cancel",
-    "confirm": "Confirm"
   }
 }

@@ -1,16 +1,17 @@
 "use client";
 
-import { SessionProvider, useSession, signOut } from "next-auth/react";
 import {
+  ReactNode,
   createContext,
   useContext,
-  ReactNode,
   useEffect,
   useState,
 } from "react";
-import { userService } from "@/services/userService";
+import { SessionProvider, signOut, useSession } from "next-auth/react";
+
 import { User } from "@/types/user";
 import { useMinimumLoading } from "@/components/hooks/use-minimum-loading";
+import { userService } from "@/services/userService";
 
 interface AuthContextType {
   user: User | null;

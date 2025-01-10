@@ -28,10 +28,6 @@ export default async function ProjectDetailPage({
       </Suspense>
     );
   } catch (error) {
-    return (
-      <div className="flex h-[calc(100vh-4rem)] w-full items-center justify-center">
-        <p>Failed to load project</p>
-      </div>
-    );
+    notFound();
   }
 }
