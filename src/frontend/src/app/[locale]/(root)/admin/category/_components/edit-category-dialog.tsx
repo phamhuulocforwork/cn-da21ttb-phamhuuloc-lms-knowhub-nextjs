@@ -1,15 +1,15 @@
-import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -17,13 +17,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { categoryService } from "@/services/categoryService";
-import { Category } from "@/types/category";
-import { useToast } from "@/components/hooks/use-toast";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { categoryService } from '@/services/categoryService';
+import { Category } from '@/types/category';
+import { useToast } from '@/components/hooks/use-toast';
 
 interface EditCategoryDialogProps {
   category: Category;
@@ -33,7 +33,7 @@ interface EditCategoryDialogProps {
 }
 
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, 'Name is required'),
   description: z.string().optional(),
 });
 
@@ -45,8 +45,8 @@ export function EditCategoryDialog({
   onClose,
   onSuccess,
 }: EditCategoryDialogProps) {
-  const t = useTranslations("admin.category.editCategory");
-  const tToast = useTranslations("toast");
+  const t = useTranslations('admin.category.editCategory');
+  const tToast = useTranslations('toast');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -54,7 +54,7 @@ export function EditCategoryDialog({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: category.name,
-      description: category.description || "",
+      description: category.description || '',
     },
   });
 
@@ -66,17 +66,17 @@ export function EditCategoryDialog({
         ...data,
       });
       toast({
-        variant: "success",
-        title: tToast("editSuccess"),
+        variant: 'success',
+        title: tToast('editSuccess'),
       });
       onSuccess();
       onClose();
     } catch (error) {
       toast({
-        variant: "destructive",
-        title: tToast("editError"),
+        variant: 'destructive',
+        title: tToast('editError'),
       });
-      console.error("Failed to update category:", error);
+      console.error('Failed to update category:', error);
     } finally {
       setLoading(false);
     }
@@ -86,16 +86,16 @@ export function EditCategoryDialog({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
             <FormField
               control={form.control}
-              name="name"
+              name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("name")}</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={loading} />
                   </FormControl>
@@ -105,10 +105,10 @@ export function EditCategoryDialog({
             />
             <FormField
               control={form.control}
-              name="description"
+              name='description'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("description")}</FormLabel>
+                  <FormLabel>{t('description')}</FormLabel>
                   <FormControl>
                     <Textarea {...field} disabled={loading} />
                   </FormControl>
@@ -116,12 +116,12 @@ export function EditCategoryDialog({
                 </FormItem>
               )}
             />
-            <div className="flex justify-end gap-2">
-              <Button type="button" variant="outline" onClick={onClose}>
-                {t("cancel")}
+            <div className='flex justify-end gap-2'>
+              <Button type='button' variant='outline' onClick={onClose}>
+                {t('cancel')}
               </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? t("saving") : t("save")}
+              <Button type='submit' disabled={loading}>
+                {loading ? t('saving') : t('save')}
               </Button>
             </div>
           </form>

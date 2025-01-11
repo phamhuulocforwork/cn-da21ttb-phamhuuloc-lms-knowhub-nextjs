@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown } from 'lucide-react';
 
-import * as React from "react";
+import * as React from 'react';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,21 +13,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/side-bar";
+} from '@/components/ui/side-bar';
 
-import { useTheme } from "next-themes";
-import { User } from "@/types/user";
-import { useRouter } from "@/i18n/routing";
-import { menuItems } from "@/config/menuConfig";
-import { menuHandlers } from "@/config/menuHandlers";
-import { UserMenuSkeleton } from "./user-menu-skeleton";
-import { useAuth } from "@/contexts/auth-provider";
+import { useTheme } from 'next-themes';
+import { User } from '@/types/user';
+import { useRouter } from '@/i18n/routing';
+import { menuItems } from '@/config/menuConfig';
+import { menuHandlers } from '@/config/menuHandlers';
+import { UserMenuSkeleton } from './user-menu-skeleton';
+import { useAuth } from '@/contexts/auth-provider';
 
 export function UserMenu({
   user,
@@ -40,18 +40,18 @@ export function UserMenu({
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const { status } = useAuth();
-  const role = user?.role || "GUEST";
+  const role = user?.role || 'GUEST';
   const items = menuItems[role];
 
   // Thêm state để track việc load auth lần đầu
   const [initialLoadComplete, setInitialLoadComplete] = React.useState(false);
 
   // Chỉ show loading khi chưa load lần đầu và đang trong trạng thái loading
-  const isLoading = !initialLoadComplete && status === "loading";
+  const isLoading = !initialLoadComplete && status === 'loading';
 
   // Effect để đánh dấu đã load xong lần đầu
   React.useEffect(() => {
-    if (status !== "loading") {
+    if (status !== 'loading') {
       setInitialLoadComplete(true);
     }
   }, [status]);
@@ -68,8 +68,8 @@ export function UserMenu({
   };
 
   // Tách items theo type
-  const navigationItems = items.filter((item) => item.type === "navigation");
-  const actionItems = items.filter((item) => item.type === "action");
+  const navigationItems = items.filter((item) => item.type === 'navigation');
+  const actionItems = items.filter((item) => item.type === 'action');
 
   return (
     <SidebarMenu>
@@ -77,59 +77,59 @@ export function UserMenu({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              size='lg'
+              className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
               {user ? (
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar className='h-8 w-8 rounded-lg'>
                   <AvatarImage src={user?.image} alt={user?.name} />
-                  <AvatarFallback className="rounded-lg">
+                  <AvatarFallback className='rounded-lg'>
                     {user?.name
-                      .split(" ")
+                      .split(' ')
                       .map((n) => n[0])
-                      .join("")}
+                      .join('')}
                   </AvatarFallback>
                 </Avatar>
               ) : (
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar className='h-8 w-8 rounded-lg'>
                   <AvatarImage
-                    src="assets/images/avatars/guest.png"
-                    alt="user-image"
+                    src='assets/images/avatars/guest.png'
+                    alt='user-image'
                   />
-                  <AvatarFallback className="rounded-lg">G</AvatarFallback>
+                  <AvatarFallback className='rounded-lg'>G</AvatarFallback>
                 </Avatar>
               )}
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user?.name}</span>
-                <span className="truncate text-xs">{user?.email}</span>
+              <div className='grid flex-1 text-left text-sm leading-tight'>
+                <span className='truncate font-semibold'>{user?.name}</span>
+                <span className='truncate text-xs'>{user?.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
-            align="end"
+            className='w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg'
+            side={isMobile ? 'bottom' : 'right'}
+            align='end'
             sideOffset={4}
           >
             {user && (
               <>
-                <DropdownMenuLabel className="p-0 font-normal">
-                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                    <Avatar className="h-8 w-8 rounded-lg">
+                <DropdownMenuLabel className='p-0 font-normal'>
+                  <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
+                    <Avatar className='h-8 w-8 rounded-lg'>
                       <AvatarImage src={user.image} alt={user.name} />
-                      <AvatarFallback className="rounded-lg">
+                      <AvatarFallback className='rounded-lg'>
                         {user.name
-                          .split(" ")
+                          .split(' ')
                           .map((n) => n[0])
-                          .join("")}
+                          .join('')}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">
+                    <div className='grid flex-1 text-left text-sm leading-tight'>
+                      <span className='truncate font-semibold'>
                         {user.name}
                       </span>
-                      <span className="truncate text-xs">{user.email}</span>
+                      <span className='truncate text-xs'>{user.email}</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
@@ -143,7 +143,7 @@ export function UserMenu({
                   key={item.id}
                   onClick={() => handleMenuAction(item.id)}
                 >
-                  <item.icon className="h-4 w-4" />
+                  <item.icon className='h-4 w-4' />
                   {item.label}
                 </DropdownMenuItem>
               ))}
@@ -159,9 +159,9 @@ export function UserMenu({
                   key={item.id}
                   onClick={() => handleMenuAction(item.id)}
                 >
-                  <item.icon className="h-4 w-4" />
-                  {item.id === "theme"
-                    ? `Theme: ${theme === "light" ? "dark" : "light"}`
+                  <item.icon className='h-4 w-4' />
+                  {item.id === 'theme'
+                    ? `Theme: ${theme === 'light' ? 'dark' : 'light'}`
                     : item.label}
                 </DropdownMenuItem>
               ))}

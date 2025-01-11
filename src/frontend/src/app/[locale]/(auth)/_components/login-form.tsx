@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import {
   Form,
@@ -12,34 +12,34 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 
-import { CardWrapper } from "@/app/[locale]/(auth)/_components/card-wrapper";
-import { useTranslations } from "next-intl";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-import { ParentFormMessage } from "@/components/ui/parent-form-message";
-import { signIn } from "next-auth/react";
-import { useRouter } from "@/i18n/routing";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { CardWrapper } from '@/app/[locale]/(auth)/_components/card-wrapper';
+import { useTranslations } from 'next-intl';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { FcGoogle } from 'react-icons/fc';
+import { ParentFormMessage } from '@/components/ui/parent-form-message';
+import { signIn } from 'next-auth/react';
+import { useRouter } from '@/i18n/routing';
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
 
 export const LoginForm = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
+  const [error, setError] = useState<string | undefined>('');
+  const [success, setSuccess] = useState<string | undefined>('');
 
-  const t = useTranslations("auth.login");
-  const tValidation = useTranslations("auth.validation");
-  const tServerMessages = useTranslations("auth.serverMessages");
+  const t = useTranslations('auth.login');
+  const tValidation = useTranslations('auth.validation');
+  const tServerMessages = useTranslations('auth.serverMessages');
 
   const formSchema = z.object({
     email: z.string().regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
-      message: tValidation("invalidEmail"),
+      message: tValidation('invalidEmail'),
     }),
-    password: z.string().min(1, { message: tValidation("invalidPassword") }),
+    password: z.string().min(1, { message: tValidation('invalidPassword') }),
   });
 
   type FormData = z.infer<typeof formSchema>;
@@ -47,33 +47,33 @@ export const LoginForm = () => {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
   const onSubmit = async (values: FormData) => {
     try {
       setLoading(true);
-      setError("");
-      setSuccess("");
+      setError('');
+      setSuccess('');
 
-      const result = await signIn("credentials", {
+      const result = await signIn('credentials', {
         email: values.email,
         password: values.password,
         redirect: false,
       });
 
       if (result?.error) {
-        setError(tServerMessages("error.invalidCredentials"));
+        setError(tServerMessages('error.invalidCredentials'));
         return;
       }
 
-      setSuccess(tServerMessages("success.login"));
-      router.push("/");
+      setSuccess(tServerMessages('success.login'));
+      router.push('/');
     } catch (error) {
-      console.error("Login error:", error);
-      setError(tServerMessages("error.loginFailed"));
+      console.error('Login error:', error);
+      setError(tServerMessages('error.loginFailed'));
     } finally {
       setLoading(false);
     }
@@ -81,26 +81,26 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel={t("headerLabel")}
-      backButtonLabel={t("backButtonLabel")}
-      backButtonLink="/register"
-      backButtonLinkText={t("backButtonLinkText")}
+      headerLabel={t('headerLabel')}
+      backButtonLabel={t('backButtonLabel')}
+      backButtonLink='/register'
+      backButtonLinkText={t('backButtonLinkText')}
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-2">
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+          <div className='space-y-2'>
             <FormField
               control={form.control}
-              name="email"
+              name='email'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("email")}</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       disabled={loading}
-                      type="text"
-                      placeholder={t("emailPlaceholder")}
+                      type='text'
+                      placeholder={t('emailPlaceholder')}
                     />
                   </FormControl>
                   <FormMessage />
@@ -109,40 +109,40 @@ export const LoginForm = () => {
             />
             <FormField
               control={form.control}
-              name="password"
+              name='password'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("password")}</FormLabel>
+                  <FormLabel>{t('password')}</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={loading} type="password" />
+                    <Input {...field} disabled={loading} type='password' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="flex w-full justify-end">
+            <div className='flex w-full justify-end'>
               <Link
-                className="text-right text-sm text-primary underline-offset-4 hover:underline"
-                href="/forgot-password"
+                className='text-right text-sm text-primary underline-offset-4 hover:underline'
+                href='/forgot-password'
               >
-                {t("forgotPassword")}
+                {t('forgotPassword')}
               </Link>
             </div>
           </div>
-          <ParentFormMessage message={error} variant="error" />
+          <ParentFormMessage message={error} variant='error' />
           <ParentFormMessage message={success} />
-          <div className="flex flex-col gap-2">
-            <Button className="w-full" type="submit" disabled={loading}>
+          <div className='flex flex-col gap-2'>
+            <Button className='w-full' type='submit' disabled={loading}>
               {loading ? (
-                <span className="flex items-center gap-2">
-                  <LoadingSpinner size="sm" />
-                  {t("submitLoading")}
+                <span className='flex items-center gap-2'>
+                  <LoadingSpinner size='sm' />
+                  {t('submitLoading')}
                 </span>
               ) : (
-                t("submit")
+                t('submit')
               )}
             </Button>
-            <SocialButtons loginWithGoogleLabel={t("loginWithGoogleLabel")} />
+            <SocialButtons loginWithGoogleLabel={t('loginWithGoogleLabel')} />
           </div>
         </form>
       </Form>
@@ -162,32 +162,32 @@ const SocialButtons = ({
     try {
       setIsLoading(true);
       setError(undefined);
-      await signIn("google", { callbackUrl: "/" });
+      await signIn('google', { callbackUrl: '/' });
     } catch (error) {
-      console.error("Google login error:", error);
-      setError("Failed to login with Google. Please try again.");
+      console.error('Google login error:', error);
+      setError('Failed to login with Google. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-2">
+    <div className='flex w-full flex-col items-center justify-center gap-2'>
       <Button
-        size="lg"
-        className="w-full justify-center gap-2"
-        variant="outline"
+        size='lg'
+        className='w-full justify-center gap-2'
+        variant='outline'
         onClick={handleGoogleLogin}
         disabled={isLoading}
       >
         {isLoading ? (
-          <LoadingSpinner size="sm" />
+          <LoadingSpinner size='sm' />
         ) : (
-          <FcGoogle className="h-6 w-6" />
+          <FcGoogle className='h-6 w-6' />
         )}
         {loginWithGoogleLabel}
       </Button>
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      {error && <p className='text-sm text-destructive'>{error}</p>}
     </div>
   );
 };

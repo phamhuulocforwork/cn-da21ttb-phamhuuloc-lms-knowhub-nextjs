@@ -5,15 +5,15 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from '@/components/ui/pagination';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useTranslations } from "next-intl";
+} from '@/components/ui/select';
+import { useTranslations } from 'next-intl';
 
 interface PaginationControlsProps {
   currentPage: number;
@@ -30,24 +30,24 @@ export function PaginationControls({
   onPageChange,
   onItemsPerPageChange,
 }: PaginationControlsProps) {
-  const t = useTranslations("admin.pagination");
+  const t = useTranslations('admin.pagination');
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <p className="text-muted-foreground text-sm">{t("itemsPerPage")}</p>
+    <div className='flex items-center justify-between'>
+      <div className='flex items-center gap-2'>
+        <p className='text-muted-foreground text-sm'>{t('itemsPerPage')}</p>
         <Select
           value={itemsPerPage.toString()}
           onValueChange={(value) => onItemsPerPageChange(Number(value))}
         >
-          <SelectTrigger className="w-[70px]">
-            <SelectValue placeholder="10" />
+          <SelectTrigger className='w-[70px]'>
+            <SelectValue placeholder='10' />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="5">5</SelectItem>
-            <SelectItem value="10">10</SelectItem>
-            <SelectItem value="20">20</SelectItem>
-            <SelectItem value="50">50</SelectItem>
+            <SelectItem value='5'>5</SelectItem>
+            <SelectItem value='10'>10</SelectItem>
+            <SelectItem value='20'>20</SelectItem>
+            <SelectItem value='50'>50</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -56,7 +56,7 @@ export function PaginationControls({
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              href="#"
+              href='#'
               onClick={(e) => {
                 e.preventDefault();
                 onPageChange(currentPage - 1);
@@ -66,7 +66,7 @@ export function PaginationControls({
           {[...Array(totalPages)].map((_, i) => (
             <PaginationItem key={i + 1}>
               <PaginationLink
-                href="#"
+                href='#'
                 onClick={(e) => {
                   e.preventDefault();
                   onPageChange(i + 1);
@@ -79,7 +79,7 @@ export function PaginationControls({
           ))}
           <PaginationItem>
             <PaginationNext
-              href="#"
+              href='#'
               onClick={(e) => {
                 e.preventDefault();
                 onPageChange(currentPage + 1);

@@ -1,3 +1,3 @@
-import { LexicalContextMenuPlugin } from '@lexical/react/LexicalContextMenuPlugin'
+import { LexicalContextMenuPlugin } from '@lexical/react/LexicalContextMenuPlugin';
 
-export default LexicalContextMenuPlugin
+export default LexicalContextMenuPlugin;

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 import {
   Form,
   FormControl,
@@ -10,22 +10,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { useCallback, useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
-import { categoryService } from "@/services/categoryService";
-import { projectService } from "@/services/projectService";
+} from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { categoryService } from '@/services/categoryService';
+import { projectService } from '@/services/projectService';
 
-import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
 interface CreateProjectDialogProps {
   open: boolean;
@@ -35,12 +35,12 @@ interface CreateProjectDialogProps {
 
 const formSchema = z.object({
   title: z.string().min(1, {
-    message: "Title is required",
+    message: 'Title is required',
   }),
   description: z.string().optional(),
   thumbnail: z.string().optional(),
   categoryIds: z.array(z.string()).min(1, {
-    message: "At least one category is required",
+    message: 'At least one category is required',
   }),
 });
 
@@ -51,11 +51,11 @@ export function CreateProjectDialog({
   onClose,
   onSuccess,
 }: CreateProjectDialogProps) {
-  const t = useTranslations("teacher.projects.create");
+  const t = useTranslations('teacher.projects.create');
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Option[]>([]);
 
-  const fetchCategories = useCallback(async (search: string = "") => {
+  const fetchCategories = useCallback(async (search: string = '') => {
     const { categories } = await categoryService.getCategories({
       page: 1,
       limit: 10,
@@ -78,9 +78,9 @@ export function CreateProjectDialog({
   const form = useForm<CreateProjectFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      thumbnail: "https://placehold.co/600x400",
+      title: '',
+      description: '',
+      thumbnail: 'https://placehold.co/600x400',
       categoryIds: [],
     },
   });
@@ -100,20 +100,20 @@ export function CreateProjectDialog({
   };
   return (
     <Dialog>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader>
           <DialogTitle>Create New Project</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
             {/* //TODO: add thumbnail */}
 
             <FormField
               control={form.control}
-              name="title"
+              name='title'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("title")}</FormLabel>
+                  <FormLabel>{t('title')}</FormLabel>
                   <FormControl>
                     <Input disabled={loading} {...field} />
                   </FormControl>
@@ -124,10 +124,10 @@ export function CreateProjectDialog({
 
             <FormField
               control={form.control}
-              name="description"
+              name='description'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("description")}</FormLabel>
+                  <FormLabel>{t('description')}</FormLabel>
                   <FormControl>
                     <Textarea disabled={loading} {...field} />
                   </FormControl>
@@ -138,10 +138,10 @@ export function CreateProjectDialog({
 
             <FormField
               control={form.control}
-              name="categoryIds"
+              name='categoryIds'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("categories")}</FormLabel>
+                  <FormLabel>{t('categories')}</FormLabel>
                   <FormControl>
                     <MultipleSelector
                       disabled={loading}
@@ -158,8 +158,8 @@ export function CreateProjectDialog({
                       onChange={(selected) => {
                         field.onChange(selected.map((opt) => opt.value));
                       }}
-                      placeholder={t("categories")}
-                      emptyIndicator={t("no_results")}
+                      placeholder={t('categories')}
+                      emptyIndicator={t('no_results')}
                       options={categories}
                     />
                   </FormControl>
@@ -168,8 +168,8 @@ export function CreateProjectDialog({
               )}
             />
 
-            <Button type="submit" disabled={loading}>
-              {t("create")}
+            <Button type='submit' disabled={loading}>
+              {t('create')}
             </Button>
           </form>
         </Form>

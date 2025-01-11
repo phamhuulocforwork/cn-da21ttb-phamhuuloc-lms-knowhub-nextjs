@@ -1,4 +1,4 @@
-import * as XLSX from "xlsx";
+import * as XLSX from 'xlsx';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const downloadExcel = (data: any[], name: string) => {

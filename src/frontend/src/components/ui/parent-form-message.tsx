@@ -1,20 +1,20 @@
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from "@/lib/utils";
-import { CheckIcon, TriangleAlert } from "lucide-react";
+import { cn } from '@/lib/utils';
+import { CheckIcon, TriangleAlert } from 'lucide-react';
 
 const parentFormMessageVariants = cva(
-  "rounded-md p-3 flex items-center gap-2 text-sm",
+  'rounded-md p-3 flex items-center gap-2 text-sm',
   {
     variants: {
       variant: {
-        success: "bg-emerald-500/15 text-emerald-500",
-        error: "bg-destructive-500/15 text-destructive",
+        success: 'bg-emerald-500/15 text-emerald-500',
+        error: 'bg-destructive-500/15 text-destructive',
       },
     },
     defaultVariants: {
-      variant: "success",
+      variant: 'success',
     },
   },
 );
@@ -27,7 +27,7 @@ export interface ParentFormMessageProps
 
 export function ParentFormMessage({
   className,
-  variant = "success",
+  variant = 'success',
   message,
   ...props
 }: ParentFormMessageProps) {
@@ -38,10 +38,10 @@ export function ParentFormMessage({
       className={cn(parentFormMessageVariants({ variant, className }))}
       {...props}
     >
-      {variant === "success" ? (
-        <CheckIcon className="h-4 w-4" />
+      {variant === 'success' ? (
+        <CheckIcon className='h-4 w-4' />
       ) : (
-        <TriangleAlert className="h-4 w-4" />
+        <TriangleAlert className='h-4 w-4' />
       )}
       {message}
     </div>

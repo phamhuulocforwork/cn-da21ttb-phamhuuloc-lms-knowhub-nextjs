@@ -1,24 +1,24 @@
-import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode'
-import { ScissorsIcon } from 'lucide-react'
+import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
+import { ScissorsIcon } from 'lucide-react';
 
-import { useToolbarContext } from '@/components/editor/context/toolbar-context'
-import { SelectItem } from '@/components/ui/select'
+import { useToolbarContext } from '@/components/editor/context/toolbar-context';
+import { SelectItem } from '@/components/ui/select';
 
 export function InsertHorizontalRule() {
-  const { activeEditor } = useToolbarContext()
+  const { activeEditor } = useToolbarContext();
 
   return (
     <SelectItem
-      value="horizontal-rule"
+      value='horizontal-rule'
       onPointerUp={() =>
         activeEditor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined)
       }
-      className=""
+      className=''
     >
-      <div className="flex items-center gap-1">
-        <ScissorsIcon className="size-4" />
+      <div className='flex items-center gap-1'>
+        <ScissorsIcon className='size-4' />
         <span>Horizontal Rule</span>
       </div>
     </SelectItem>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { api } from "@/config/axios";
-import { Category } from "@/types/category";
+import { api } from '@/config/axios';
+import { Category } from '@/types/category';
 
 interface GetCategoriesParams {
   page?: number;
@@ -21,15 +21,15 @@ export const categoryService = {
   async getCategories(
     params?: GetCategoriesParams,
   ): Promise<GetCategoriesResponse> {
-    const { page = 1, limit = 10, search = "" } = params || {};
-    const response = await api.get("/api/category", {
+    const { page = 1, limit = 10, search = '' } = params || {};
+    const response = await api.get('/api/category', {
       params: { page, limit, search },
     });
     return response.data;
   },
 
-  async createCategory(category: Omit<Category, "id">) {
-    const response = await api.post("/api/category", category);
+  async createCategory(category: Omit<Category, 'id'>) {
+    const response = await api.post('/api/category', category);
     return response.data;
   },
 

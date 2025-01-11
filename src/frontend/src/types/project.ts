@@ -1,8 +1,8 @@
-import { Category } from "./category";
-import { Course } from "./course";
-import { Status } from "./common";
-import { User } from "./user";
-import { Quiz } from "./quiz";
+import { Category } from './category';
+import { Course } from './course';
+import { Quiz } from './quiz';
+import { Status } from './common';
+import { User } from './user';
 
 export interface Project {
   id: string;

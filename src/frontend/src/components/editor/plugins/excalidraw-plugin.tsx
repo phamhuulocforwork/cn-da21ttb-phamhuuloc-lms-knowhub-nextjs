@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
-import type { AppState, BinaryFiles } from '@excalidraw/excalidraw/types/types'
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { $wrapNodeInElement } from '@lexical/utils'
+import type { AppState, BinaryFiles } from '@excalidraw/excalidraw/types/types';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $wrapNodeInElement } from '@lexical/utils';
 import {
   $createParagraphNode,
   $insertNodes,
@@ -17,66 +17,69 @@ import {
   COMMAND_PRIORITY_EDITOR,
   LexicalCommand,
   createCommand,
-} from 'lexical'
+} from 'lexical';
 
-import { $createExcalidrawNode, ExcalidrawNode } from '../nodes/excalidraw-node'
-import type { ExcalidrawInitialElements } from '../ui/excalidraw-modal'
-import { ExcalidrawModal } from '../ui/excalidraw-modal'
+import {
+  $createExcalidrawNode,
+  ExcalidrawNode,
+} from '../nodes/excalidraw-node';
+import type { ExcalidrawInitialElements } from '../ui/excalidraw-modal';
+import { ExcalidrawModal } from '../ui/excalidraw-modal';
 
 export const INSERT_EXCALIDRAW_COMMAND: LexicalCommand<void> = createCommand(
-  'INSERT_EXCALIDRAW_COMMAND'
-)
+  'INSERT_EXCALIDRAW_COMMAND',
+);
 
 export function ExcalidrawPlugin(): JSX.Element | null {
-  const [editor] = useLexicalComposerContext()
-  const [isModalOpen, setModalOpen] = useState<boolean>(false)
+  const [editor] = useLexicalComposerContext();
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (!editor.hasNodes([ExcalidrawNode])) {
       throw new Error(
-        'ExcalidrawPlugin: ExcalidrawNode not registered on editor'
-      )
+        'ExcalidrawPlugin: ExcalidrawNode not registered on editor',
+      );
     }
 
     return editor.registerCommand(
       INSERT_EXCALIDRAW_COMMAND,
       () => {
-        setModalOpen(true)
-        return true
+        setModalOpen(true);
+        return true;
       },
-      COMMAND_PRIORITY_EDITOR
-    )
-  }, [editor])
+      COMMAND_PRIORITY_EDITOR,
+    );
+  }, [editor]);
 
   const onClose = () => {
-    setModalOpen(false)
-  }
+    setModalOpen(false);
+  };
 
   const onDelete = () => {
-    setModalOpen(false)
-  }
+    setModalOpen(false);
+  };
 
   const onSave = (
     elements: ExcalidrawInitialElements,
     appState: Partial<AppState>,
-    files: BinaryFiles
+    files: BinaryFiles,
   ) => {
     editor.update(() => {
-      const excalidrawNode = $createExcalidrawNode()
+      const excalidrawNode = $createExcalidrawNode();
       excalidrawNode.setData(
         JSON.stringify({
           appState,
           elements,
           files,
-        })
-      )
-      $insertNodes([excalidrawNode])
+        }),
+      );
+      $insertNodes([excalidrawNode]);
       if ($isRootOrShadowRoot(excalidrawNode.getParentOrThrow())) {
-        $wrapNodeInElement(excalidrawNode, $createParagraphNode).selectEnd()
+        $wrapNodeInElement(excalidrawNode, $createParagraphNode).selectEnd();
       }
-    })
-    setModalOpen(false)
-  }
+    });
+    setModalOpen(false);
+  };
   return (
     <ExcalidrawModal
       initialElements={[]}
@@ -88,5 +91,5 @@ export function ExcalidrawPlugin(): JSX.Element | null {
       onSave={onSave}
       closeOnClickOutside={false}
     />
-  )
+  );
 }

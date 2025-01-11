@@ -9,8 +9,8 @@ export interface User {
 }
 
 export enum Role {
-  GUEST = "GUEST",
-  STUDENT = "STUDENT",
-  TEACHER = "TEACHER",
-  ADMIN = "ADMIN",
+  GUEST = 'GUEST',
+  STUDENT = 'STUDENT',
+  TEACHER = 'TEACHER',
+  ADMIN = 'ADMIN',
 }

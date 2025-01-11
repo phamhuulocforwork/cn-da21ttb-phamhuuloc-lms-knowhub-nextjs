@@ -1,4 +1,4 @@
-import { ChartColumnStacked, Home, Users, SquareMinus } from "lucide-react";
+import { ChartColumnStacked, Home, Users, SquareMinus } from 'lucide-react';
 
 type NavigationItem = {
   title: string;
@@ -15,8 +15,8 @@ export const navigations: Record<string, NavigationConfig> = {
   GUEST: {
     navigations: [
       {
-        title: "home",
-        url: "/",
+        title: 'home',
+        url: '/',
         icon: Home,
       },
     ],
@@ -24,8 +24,8 @@ export const navigations: Record<string, NavigationConfig> = {
   STUDENT: {
     navigations: [
       {
-        title: "home",
-        url: "/student",
+        title: 'home',
+        url: '/student',
         icon: Home,
       },
     ],
@@ -33,15 +33,15 @@ export const navigations: Record<string, NavigationConfig> = {
   TEACHER: {
     navigations: [
       {
-        title: "home",
-        url: "/teacher",
+        title: 'home',
+        url: '/teacher',
         icon: Home,
       },
     ],
     projects: [
       {
-        title: "projects",
-        url: "/teacher/projects",
+        title: 'projects',
+        url: '/teacher/projects',
         icon: SquareMinus,
       },
     ],
@@ -49,13 +49,13 @@ export const navigations: Record<string, NavigationConfig> = {
   ADMIN: {
     navigations: [
       {
-        title: "users",
-        url: "/admin/users",
+        title: 'users',
+        url: '/admin/users',
         icon: Users,
       },
       {
-        title: "category",
-        url: "/admin/category",
+        title: 'category',
+        url: '/admin/category',
         icon: ChartColumnStacked,
       },
     ],

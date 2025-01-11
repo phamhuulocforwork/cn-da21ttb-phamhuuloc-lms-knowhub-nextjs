@@ -1,27 +1,27 @@
-import { TextMatchTransformer } from '@lexical/markdown'
+import { TextMatchTransformer } from '@lexical/markdown';
 
-import { $createImageNode, $isImageNode, ImageNode } from '../nodes/image-node'
+import { $createImageNode, $isImageNode, ImageNode } from '../nodes/image-node';
 
 export const IMAGE: TextMatchTransformer = {
   dependencies: [ImageNode],
   export: (node) => {
     if (!$isImageNode(node)) {
-      return null
+      return null;
     }
 
-    return `![${node.getAltText()}](${node.getSrc()})`
+    return `![${node.getAltText()}](${node.getSrc()})`;
   },
   importRegExp: /!(?:\[([^[]*)\])(?:\(([^(]+)\))/,
   regExp: /!(?:\[([^[]*)\])(?:\(([^(]+)\))$/,
   replace: (textNode, match) => {
-    const [, altText, src] = match
+    const [, altText, src] = match;
     const imageNode = $createImageNode({
       altText,
       maxWidth: 800,
       src,
-    })
-    textNode.replace(imageNode)
+    });
+    textNode.replace(imageNode);
   },
   trigger: ')',
   type: 'text-match',
-}
+};

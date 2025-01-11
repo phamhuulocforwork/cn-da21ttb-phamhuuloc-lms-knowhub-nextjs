@@ -1,7 +1,7 @@
-import Forbidden from "@/components/pages/forbidden";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import Forbidden from '@/components/pages/forbidden';
+import { authOptions } from '@/lib/auth';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 export default async function TeacherLayout({
   children,
@@ -11,10 +11,10 @@ export default async function TeacherLayout({
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect("/login");
+    redirect('/login');
   }
 
-  if (session.user.role !== "TEACHER") {
+  if (session.user.role !== 'TEACHER') {
     return <Forbidden />;
   }
   return <>{children}</>;

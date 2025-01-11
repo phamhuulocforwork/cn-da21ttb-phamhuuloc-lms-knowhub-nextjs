@@ -1,11 +1,11 @@
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { LucideIcon } from "lucide-react";
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { LucideIcon } from 'lucide-react';
 
 export interface MenuItem {
   id: string;
   icon: LucideIcon;
   label: string;
-  type?: "navigation" | "action";
+  type?: 'navigation' | 'action';
 }
 
 export type MenuHandlers = {

@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { useEffect, useMemo, useRef, useState } from "react";
-import * as React from "react";
+import { useEffect, useMemo, useRef, useState } from 'react';
+import * as React from 'react';
 
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { useLexicalEditable } from '@lexical/react/useLexicalEditable';
 import {
   $getTableColumnIndexFromTableCellNode,
   $getTableRowIndexFromTableCellNode,
@@ -20,13 +20,13 @@ import {
   TableCellNode,
   TableNode,
   TableRowNode,
-} from "@lexical/table";
-import { $findMatchingParent, mergeRegister } from "@lexical/utils";
-import { $getNearestNodeFromDOMNode, NodeKey } from "lexical";
-import { PlusIcon } from "lucide-react";
-import { createPortal } from "react-dom";
+} from '@lexical/table';
+import { $findMatchingParent, mergeRegister } from '@lexical/utils';
+import { $getNearestNodeFromDOMNode, NodeKey } from 'lexical';
+import { PlusIcon } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
-import { useDebounce } from "../hooks/use-debounce";
+import { useDebounce } from '../hooks/use-debounce';
 
 const BUTTON_WIDTH_PX = 20;
 
@@ -149,13 +149,13 @@ function TableHoverActionsContainer({
       return;
     }
 
-    document.addEventListener("mousemove", debouncedOnMouseMove);
+    document.addEventListener('mousemove', debouncedOnMouseMove);
 
     return () => {
       setShownRow(false);
       setShownColumn(false);
       debouncedOnMouseMove.cancel();
-      document.removeEventListener("mousemove", debouncedOnMouseMove);
+      document.removeEventListener('mousemove', debouncedOnMouseMove);
     };
   }, [shouldListenMouseMove, debouncedOnMouseMove]);
 
@@ -168,7 +168,7 @@ function TableHoverActionsContainer({
             for (const [key, type] of Array.from(mutations)) {
               const tableDOMElement = editor.getElementByKey(key);
               switch (type) {
-                case "created":
+                case 'created':
                   tableSetRef.current.add(key);
                   setShouldListenMouseMove(tableSetRef.current.size > 0);
                   if (tableDOMElement) {
@@ -176,7 +176,7 @@ function TableHoverActionsContainer({
                   }
                   break;
 
-                case "destroyed":
+                case 'destroyed':
                   tableSetRef.current.delete(key);
                   setShouldListenMouseMove(tableSetRef.current.size > 0);
                   // Reset resize observers
@@ -227,23 +227,23 @@ function TableHoverActionsContainer({
       {isShownRow && (
         <button
           className={
-            "EditorTheme__tableAddRows absolute flex w-[calc(100%-25px)] cursor-pointer items-center justify-center border-0 bg-accent hover:bg-accent/80"
+            'EditorTheme__tableAddRows absolute flex w-[calc(100%-25px)] cursor-pointer items-center justify-center border-0 bg-accent hover:bg-accent/80'
           }
           style={{ ...position }}
           onClick={() => insertAction(true)}
         >
-          <PlusIcon className="h-4 w-4" />
+          <PlusIcon className='h-4 w-4' />
         </button>
       )}
       {isShownColumn && (
         <button
           className={
-            "EditorTheme__tableAddColumns absolute flex w-[calc(100%-25px)] cursor-pointer items-center justify-center border-0 bg-accent hover:bg-accent/80"
+            'EditorTheme__tableAddColumns absolute flex w-[calc(100%-25px)] cursor-pointer items-center justify-center border-0 bg-accent hover:bg-accent/80'
           }
           style={{ ...position }}
           onClick={() => insertAction(false)}
         >
-          <PlusIcon className="h-4 w-4" />
+          <PlusIcon className='h-4 w-4' />
         </button>
       )}
     </>
@@ -258,14 +258,14 @@ function getMouseInfo(event: MouseEvent): {
 
   if (target && target instanceof HTMLElement) {
     const tableDOMNode = target.closest<HTMLElement>(
-      "td.EditorTheme__tableCell, th.EditorTheme__tableCell",
+      'td.EditorTheme__tableCell, th.EditorTheme__tableCell',
     );
 
     const isOutside = !(
       tableDOMNode ||
-      target.closest<HTMLElement>("button.EditorTheme__tableAddRows") ||
-      target.closest<HTMLElement>("button.EditorTheme__tableAddColumns") ||
-      target.closest<HTMLElement>("div.TableCellResizer__resizer")
+      target.closest<HTMLElement>('button.EditorTheme__tableAddRows') ||
+      target.closest<HTMLElement>('button.EditorTheme__tableAddColumns') ||
+      target.closest<HTMLElement>('div.TableCellResizer__resizer')
     );
 
     return { isOutside, tableDOMNode };

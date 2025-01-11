@@ -1,5 +1,5 @@
-import { useLayoutEffect, useState } from "react";
-import debounce from "lodash/debounce";
+import { useLayoutEffect, useState } from 'react';
+import debounce from 'lodash/debounce';
 
 const useIsMobile = (): boolean => {
   const [isMobile, setIsMobile] = useState(false);
@@ -12,10 +12,10 @@ const useIsMobile = (): boolean => {
 
     updateSize();
 
-    window.addEventListener("resize", debouncedUpdateSize);
+    window.addEventListener('resize', debouncedUpdateSize);
 
     return (): void =>
-      window.removeEventListener("resize", debouncedUpdateSize);
+      window.removeEventListener('resize', debouncedUpdateSize);
   }, []);
 
   return isMobile;

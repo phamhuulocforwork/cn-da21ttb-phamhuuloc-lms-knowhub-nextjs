@@ -1,5 +1,5 @@
-import { AppSidebar } from "@/components/blocks/side-bar/app-side-bar";
-import { SidebarProvider } from "@/components/ui/side-bar";
+import { AppSidebar } from '@/components/blocks/side-bar/app-side-bar';
+import { SidebarProvider } from '@/components/ui/side-bar';
 
 export default async function LocaleLayout({
   children,
@@ -9,7 +9,7 @@ export default async function LocaleLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="relative flex w-full flex-col">{children}</main>
+      <main className='relative flex w-full flex-col'>{children}</main>
     </SidebarProvider>
   );
 }

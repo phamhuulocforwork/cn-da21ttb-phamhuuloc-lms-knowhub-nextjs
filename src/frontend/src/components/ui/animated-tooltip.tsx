@@ -1,13 +1,13 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 import {
   motion,
   useTransform,
   AnimatePresence,
   useMotionValue,
   useSpring,
-} from "framer-motion";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+} from 'framer-motion';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 export const AnimatedTooltip = ({
   items,
@@ -40,12 +40,12 @@ export const AnimatedTooltip = ({
     <>
       {items.map((item) => (
         <div
-          className="group relative -mr-3"
+          className='group relative -mr-3'
           key={item.name}
           onMouseEnter={() => setHoveredIndex(item.id)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode='popLayout'>
             {hoveredIndex === item.id && (
               <motion.div
                 initial={{ opacity: 0, y: 20, scale: 0.6 }}
@@ -54,7 +54,7 @@ export const AnimatedTooltip = ({
                   y: 0,
                   scale: 1,
                   transition: {
-                    type: "spring",
+                    type: 'spring',
                     stiffness: 260,
                     damping: 10,
                   },
@@ -63,13 +63,13 @@ export const AnimatedTooltip = ({
                 style={{
                   translateX: translateX,
                   rotate: rotate,
-                  whiteSpace: "nowrap",
+                  whiteSpace: 'nowrap',
                 }}
-                className="absolute -bottom-12 -left-1/2 z-50 flex translate-x-1/2 flex-col items-center justify-center rounded-md bg-black px-4 py-1 text-xs shadow-xl"
+                className='absolute -bottom-12 -left-1/2 z-50 flex translate-x-1/2 flex-col items-center justify-center rounded-md bg-black px-4 py-1 text-xs shadow-xl'
               >
-                <div className="absolute inset-x-10 -bottom-px z-30 h-px w-[20%] bg-gradient-to-r from-transparent via-emerald-500 to-transparent" />
-                <div className="absolute -bottom-px left-10 z-30 h-px w-[40%] bg-gradient-to-r from-transparent via-sky-500 to-transparent" />
-                <div className="relative z-30 text-sm font-bold text-white">
+                <div className='absolute inset-x-10 -bottom-px z-30 h-px w-[20%] bg-gradient-to-r from-transparent via-emerald-500 to-transparent' />
+                <div className='absolute -bottom-px left-10 z-30 h-px w-[40%] bg-gradient-to-r from-transparent via-sky-500 to-transparent' />
+                <div className='relative z-30 text-sm font-bold text-white'>
                   {item.name}
                 </div>
               </motion.div>
@@ -77,7 +77,7 @@ export const AnimatedTooltip = ({
           </AnimatePresence>
           <Avatar
             onMouseMove={handleMouseMove}
-            className="relative size-8 border-2 transition duration-500 group-hover:z-30 group-hover:scale-105"
+            className='relative size-8 border-2 transition duration-500 group-hover:z-30 group-hover:scale-105'
           >
             <AvatarImage src={item.image} alt={item.name} />
             <AvatarFallback>{item.name[0]}</AvatarFallback>

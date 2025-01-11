@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { TableSkeleton } from "@/components/common/table-skeleton";
-import { useDebounce } from "@/components/hooks/use-debounce";
-import { Input } from "@/components/ui/input";
-import { downloadExcel } from "@/lib/excel";
-import { categoryService } from "@/services/categoryService";
-import { Category } from "@/types/category";
-import { Plus, Download } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
-import { PaginationControls } from "@/components/common/pagination-controls";
-import { CategoryTable } from "./category-table";
-import { EditCategoryDialog } from "./edit-category-dialog";
-import { CreateCategoryDialog } from "./create-category-dialog";
-import { useMinimumLoading } from "@/components/hooks/use-minimum-loading";
-import { useToast } from "@/components/hooks/use-toast";
+import { Button } from '@/components/ui/button';
+import { TableSkeleton } from '@/components/common/table-skeleton';
+import { useDebounce } from '@/components/hooks/use-debounce';
+import { Input } from '@/components/ui/input';
+import { downloadExcel } from '@/lib/excel';
+import { categoryService } from '@/services/categoryService';
+import { Category } from '@/types/category';
+import { Plus, Download } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
+import { PaginationControls } from '@/components/common/pagination-controls';
+import { CategoryTable } from './category-table';
+import { EditCategoryDialog } from './edit-category-dialog';
+import { CreateCategoryDialog } from './create-category-dialog';
+import { useMinimumLoading } from '@/components/hooks/use-minimum-loading';
+import { useToast } from '@/components/hooks/use-toast';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,13 +25,13 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 export default function CategoryManagement() {
-  const t = useTranslations("admin.category");
-  const tToast = useTranslations("toast");
+  const t = useTranslations('admin.category');
+  const tToast = useTranslations('toast');
   const [categories, setCategories] = useState<Category[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,7 +59,7 @@ export default function CategoryManagement() {
       setTotalPages(meta.totalPages);
       setTotalCategories(meta.total);
     } catch (error) {
-      console.error("Failed to fetch categories:", error);
+      console.error('Failed to fetch categories:', error);
     }
   }, [currentPage, itemsPerPage, debouncedSearch, withMinimumLoading]);
 
@@ -85,14 +85,14 @@ export default function CategoryManagement() {
         ]),
       );
       toast({
-        variant: "success",
-        title: tToast("deleteSuccess"),
+        variant: 'success',
+        title: tToast('deleteSuccess'),
       });
     } catch (error) {
-      console.error("Failed to delete category:", error);
+      console.error('Failed to delete category:', error);
       toast({
-        variant: "destructive",
-        title: tToast("deleteError"),
+        variant: 'destructive',
+        title: tToast('deleteError'),
       });
     } finally {
       setCategoryToDelete(null);
@@ -103,49 +103,49 @@ export default function CategoryManagement() {
     downloadExcel(
       categories.map((category) => ({
         Name: category.name,
-        Description: category.description || "",
+        Description: category.description || '',
       })),
-      "Categories",
+      'Categories',
     );
   };
 
   return (
-    <div className="mx-4 py-10 md:mx-11">
-      <div className="space-y-4">
+    <div className='mx-4 py-10 md:mx-11'>
+      <div className='space-y-4'>
         <div>
-          <h1 className="text-2xl font-semibold">{t("title")}</h1>
-          <p className="text-muted-foreground">{t("description")}</p>
+          <h1 className='text-2xl font-semibold'>{t('title')}</h1>
+          <p className='text-muted-foreground'>{t('description')}</p>
         </div>
 
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-base font-semibold">
-            {t("allCategories")}{" "}
-            <span className="text-muted-foreground">{totalCategories}</span>
+        <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+          <h2 className='text-base font-semibold'>
+            {t('allCategories')}{' '}
+            <span className='text-muted-foreground'>{totalCategories}</span>
           </h2>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-            <div className="w-full sm:w-auto">
+          <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
+            <div className='w-full sm:w-auto'>
               <Input
-                placeholder={t("search")}
-                className="w-full sm:w-[300px]"
+                placeholder={t('search')}
+                className='w-full sm:w-[300px]'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="flex gap-2">
+            <div className='flex gap-2'>
               <Button
                 onClick={handleExportCategories}
-                variant="outline"
-                className="gap-2"
+                variant='outline'
+                className='gap-2'
               >
-                <Download className="h-4 w-4" />
-                <span className="hidden sm:inline">{t("export")}</span>
+                <Download className='h-4 w-4' />
+                <span className='hidden sm:inline'>{t('export')}</span>
               </Button>
               <Button
                 onClick={() => setShowCreateDialog(true)}
-                className="gap-2"
+                className='gap-2'
               >
-                <Plus className="h-4 w-4" />
-                <span className="hidden sm:inline">{t("addCategory")}</span>
+                <Plus className='h-4 w-4' />
+                <span className='hidden sm:inline'>{t('addCategory')}</span>
               </Button>
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function CategoryManagement() {
             onDelete={handleDeleteCategory}
           />
         ) : (
-          <div className="py-4 text-center">{t("noData")}</div>
+          <div className='py-4 text-center'>{t('noData')}</div>
         )}
 
         <PaginationControls
@@ -194,20 +194,20 @@ export default function CategoryManagement() {
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>{t("deleteCategory.title")}</AlertDialogTitle>
+              <AlertDialogTitle>{t('deleteCategory.title')}</AlertDialogTitle>
               <AlertDialogDescription>
-                {t("deleteCategory.description", {
+                {t('deleteCategory.description', {
                   name: categoryToDelete?.name,
                 })}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+              <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
               <AlertDialogAction
-                className="bg-destructive-500 hover:bg-destructive-600"
+                className='bg-destructive-500 hover:bg-destructive-600'
                 onClick={handleConfirmDelete}
               >
-                {t("confirm")}
+                {t('confirm')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

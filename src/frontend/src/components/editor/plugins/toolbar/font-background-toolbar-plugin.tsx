@@ -1,20 +1,20 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react';
 
 import {
   $getSelectionStyleValueForProperty,
   $patchStyleText,
-} from '@lexical/selection'
-import { $getSelection, $isRangeSelection, BaseSelection } from 'lexical'
-import { BaselineIcon, PaintBucketIcon } from 'lucide-react'
+} from '@lexical/selection';
+import { $getSelection, $isRangeSelection, BaseSelection } from 'lexical';
+import { BaselineIcon, PaintBucketIcon } from 'lucide-react';
 
-import { useToolbarContext } from '../../context/toolbar-context'
-import { useUpdateToolbarHandler } from '../../hooks/use-update-toolbar'
-import ColorPicker from '../../ui/colorpicker'
+import { useToolbarContext } from '../../context/toolbar-context';
+import { useUpdateToolbarHandler } from '../../hooks/use-update-toolbar';
+import ColorPicker from '../../ui/colorpicker';
 
 export function FontBackgroundToolbarPlugin() {
-  const { activeEditor } = useToolbarContext()
+  const { activeEditor } = useToolbarContext();
 
-  const [bgColor, setBgColor] = useState('#fff')
+  const [bgColor, setBgColor] = useState('#fff');
 
   const $updateToolbar = (selection: BaseSelection) => {
     if ($isRangeSelection(selection)) {
@@ -22,42 +22,42 @@ export function FontBackgroundToolbarPlugin() {
         $getSelectionStyleValueForProperty(
           selection,
           'background-color',
-          '#fff'
-        )
-      )
+          '#fff',
+        ),
+      );
     }
-  }
+  };
 
-  useUpdateToolbarHandler($updateToolbar)
+  useUpdateToolbarHandler($updateToolbar);
 
   const applyStyleText = useCallback(
     (styles: Record<string, string>, skipHistoryStack?: boolean) => {
       activeEditor.update(
         () => {
-          const selection = $getSelection()
+          const selection = $getSelection();
           if (selection !== null) {
-            $patchStyleText(selection, styles)
+            $patchStyleText(selection, styles);
           }
         },
-        skipHistoryStack ? { tag: 'historic' } : {}
-      )
+        skipHistoryStack ? { tag: 'historic' } : {},
+      );
     },
-    [activeEditor]
-  )
+    [activeEditor],
+  );
 
   const onBgColorSelect = useCallback(
     (value: string, skipHistoryStack: boolean) => {
-      applyStyleText({ 'background-color': value }, skipHistoryStack)
+      applyStyleText({ 'background-color': value }, skipHistoryStack);
     },
-    [applyStyleText]
-  )
+    [applyStyleText],
+  );
 
   return (
     <ColorPicker
-      icon={<PaintBucketIcon className="size-4" />}
+      icon={<PaintBucketIcon className='size-4' />}
       color={bgColor}
       onChange={onBgColorSelect}
-      title="text background color"
+      title='text background color'
     />
-  )
+  );
 }

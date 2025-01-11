@@ -1,5 +1,5 @@
-import { api } from "@/config/axios";
-import { User } from "@/types/user";
+import { api } from '@/config/axios';
+import { User } from '@/types/user';
 
 interface AuthResponse {
   user: User;
@@ -11,7 +11,7 @@ export const authService = {
     email: string;
     password: string;
   }): Promise<AuthResponse> {
-    const response = await api.post("/api/auth/login", credentials);
+    const response = await api.post('/api/auth/login', credentials);
     return response.data;
   },
 
@@ -21,7 +21,7 @@ export const authService = {
     name: string;
     role: string;
   }): Promise<AuthResponse> {
-    const response = await api.post("/api/auth/register", userData);
+    const response = await api.post('/api/auth/register', userData);
     return response.data;
   },
 
@@ -30,15 +30,15 @@ export const authService = {
     name: string;
     image?: string;
   }): Promise<AuthResponse> {
-    const response = await api.post("/api/auth/google", {
+    const response = await api.post('/api/auth/google', {
       ...googleData,
-      role: "STUDENT",
+      role: 'STUDENT',
     });
     return response.data;
   },
 
   async refreshToken(userId: string): Promise<AuthResponse> {
-    const response = await api.post("/api/auth/refresh-token", { userId });
+    const response = await api.post('/api/auth/refresh-token', { userId });
     return response.data;
   },
 };

@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import { Plus, SquareMinus } from "lucide-react";
+import { Plus, SquareMinus } from 'lucide-react';
 import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/side-bar";
-import { useEffect, useState } from "react";
+} from '@/components/ui/side-bar';
+import { useEffect, useState } from 'react';
 
-import { Link } from "@/i18n/routing";
-import { Project } from "@/types/project";
-import { Separator } from "@/components/ui/separator";
-import { projectService } from "@/services/projectService";
-import { useTranslations } from "next-intl";
+import { Link } from '@/i18n/routing';
+import { Project } from '@/types/project';
+import { Separator } from '@/components/ui/separator';
+import { projectService } from '@/services/projectService';
+import { useTranslations } from 'next-intl';
 
 export function ProjectList() {
-  const t = useTranslations("sidebar");
+  const t = useTranslations('sidebar');
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export function ProjectList() {
         const response = await projectService.getMyProjects();
         setProjects(response);
       } catch (error) {
-        console.error("Failed to fetch projects:", error);
+        console.error('Failed to fetch projects:', error);
       }
     };
 
@@ -39,19 +39,19 @@ export function ProjectList() {
 
   return (
     <>
-      <Separator className="my-2" />
-      <SidebarGroupLabel className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          {t("projects")}
-          <span className="rounded-sm bg-slate-200 px-2 py-0.5 text-xs">
+      <Separator className='my-2' />
+      <SidebarGroupLabel className='flex items-center justify-between'>
+        <div className='flex items-center gap-2'>
+          {t('projects')}
+          <span className='rounded-sm bg-slate-200 px-2 py-0.5 text-xs'>
             {projects.length}
           </span>
         </div>
         <Link
-          href="/teacher/project/create"
-          className="rounded-full border bg-background p-1"
+          href='/teacher/project/create'
+          className='rounded-full border bg-background p-1'
         >
-          <Plus className="h-3 w-3" />
+          <Plus className='h-3 w-3' />
         </Link>
       </SidebarGroupLabel>
       <SidebarGroupContent>
@@ -59,7 +59,7 @@ export function ProjectList() {
           {projects.map((project) => (
             <SidebarMenuItem
               key={project.id}
-              className="flex items-center justify-center"
+              className='flex items-center justify-center'
             >
               <SidebarMenuButton asChild>
                 <a href={`/teacher/project/${project.id}`}>

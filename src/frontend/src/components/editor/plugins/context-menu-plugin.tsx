@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { useCallback, useMemo } from "react";
-import * as React from "react";
+import { useCallback, useMemo } from 'react';
+import * as React from 'react';
 
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 
-import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { MenuOption } from "@lexical/react/LexicalContextMenuPlugin";
-import { PopoverPortal } from "@radix-ui/react-popover";
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { MenuOption } from '@lexical/react/LexicalContextMenuPlugin';
+import { PopoverPortal } from '@radix-ui/react-popover';
 import {
   $getNearestNodeFromDOMNode,
   $getSelection,
@@ -22,17 +22,17 @@ import {
   CUT_COMMAND,
   type LexicalNode,
   PASTE_COMMAND,
-} from "lexical";
+} from 'lexical';
 
-import { Command, CommandItem, CommandList } from "@/components/ui/command";
+import { Command, CommandItem, CommandList } from '@/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/popover';
 
 const LexicalContextMenuPlugin = dynamic(
-  () => import("./default/lexical-context-menu-plugin"),
+  () => import('./default/lexical-context-menu-plugin'),
   { ssr: false },
 );
 
@@ -77,10 +77,10 @@ export function ContextMenuPlugin(): JSX.Element {
 
             const permission = await navigator.permissions.query({
               // @ts-expect-error These types are incorrect.
-              name: "clipboard-read",
+              name: 'clipboard-read',
             });
-            if (permission.state === "denied") {
-              alert("Not allowed to paste from clipboard.");
+            if (permission.state === 'denied') {
+              alert('Not allowed to paste from clipboard.');
               return;
             }
 
@@ -89,7 +89,7 @@ export function ContextMenuPlugin(): JSX.Element {
               data.setData(type, dataString);
             }
 
-            const event = new ClipboardEvent("paste", {
+            const event = new ClipboardEvent('paste', {
               clipboardData: data,
             });
 
@@ -102,19 +102,19 @@ export function ContextMenuPlugin(): JSX.Element {
           navigator.clipboard.read().then(async function (...args) {
             const permission = await navigator.permissions.query({
               // @ts-expect-error These types are incorrect.
-              name: "clipboard-read",
+              name: 'clipboard-read',
             });
 
-            if (permission.state === "denied") {
-              alert("Not allowed to paste from clipboard.");
+            if (permission.state === 'denied') {
+              alert('Not allowed to paste from clipboard.');
               return;
             }
 
             const data = new DataTransfer();
             const items = await navigator.clipboard.readText();
-            data.setData("text/plain", items);
+            data.setData('text/plain', items);
 
-            const event = new ClipboardEvent("paste", {
+            const event = new ClipboardEvent('paste', {
               clipboardData: data,
             });
             editor.dispatchCommand(PASTE_COMMAND, event);
@@ -203,10 +203,10 @@ export function ContextMenuPlugin(): JSX.Element {
                   ref={setMenuRef}
                   style={{
                     marginLeft: anchorElementRef.current?.style.width,
-                    userSelect: "none",
+                    userSelect: 'none',
                   }}
                 />
-                <PopoverContent className="w-[200px] p-1">
+                <PopoverContent className='w-[200px] p-1'>
                   <Command>
                     <CommandList>
                       {options.map((option) => (

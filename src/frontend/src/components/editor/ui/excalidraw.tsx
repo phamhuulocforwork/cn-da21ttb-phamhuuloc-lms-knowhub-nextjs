@@ -1,3 +1,3 @@
-import { Excalidraw } from '@excalidraw/excalidraw'
+import { Excalidraw } from '@excalidraw/excalidraw';
 
-export default Excalidraw
+export default Excalidraw;

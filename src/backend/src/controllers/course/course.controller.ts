@@ -131,17 +131,9 @@ export default new (class CourseController {
           categories: {
             connect: categoryIds.map((id: string) => ({ id })),
           },
-          content: {
-            create: content.map((item: any, index: number) => ({
-              type: item.type,
-              value: item.value,
-              order: index,
-            })),
-          },
         },
         include: {
           categories: true,
-          content: true,
         },
       });
 

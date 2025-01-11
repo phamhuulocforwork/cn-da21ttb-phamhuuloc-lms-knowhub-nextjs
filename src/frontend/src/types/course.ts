@@ -1,5 +1,5 @@
-import { Category } from "./category";
-import { Status } from "./common";
+import { Category } from './category';
+import { Status } from './common';
 
 export interface Course {
   id: string;

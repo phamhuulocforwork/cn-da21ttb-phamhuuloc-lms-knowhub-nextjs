@@ -1,6 +1,6 @@
-import createMiddleware from "next-intl/middleware";
-import { NextRequest } from "next/server";
-import { routing } from "./i18n/routing";
+import createMiddleware from 'next-intl/middleware';
+import { NextRequest } from 'next/server';
+import { routing } from './i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/admin/:path*",
-    "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|auth/callback/google).*)",
+    '/admin/:path*',
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|auth/callback/google).*)',
   ],
 };

@@ -1,5 +1,5 @@
-import { Project } from "@/types/project";
-import { api } from "@/config/axios";
+import { Project } from '@/types/project';
+import { api } from '@/config/axios';
 
 interface GetProjectsParams {
   page?: number;
@@ -20,8 +20,8 @@ interface GetProjectsResponse {
 
 export const projectService = {
   async getProjects(params?: GetProjectsParams): Promise<GetProjectsResponse> {
-    const { page = 1, limit = 10, search = "", categoryId } = params || {};
-    const response = await api.get("/api/project", {
+    const { page = 1, limit = 10, search = '', categoryId } = params || {};
+    const response = await api.get('/api/project', {
       params: { page, limit, search, categoryId },
     });
     return response.data;
@@ -33,12 +33,12 @@ export const projectService = {
   },
 
   async getMyProjects() {
-    const response = await api.get("/api/project/teacher/my-projects");
+    const response = await api.get('/api/project/teacher/my-projects');
     return response.data;
   },
 
   async createProject(project: Partial<Project>) {
-    const response = await api.post("/api/project", project);
+    const response = await api.post('/api/project', project);
     return response.data;
   },
 

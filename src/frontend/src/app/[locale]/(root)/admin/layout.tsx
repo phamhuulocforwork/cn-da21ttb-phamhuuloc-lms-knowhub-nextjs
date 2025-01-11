@@ -1,7 +1,7 @@
-import Forbidden from "@/components/pages/forbidden";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import Forbidden from '@/components/pages/forbidden';
+import { authOptions } from '@/lib/auth';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 export default async function AdminLayout({
   children,
@@ -11,10 +11,10 @@ export default async function AdminLayout({
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect("/login");
+    redirect('/login');
   }
 
-  if (session.user.role !== "ADMIN") {
+  if (session.user.role !== 'ADMIN') {
     return <Forbidden />;
   }
 

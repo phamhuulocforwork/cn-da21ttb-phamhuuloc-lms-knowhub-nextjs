@@ -1,22 +1,21 @@
-"use client";
+'use client';
 
+import { EditorState, SerializedEditorState } from 'lexical';
 import {
   InitialConfigType,
   LexicalComposer,
-} from "@lexical/react/LexicalComposer";
-import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
-import { EditorState, SerializedEditorState } from "lexical";
+} from '@lexical/react/LexicalComposer';
 
-import { FloatingLinkContext } from "@/components/editor/context/floating-link-context";
-import { SharedAutocompleteContext } from "@/components/editor/context/shared-autocomplete-context";
-import { editorTheme } from "@/components/editor/themes/editor-theme";
-import { TooltipProvider } from "@/components/ui/tooltip";
-
-import { nodes } from "./nodes";
-import { Plugins } from "./plugins";
+import { FloatingLinkContext } from '@/components/editor/context/floating-link-context';
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+import { Plugins } from './plugins';
+import { SharedAutocompleteContext } from '@/components/editor/context/shared-autocomplete-context';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { editorTheme } from '@/components/editor/themes/editor-theme';
+import { nodes } from './nodes';
 
 const editorConfig: InitialConfigType = {
-  namespace: "Editor",
+  namespace: 'Editor',
   theme: editorTheme,
   nodes,
   onError: (error: Error) => {
@@ -36,7 +35,7 @@ export function Editor({
   onSerializedChange?: (editorSerializedState: SerializedEditorState) => void;
 }) {
   return (
-    <div className="m-4 overflow-hidden rounded-lg border bg-background shadow">
+    <div className='overflow-hidden rounded-lg border bg-background shadow'>
       <LexicalComposer
         initialConfig={{
           ...editorConfig,

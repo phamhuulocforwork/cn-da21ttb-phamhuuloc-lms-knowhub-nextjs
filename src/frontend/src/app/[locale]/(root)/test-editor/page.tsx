@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { SerializedEditorState, createEditor } from 'lexical';
 
-import { SerializedEditorState } from "lexical";
-
-import { Editor } from "@/components/blocks/editor-x/editor";
+import { $generateHtmlFromNodes } from '@lexical/html';
+import { Editor } from '@/components/blocks/editor-x/editor';
+import { useState } from 'react';
 
 const initialValue = {
   root: {
@@ -14,24 +14,24 @@ const initialValue = {
           {
             detail: 0,
             format: 0,
-            mode: "normal",
-            style: "",
-            text: "Hello World 🚀",
-            type: "text",
+            mode: 'normal',
+            style: '',
+            text: 'Hello World 🚀',
+            type: 'text',
             version: 1,
           },
         ],
-        direction: "ltr",
-        format: "",
+        direction: 'ltr',
+        format: '',
         indent: 0,
-        type: "paragraph",
+        type: 'paragraph',
         version: 1,
       },
     ],
-    direction: "ltr",
-    format: "",
+    direction: 'ltr',
+    format: '',
     indent: 0,
-    type: "root",
+    type: 'root',
     version: 1,
   },
 } as unknown as SerializedEditorState;
@@ -39,16 +39,34 @@ const initialValue = {
 export default function EditorDemo() {
   const [editorState, setEditorState] =
     useState<SerializedEditorState>(initialValue);
+  const [html, setHtml] = useState<string>('');
 
   return (
-    <>
+    <div className='space-y-4 p-4'>
       <Editor
         editorSerializedState={editorState}
-        onSerializedChange={(value) => {
+        onSerializedChange={(value: SerializedEditorState) => {
           setEditorState(value);
-          console.log(value);
+          // Get HTML from editor state
+          const editorStateJSON = JSON.stringify(value);
+          const tempEditor = createEditor({
+            nodes: [], // Add your node types here
+            onError: () => null,
+          });
+          tempEditor.setEditorState(
+            tempEditor.parseEditorState(editorStateJSON),
+          );
+          tempEditor.update(() => {
+            const htmlString = $generateHtmlFromNodes(tempEditor);
+            setHtml(htmlString);
+          });
         }}
       />
-    </>
+
+      <div
+        className='rounded border p-4'
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    </div>
   );
 }

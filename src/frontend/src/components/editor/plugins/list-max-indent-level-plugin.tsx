@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { $getListDepth, $isListItemNode, $isListNode } from "@lexical/list";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import type { ElementNode, RangeSelection } from "lexical";
+import { $getListDepth, $isListItemNode, $isListNode } from '@lexical/list';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import type { ElementNode, RangeSelection } from 'lexical';
 import {
   $getSelection,
   $isElementNode,
   $isRangeSelection,
   COMMAND_PRIORITY_CRITICAL,
   INDENT_CONTENT_COMMAND,
-} from "lexical";
+} from 'lexical';
 
 function getElementNodesInSelection(
   selection: RangeSelection,
@@ -55,7 +55,7 @@ function $shouldPreventIndent(maxDepth: number): boolean {
 
       if (!$isListNode(parent)) {
         throw new Error(
-          "ListMaxIndentLevelPlugin: A ListItemNode must have a ListNode for a parent.",
+          'ListMaxIndentLevelPlugin: A ListItemNode must have a ListNode for a parent.',
         );
       }
 

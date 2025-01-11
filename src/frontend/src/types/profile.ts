@@ -1,5 +1,5 @@
-import { Status } from "./common";
-import { Role } from "./user";
+import { Status } from './common';
+import { Role } from './user';
 
 export interface UserProfile {
   id: string;
@@ -35,7 +35,7 @@ export interface RecentActivity {
   createdContent: {
     id: string;
     title: string;
-    type: "Project" | "Course" | "Wiki";
+    type: 'Project' | 'Course' | 'Wiki';
     status: Status;
     createdAt: Date;
   }[];

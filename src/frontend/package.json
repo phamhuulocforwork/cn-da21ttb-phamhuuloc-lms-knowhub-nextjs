@@ -1,17 +1,5 @@
 {
-  "name": "knowhub",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "preview": "next build && next start",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
   "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "@excalidraw/excalidraw": "^0.17.6",
     "@firecms/neat": "^0.3.0",
@@ -60,7 +48,9 @@
     "xlsx": "^0.18.5",
     "zod": "^3.24.1"
   },
+  "description": "",
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/bcrypt": "^5.0.2",
     "@types/lodash": "^4.17.13",
     "@types/node": "^20.17.8",
@@ -69,9 +59,22 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.12",
     "postcss": "^8",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
-  }
+  },
+  "license": "ISC",
+  "name": "knowhub",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "lint": "next lint",
+    "preview": "next build && next start",
+    "start": "next start"
+  },
+  "version": "0.1.0"
 }

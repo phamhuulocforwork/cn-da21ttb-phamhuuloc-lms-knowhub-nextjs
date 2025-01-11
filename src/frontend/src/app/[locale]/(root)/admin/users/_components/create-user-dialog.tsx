@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -15,20 +15,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Role } from "@/types/user";
-import { userService } from "@/services/userService";
-import { useTranslations } from "next-intl";
-import { useToast } from "@/components/hooks/use-toast";
+} from '@/components/ui/select';
+import { Role } from '@/types/user';
+import { userService } from '@/services/userService';
+import { useTranslations } from 'next-intl';
+import { useToast } from '@/components/hooks/use-toast';
 
 interface CreateUserDialogProps {
   open: boolean;
@@ -41,32 +41,32 @@ export function CreateUserDialog({
   onClose,
   onSuccess,
 }: CreateUserDialogProps) {
-  const t = useTranslations("admin.users.createUser");
-  const tValidation = useTranslations("admin.users.createUser.validation");
+  const t = useTranslations('admin.users.createUser');
+  const tValidation = useTranslations('admin.users.createUser.validation');
   const [loading, setLoading] = useState(false);
-  const tToast = useTranslations("toast");
+  const tToast = useTranslations('toast');
   const { toast } = useToast();
 
   const formSchema = z.object({
     name: z.string().min(1, {
-      message: tValidation("invalidName"),
+      message: tValidation('invalidName'),
     }),
     email: z.string().regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, {
-      message: tValidation("invalidEmail"),
+      message: tValidation('invalidEmail'),
     }),
     password: z
       .string()
       .min(8, {
-        message: tValidation("passwordMin"),
+        message: tValidation('passwordMin'),
       })
       .regex(/[a-z]/, {
-        message: tValidation("passwordLowercase"),
+        message: tValidation('passwordLowercase'),
       })
       .regex(/[A-Z]/, {
-        message: tValidation("passwordUppercase"),
+        message: tValidation('passwordUppercase'),
       })
       .regex(/[0-9]/, {
-        message: tValidation("passwordNumber"),
+        message: tValidation('passwordNumber'),
       }),
     confirmPassword: z.string(),
     role: z.nativeEnum(Role),
@@ -77,9 +77,9 @@ export function CreateUserDialog({
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
+      name: '',
+      email: '',
+      password: '',
       role: Role.STUDENT,
     },
   });
@@ -96,14 +96,14 @@ export function CreateUserDialog({
       onClose();
       form.reset();
       toast({
-        variant: "success",
-        title: tToast("addSuccess"),
+        variant: 'success',
+        title: tToast('addSuccess'),
       });
     } catch (error) {
-      console.error("Failed to create user:", error);
+      console.error('Failed to create user:', error);
       toast({
-        variant: "destructive",
-        title: tToast("addError"),
+        variant: 'destructive',
+        title: tToast('addError'),
       });
     } finally {
       setLoading(false);
@@ -114,16 +114,16 @@ export function CreateUserDialog({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
             <FormField
               control={form.control}
-              name="name"
+              name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("name")}</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={loading} />
                   </FormControl>
@@ -133,12 +133,12 @@ export function CreateUserDialog({
             />
             <FormField
               control={form.control}
-              name="email"
+              name='email'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("email")}</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={loading} type="text" />
+                    <Input {...field} disabled={loading} type='text' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -146,12 +146,12 @@ export function CreateUserDialog({
             />
             <FormField
               control={form.control}
-              name="password"
+              name='password'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("password")}</FormLabel>
+                  <FormLabel>{t('password')}</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={loading} type="password" />
+                    <Input {...field} disabled={loading} type='password' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -159,10 +159,10 @@ export function CreateUserDialog({
             />
             <FormField
               control={form.control}
-              name="role"
+              name='role'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("role")}</FormLabel>
+                  <FormLabel>{t('role')}</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -170,7 +170,7 @@ export function CreateUserDialog({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder={t("selectRole")} />
+                        <SelectValue placeholder={t('selectRole')} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -185,12 +185,12 @@ export function CreateUserDialog({
                 </FormItem>
               )}
             />
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={onClose} disabled={loading}>
-                {t("cancel")}
+            <div className='flex justify-end gap-2'>
+              <Button variant='outline' onClick={onClose} disabled={loading}>
+                {t('cancel')}
               </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? t("submitting") : t("submit")}
+              <Button type='submit' disabled={loading}>
+                {loading ? t('submitting') : t('submit')}
               </Button>
             </div>
           </form>

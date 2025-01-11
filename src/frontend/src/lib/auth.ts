@@ -1,20 +1,20 @@
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from 'next-auth/providers/google';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { authService } from "@/services/authService";
+import { authService } from '@/services/authService';
 
 export const authOptions = {
   providers: [
     CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
+      id: 'credentials',
+      name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Invalid credentials");
+          throw new Error('Invalid credentials');
         }
 
         try {
@@ -28,7 +28,7 @@ export const authOptions = {
             accessToken: token,
           };
         } catch (error) {
-          throw new Error("Invalid credentials", { cause: error });
+          throw new Error('Invalid credentials', { cause: error });
         }
       },
     }),
@@ -52,17 +52,17 @@ export const authOptions = {
             accessToken: token,
           };
         } catch (error) {
-          console.error("Google auth error:", error);
-          throw new Error("Failed to authenticate with Google");
+          console.error('Google auth error:', error);
+          throw new Error('Failed to authenticate with Google');
         }
       },
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
   session: {
-    strategy: "jwt" as const,
+    strategy: 'jwt' as const,
     maxAge: 30 * 24 * 60 * 60,
   },
   callbacks: {
@@ -71,7 +71,7 @@ export const authOptions = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
-        if ("accessToken" in user) {
+        if ('accessToken' in user) {
           token.accessToken = user.accessToken;
         }
       }

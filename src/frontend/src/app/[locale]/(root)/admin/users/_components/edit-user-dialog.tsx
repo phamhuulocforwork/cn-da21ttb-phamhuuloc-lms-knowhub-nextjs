@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -15,24 +15,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Role, User } from "@/types/user";
-import { userService } from "@/services/userService";
-import { useTranslations } from "next-intl";
-import { useToast } from "@/components/hooks/use-toast";
+} from '@/components/ui/select';
+import { Role, User } from '@/types/user';
+import { userService } from '@/services/userService';
+import { useTranslations } from 'next-intl';
+import { useToast } from '@/components/hooks/use-toast';
 
 const editUserSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email"),
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email'),
   role: z.enum([Role.ADMIN, Role.TEACHER, Role.STUDENT, Role.GUEST]),
 });
 
@@ -53,8 +53,8 @@ export function EditUserDialog({
 }: EditUserDialogProps) {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
-  const t = useTranslations("admin.users.editUser");
-  const tToast = useTranslations("toast");
+  const t = useTranslations('admin.users.editUser');
+  const tToast = useTranslations('toast');
 
   const form = useForm<EditUserFormData>({
     resolver: zodResolver(editUserSchema),
@@ -75,14 +75,14 @@ export function EditUserDialog({
       onSuccess();
       onClose();
       toast({
-        variant: "success",
-        title: tToast("updateSuccess"),
+        variant: 'success',
+        title: tToast('updateSuccess'),
       });
     } catch (error) {
-      console.error("Failed to update user:", error);
+      console.error('Failed to update user:', error);
       toast({
-        variant: "destructive",
-        title: tToast("updateError"),
+        variant: 'destructive',
+        title: tToast('updateError'),
       });
     } finally {
       setLoading(false);
@@ -93,16 +93,16 @@ export function EditUserDialog({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
             <FormField
               control={form.control}
-              name="name"
+              name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("name")}</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={loading} />
                   </FormControl>
@@ -112,12 +112,12 @@ export function EditUserDialog({
             />
             <FormField
               control={form.control}
-              name="email"
+              name='email'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("email")}</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={loading} type="email" />
+                    <Input {...field} disabled={loading} type='email' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -125,10 +125,10 @@ export function EditUserDialog({
             />
             <FormField
               control={form.control}
-              name="role"
+              name='role'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("role")}</FormLabel>
+                  <FormLabel>{t('role')}</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -136,7 +136,7 @@ export function EditUserDialog({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a role" />
+                        <SelectValue placeholder='Select a role' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -151,12 +151,12 @@ export function EditUserDialog({
                 </FormItem>
               )}
             />
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={onClose} disabled={loading}>
-                {t("cancel")}
+            <div className='flex justify-end gap-2'>
+              <Button variant='outline' onClick={onClose} disabled={loading}>
+                {t('cancel')}
               </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? t("saving") : t("save")}
+              <Button type='submit' disabled={loading}>
+                {loading ? t('saving') : t('save')}
               </Button>
             </div>
           </form>

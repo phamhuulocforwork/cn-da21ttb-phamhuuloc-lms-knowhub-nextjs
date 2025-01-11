@@ -1,8 +1,8 @@
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { ProjectClient } from "./_components/project-client";
-import { Suspense } from "react";
-import { notFound } from "next/navigation";
-import { projectService } from "@/services/projectService";
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { ProjectClient } from './_components/project-client';
+import { Suspense } from 'react';
+import { notFound } from 'next/navigation';
+import { projectService } from '@/services/projectService';
 
 export default async function ProjectDetailPage({
   params,
@@ -19,12 +19,12 @@ export default async function ProjectDetailPage({
     return (
       <Suspense
         fallback={
-          <div className="flex h-[calc(100vh-4rem)] w-full items-center justify-center">
-            <LoadingSpinner size="lg" />
+          <div className='flex h-[calc(100vh-4rem)] w-full items-center justify-center'>
+            <LoadingSpinner size='lg' />
           </div>
         }
       >
-        <ProjectClient project={project} />
+        <ProjectClient projectId={params.projectId} project={project} />
       </Suspense>
     );
   } catch (error) {

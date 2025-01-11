@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import * as React from "react";
+import * as React from 'react';
 import {
   ReactNode,
   createContext,
@@ -13,7 +13,7 @@ import {
   useEffect,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
 type Suggestion = null | string;
 type CallbackFn = (newSuggestion: Suggestion) => void;

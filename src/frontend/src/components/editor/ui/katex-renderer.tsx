@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import * as React from 'react'
-import { useEffect, useRef } from 'react'
+import * as React from 'react';
+import { useEffect, useRef } from 'react';
 
-import katex from 'katex'
+import katex from 'katex';
 
 export default function KatexRenderer({
   equation,
   inline,
   onDoubleClick,
 }: Readonly<{
-  equation: string
-  inline: boolean
-  onDoubleClick: () => void
+  equation: string;
+  inline: boolean;
+  onDoubleClick: () => void;
 }>): JSX.Element {
-  const katexElementRef = useRef(null)
+  const katexElementRef = useRef(null);
 
   useEffect(() => {
-    const katexElement = katexElementRef.current
+    const katexElement = katexElementRef.current;
 
     if (katexElement !== null) {
       katex.render(equation, katexElement, {
@@ -32,23 +32,23 @@ export default function KatexRenderer({
         strict: 'warn',
         throwOnError: false,
         trust: false,
-      })
+      });
     }
-  }, [equation, inline])
+  }, [equation, inline]);
 
   return (
     // We use an empty image tag either side to ensure Android doesn't try and compose from the
     // inner text from Katex. There didn't seem to be any other way of making this work,
     // without having a physical space.
     <>
-      <img src="#" alt="" />
+      <img src='#' alt='' />
       <span
-        role="button"
+        role='button'
         tabIndex={-1}
         onDoubleClick={onDoubleClick}
         ref={katexElementRef}
       />
-      <img src="#" alt="" />
+      <img src='#' alt='' />
     </>
-  )
+  );
 }

@@ -1,22 +1,5 @@
 {
-  "name": "knowhub",
-  "version": "0.1.0",
-  "private": true,
-  "main": "server.js",
-  "scripts": {
-    "dev": "ts-node src/server.ts",
-    "start": "node dist/server.ts",
-    "check-db": "ts-node src/scripts/check-db.ts",
-    "seed": "ts-node prisma/seed.ts",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "prisma:push": "prisma db push",
-    "prisma:reset": "prisma migrate reset",
-    "prisma:studio": "prisma studio"
-  },
   "author": "",
-  "license": "",
-  "description": "",
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "bcrypt": "^5.1.1",
@@ -28,6 +11,7 @@
     "jsonwebtoken": "^9.0.2",
     "zod": "^3.24.1"
   },
+  "description": "",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.8",
@@ -38,5 +22,21 @@
     "prisma": "^6.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
-  }
+  },
+  "license": "",
+  "main": "server.js",
+  "name": "knowhub",
+  "private": true,
+  "scripts": {
+    "check-db": "ts-node src/scripts/check-db.ts",
+    "dev": "ts-node src/server.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push",
+    "prisma:reset": "prisma migrate reset",
+    "prisma:studio": "prisma studio",
+    "seed": "ts-node prisma/seed.ts",
+    "start": "node dist/server.ts"
+  },
+  "version": "0.1.0"
 }

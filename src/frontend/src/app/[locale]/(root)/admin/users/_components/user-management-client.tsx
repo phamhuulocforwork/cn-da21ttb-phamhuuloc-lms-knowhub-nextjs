@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { TableSkeleton } from "@/components/common/table-skeleton";
-import { useDebounce } from "@/components/hooks/use-debounce";
-import { Input } from "@/components/ui/input";
-import { downloadExcel } from "@/lib/excel";
-import { userService } from "@/services/userService";
-import { User } from "@/types/user";
+import { Button } from '@/components/ui/button';
+import { TableSkeleton } from '@/components/common/table-skeleton';
+import { useDebounce } from '@/components/hooks/use-debounce';
+import { Input } from '@/components/ui/input';
+import { downloadExcel } from '@/lib/excel';
+import { userService } from '@/services/userService';
+import { User } from '@/types/user';
 
-import { CreateUserDialog } from "./create-user-dialog";
-import { EditUserDialog } from "./edit-user-dialog";
-import { PaginationControls } from "@/components/common/pagination-controls";
-import { UserTable } from "./user-table";
-import { Download, Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
-import { useMinimumLoading } from "@/components/hooks/use-minimum-loading";
-import { useToast } from "@/components/hooks/use-toast";
+import { CreateUserDialog } from './create-user-dialog';
+import { EditUserDialog } from './edit-user-dialog';
+import { PaginationControls } from '@/components/common/pagination-controls';
+import { UserTable } from './user-table';
+import { Download, Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
+import { useMinimumLoading } from '@/components/hooks/use-minimum-loading';
+import { useToast } from '@/components/hooks/use-toast';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,12 +26,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 export default function UserManagement() {
-  const t = useTranslations("admin.users");
+  const t = useTranslations('admin.users');
   const [users, setUsers] = useState<User[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +40,7 @@ export default function UserManagement() {
   const [totalUsers, setTotalUsers] = useState(0);
   const { loading, withMinimumLoading } = useMinimumLoading(500);
   const { toast } = useToast();
-  const tToast = useTranslations("toast");
+  const tToast = useTranslations('toast');
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
   const debouncedSearch = useDebounce(searchQuery, 500);
@@ -58,7 +58,7 @@ export default function UserManagement() {
       setTotalPages(meta.totalPages);
       setTotalUsers(meta.total);
     } catch (error) {
-      console.error("Failed to fetch users:", error);
+      console.error('Failed to fetch users:', error);
     }
   }, [currentPage, itemsPerPage, debouncedSearch, withMinimumLoading]);
 
@@ -81,14 +81,14 @@ export default function UserManagement() {
         Promise.all([userService.deleteUser(userToDelete.id), fetchUsers()]),
       );
       toast({
-        variant: "success",
-        title: tToast("deleteSuccess"),
+        variant: 'success',
+        title: tToast('deleteSuccess'),
       });
     } catch (error) {
-      console.error("Failed to delete user:", error);
+      console.error('Failed to delete user:', error);
       toast({
-        variant: "destructive",
-        title: tToast("deleteError"),
+        variant: 'destructive',
+        title: tToast('deleteError'),
       });
     } finally {
       setUserToDelete(null);
@@ -101,49 +101,49 @@ export default function UserManagement() {
         Name: user.name,
         Email: user.email,
         Role: user.role,
-        "Created At": user.createdAt,
+        'Created At': user.createdAt,
       })),
-      "Users",
+      'Users',
     );
   };
 
   return (
-    <div className="mx-4 py-10 md:mx-11">
-      <div className="space-y-4">
+    <div className='mx-4 py-10 md:mx-11'>
+      <div className='space-y-4'>
         <div>
-          <h1 className="text-2xl font-semibold">{t("title")}</h1>
-          <p className="text-muted-foreground">{t("description")}</p>
+          <h1 className='text-2xl font-semibold'>{t('title')}</h1>
+          <p className='text-muted-foreground'>{t('description')}</p>
         </div>
 
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-base font-semibold">
-            {t("allUsers")}{" "}
-            <span className="text-muted-foreground">{totalUsers}</span>
+        <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+          <h2 className='text-base font-semibold'>
+            {t('allUsers')}{' '}
+            <span className='text-muted-foreground'>{totalUsers}</span>
           </h2>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-            <div className="w-full sm:w-auto">
+          <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
+            <div className='w-full sm:w-auto'>
               <Input
-                placeholder={t("search")}
-                className="w-full sm:w-[300px]"
+                placeholder={t('search')}
+                className='w-full sm:w-[300px]'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="flex gap-2">
+            <div className='flex gap-2'>
               <Button
                 onClick={handleExportUsers}
-                variant="outline"
-                className="gap-2"
+                variant='outline'
+                className='gap-2'
               >
-                <Download className="h-4 w-4" />
-                <span className="hidden sm:inline">{t("export")}</span>
+                <Download className='h-4 w-4' />
+                <span className='hidden sm:inline'>{t('export')}</span>
               </Button>
               <Button
                 onClick={() => setShowCreateDialog(true)}
-                className="gap-2"
+                className='gap-2'
               >
-                <Plus className="h-4 w-4" />
-                <span className="hidden sm:inline">{t("addUser")}</span>
+                <Plus className='h-4 w-4' />
+                <span className='hidden sm:inline'>{t('addUser')}</span>
               </Button>
             </div>
           </div>
@@ -158,7 +158,7 @@ export default function UserManagement() {
             onDelete={handleDeleteUser}
           />
         ) : (
-          <div className="py-4 text-center">{t("noData")}</div>
+          <div className='py-4 text-center'>{t('noData')}</div>
         )}
 
         <PaginationControls
@@ -192,20 +192,20 @@ export default function UserManagement() {
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>{t("deleteUser.title")}</AlertDialogTitle>
+              <AlertDialogTitle>{t('deleteUser.title')}</AlertDialogTitle>
               <AlertDialogDescription>
-                {t("deleteUser.description", {
+                {t('deleteUser.description', {
                   name: userToDelete?.name,
                 })}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+              <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
               <AlertDialogAction
-                className="bg-destructive-500 hover:bg-destructive-600"
+                className='bg-destructive-500 hover:bg-destructive-600'
                 onClick={handleConfirmDelete}
               >
-                {t("confirm")}
+                {t('confirm')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

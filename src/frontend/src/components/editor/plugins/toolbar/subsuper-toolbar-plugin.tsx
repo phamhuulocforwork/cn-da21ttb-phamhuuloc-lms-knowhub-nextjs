@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { $isTableSelection } from "@lexical/table";
-import { $isRangeSelection, BaseSelection, FORMAT_TEXT_COMMAND } from "lexical";
-import { SubscriptIcon, SuperscriptIcon } from "lucide-react";
+import { $isTableSelection } from '@lexical/table';
+import { $isRangeSelection, BaseSelection, FORMAT_TEXT_COMMAND } from 'lexical';
+import { SubscriptIcon, SuperscriptIcon } from 'lucide-react';
 
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
-import { useToolbarContext } from "../../context/toolbar-context";
-import { useUpdateToolbarHandler } from "../../hooks/use-update-toolbar";
+import { useToolbarContext } from '../../context/toolbar-context';
+import { useUpdateToolbarHandler } from '../../hooks/use-update-toolbar';
 
 export function SubSuperToolbarPlugin() {
   const { activeEditor } = useToolbarContext();
@@ -17,9 +17,9 @@ export function SubSuperToolbarPlugin() {
   const $updateToolbar = (selection: BaseSelection) => {
     if ($isRangeSelection(selection) || $isTableSelection(selection)) {
       // @ts-ignore
-      setIsSubscript(selection.hasFormat("subscript"));
+      setIsSubscript(selection.hasFormat('subscript'));
       // @ts-ignore
-      setIsSuperscript(selection.hasFormat("superscript"));
+      setIsSuperscript(selection.hasFormat('superscript'));
     }
   };
 
@@ -27,32 +27,32 @@ export function SubSuperToolbarPlugin() {
 
   return (
     <ToggleGroup
-      type="single"
+      type='single'
       defaultValue={
-        isSubscript ? "subscript" : isSuperscript ? "superscript" : ""
+        isSubscript ? 'subscript' : isSuperscript ? 'superscript' : ''
       }
     >
       <ToggleGroupItem
-        value="subscript"
-        aria-label="Toggle subscript"
+        value='subscript'
+        aria-label='Toggle subscript'
         onClick={() => {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
+          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
         }}
-        size="sm"
-        variant={"outline"}
+        size='sm'
+        variant={'outline'}
       >
-        <SubscriptIcon className="h-4 w-4" />
+        <SubscriptIcon className='h-4 w-4' />
       </ToggleGroupItem>
       <ToggleGroupItem
-        value="superscript"
-        aria-label="Toggle superscript"
+        value='superscript'
+        aria-label='Toggle superscript'
         onClick={() => {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript");
+          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
         }}
-        size="sm"
-        variant={"outline"}
+        size='sm'
+        variant={'outline'}
       >
-        <SuperscriptIcon className="h-4 w-4" />
+        <SuperscriptIcon className='h-4 w-4' />
       </ToggleGroupItem>
     </ToggleGroup>
   );
