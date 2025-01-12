@@ -93,9 +93,6 @@ export default new (class CourseController {
               title: true,
             },
           },
-          content: {
-            orderBy: { order: "asc" },
-          },
           _count: {
             select: {
               enrollments: true,
@@ -162,11 +159,6 @@ export default new (class CourseController {
         return res.status(403).json({ error: "Not authorized" });
       }
 
-      // Delete existing content
-      await db.content.deleteMany({
-        where: { courseId: id },
-      });
-
       const updatedCourse = await db.course.update({
         where: { id },
         data: {
@@ -179,17 +171,9 @@ export default new (class CourseController {
             set: [],
             connect: categoryIds.map((id: string) => ({ id })),
           },
-          content: {
-            create: content.map((item: any, index: number) => ({
-              type: item.type,
-              value: item.value,
-              order: index,
-            })),
-          },
         },
         include: {
           categories: true,
-          content: true,
         },
       });
 

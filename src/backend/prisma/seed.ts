@@ -108,20 +108,6 @@ async function main() {
       categories: {
         connect: [{ id: uiuxCategory?.id }],
       },
-      content: {
-        create: [
-          {
-            type: "TEXT",
-            value: "Introduction to UI/UX Design",
-            order: 1,
-          },
-          {
-            type: "VIDEO",
-            value: "https://example.com/intro-video",
-            order: 2,
-          },
-        ],
-      },
     },
   });
 
@@ -136,20 +122,6 @@ async function main() {
       categories: {
         connect: [{ id: uiuxCategory?.id }],
       },
-      content: {
-        create: [
-          {
-            type: "TEXT",
-            value: "Introduction to User Research",
-            order: 1,
-          },
-          {
-            type: "VIDEO",
-            value: "https://example.com/research-video",
-            order: 2,
-          },
-        ],
-      },
     },
   });
 
@@ -163,20 +135,6 @@ async function main() {
       projectId: designProject.id,
       categories: {
         connect: [{ id: uiuxCategory?.id }],
-      },
-      content: {
-        create: [
-          {
-            type: "TEXT",
-            value: "Design Elements and Principles",
-            order: 1,
-          },
-          {
-            type: "VIDEO",
-            value: "https://example.com/ui-fundamentals",
-            order: 2,
-          },
-        ],
       },
     },
   });

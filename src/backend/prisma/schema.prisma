@@ -20,21 +20,6 @@ enum Status {
   DELETED
 }
 
-enum ContentType {
-  FILE
-  LINK
-  TEXT
-  IMAGE
-  VIDEO
-  AUDIO
-  CODE
-  MATH
-  TABLE
-  CHART
-  DIAGRAM
-  GRAPH
-}
-
 enum QuestionType {
   MULTIPLE_CHOICE
   SHORT_ANSWER
@@ -85,7 +70,6 @@ model Course {
   description String?   @db.Text
   thumbnail   String?
   videoUrl    String?
-  content     Content[]
   status      Status    @default(DRAFT)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -135,17 +119,6 @@ model Category {
   projects    Project[]
   courses     Course[]
   quizzes     Quiz[]
-}
-
-model Content {
-  id          String      @id @default(cuid())
-  type        ContentType
-  value       String      @db.Text
-  order       Int
-  
-  // Relations
-  course      Course?     @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  courseId    String?
 }
 
 model Question {

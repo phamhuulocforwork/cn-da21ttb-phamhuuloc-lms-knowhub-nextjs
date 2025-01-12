@@ -10,21 +10,6 @@ export enum QuestionType {
   LONG_ANSWER = 'LONG_ANSWER',
 }
 
-export enum ContentType {
-  FILE = 'FILE',
-  LINK = 'LINK',
-  TEXT = 'TEXT',
-  IMAGE = 'IMAGE',
-  VIDEO = 'VIDEO',
-  AUDIO = 'AUDIO',
-  CODE = 'CODE',
-  MATH = 'MATH',
-  TABLE = 'TABLE',
-  CHART = 'CHART',
-  DIAGRAM = 'DIAGRAM',
-  GRAPH = 'GRAPH',
-}
-
 export enum SortOrder {
   ASC = 'asc',
   DESC = 'desc',

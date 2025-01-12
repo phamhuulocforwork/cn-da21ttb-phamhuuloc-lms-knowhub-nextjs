@@ -42,7 +42,6 @@ export default new (class UserController {
     try {
       const { id } = req.params;
 
-      // Kiểm tra user tồn tại
       const user = await db.user.findUnique({
         where: { id },
       });
@@ -51,9 +50,7 @@ export default new (class UserController {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Xóa theo thứ tự từ các bảng con đến bảng cha
       await Promise.all([
-        // 1. Xóa QuestionAttempt trước (vì nó phụ thuộc vào QuizAttempt)
         db.questionAttempt.deleteMany({
           where: {
             attempt: {
@@ -62,7 +59,6 @@ export default new (class UserController {
           },
         }),
 
-        // 2. Xóa CourseEnrollment và QuizAttempt
         db.courseEnrollment.deleteMany({
           where: { userId: id },
         }),
@@ -70,14 +66,6 @@ export default new (class UserController {
           where: { userId: id },
         }),
 
-        // 3. Xóa Content của Course và Wiki
-        db.content.deleteMany({
-          where: {
-            OR: [{ course: { authorId: id } }],
-          },
-        }),
-
-        // 4. Cập nhật status các bảng chính
         db.project.updateMany({
           where: { authorId: id },
           data: { status: "DELETED" },
@@ -92,7 +80,6 @@ export default new (class UserController {
         }),
       ]);
 
-      // 5. Cuối cùng xóa user
       await db.user.delete({
         where: { id },
       });
