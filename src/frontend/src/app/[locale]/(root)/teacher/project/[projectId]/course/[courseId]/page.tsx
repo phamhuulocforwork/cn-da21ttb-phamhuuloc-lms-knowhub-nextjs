@@ -9,7 +9,9 @@ export default async function CourseDetailPage({
     <div className='p-6'>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col gap-y-2'>
-          <h1 className='text-2xl font-bold'>Course setup</h1>
+          <h1 className='text-2xl font-bold'>
+            Course setup for {params.courseId}
+          </h1>
           <span>Complete all fields</span>
         </div>
       </div>

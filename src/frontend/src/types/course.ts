@@ -4,16 +4,17 @@ import { Status } from './common';
 export interface Course {
   id: string;
   title: string;
-  description?: string;
-  thumbnail?: string;
-  videoUrl?: string;
+  description?: string | null;
+  short_description: string;
+  thumbnail?: string | null;
+  videoUrl?: string | null;
   status: Status;
   createdAt: Date;
   updatedAt: Date;
-  publishedAt?: Date;
-  deletedAt?: Date;
+  publishedAt?: Date | null;
+  deletedAt?: Date | null;
   authorId: string;
-  projectId?: string;
+  projectId?: string | null;
   categories: Category[];
   _count: {
     enrollments: number;

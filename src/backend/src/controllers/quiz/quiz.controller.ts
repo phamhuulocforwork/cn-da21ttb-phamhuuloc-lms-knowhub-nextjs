@@ -1,5 +1,6 @@
-import { db } from "../../config/db";
 import { Request, Response } from "express";
+
+import { db } from "../../config/db";
 
 export default new (class QuizController {
   async getQuizzes(req: Request, res: Response): Promise<Response> {
@@ -151,6 +152,7 @@ export default new (class QuizController {
       const {
         title,
         description,
+        short_description,
         thumbnail,
         duration,
         startTime,
@@ -165,6 +167,7 @@ export default new (class QuizController {
       const quiz = await db.quiz.create({
         data: {
           title,
+          short_description,
           description,
           thumbnail,
           duration,

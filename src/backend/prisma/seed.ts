@@ -100,6 +100,7 @@ async function main() {
   const uiuxCourse1 = await prisma.course.create({
     data: {
       title: "Mastering UI/UX Design: A Guide",
+      short_description: "Learn essential UI/UX design skills",
       description: "Comprehensive guide to master UI/UX design principles",
       thumbnail: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c",
       status: "PUBLISHED",
@@ -114,6 +115,7 @@ async function main() {
   const uiuxCourse2 = await prisma.course.create({
     data: {
       title: "User Research and Testing",
+      short_description: "Master user research methods",
       description: "Learn effective user research methods and usability testing techniques",
       thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
       status: "PUBLISHED",
@@ -128,6 +130,7 @@ async function main() {
   const uiuxCourse3 = await prisma.course.create({
     data: {
       title: "UI Design Fundamentals",
+      short_description: "Core UI design principles",
       description: "Master the core principles of user interface design",
       thumbnail: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e",
       status: "PUBLISHED",
@@ -145,6 +148,7 @@ async function main() {
   const designQuiz = await prisma.quiz.create({
     data: {
       title: "UI/UX Design Principles Quiz",
+      short_description: "Test your UI/UX knowledge",
       description: "Test your knowledge of UI/UX design principles",
       thumbnail: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e",
       duration: 30,

@@ -22,8 +22,10 @@ interface CourseCardProps {
   projectId: string;
   id: string;
   title: string;
-  description: string;
+  shortDescription: string;
   thumbnail: string;
+  showStatus: boolean;
+  status: string;
   categories: Category[];
   updatedAt: Date;
   enrollments: number;
@@ -33,8 +35,10 @@ export function CourseCard({
   projectId,
   id,
   title,
-  description,
+  shortDescription,
   thumbnail,
+  showStatus,
+  status,
   categories,
   updatedAt,
   enrollments,
@@ -59,7 +63,7 @@ export function CourseCard({
             height={200}
             className='h-32 w-full object-cover'
           />
-          <div className='absolute left-2 top-2 rounded-md bg-black/50'>
+          <div className='absolute left-2 top-2 flex flex-col gap-1 rounded-md bg-black/50'>
             <div className='flex items-center gap-1 px-2 py-0.5 text-sm text-white'>
               <span>
                 {enrollments > 0 ? `${enrollments} Enrolled` : 'No enrollments'}
@@ -67,12 +71,27 @@ export function CourseCard({
               <Users className='h-4 w-4' />
             </div>
           </div>
+          {showStatus && (
+            <div className='absolute bottom-2 right-2 flex flex-col gap-1'>
+              <div
+                className={`flex items-center gap-1 rounded-md px-2 py-0.5 text-sm text-white ${
+                  status === 'PUBLISHED'
+                    ? 'bg-green-500'
+                    : status === 'DRAFT'
+                      ? 'bg-yellow-500'
+                      : 'bg-red-500'
+                }`}
+              >
+                <span>{status.charAt(0) + status.slice(1).toLowerCase()}</span>
+              </div>
+            </div>
+          )}
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant='ghost'
-              className='absolute right-2 top-2 h-8 w-8 rounded-full p-0'
+              className='absolute right-2 top-2 h-8 w-8 rounded-full bg-slate-100 p-0'
             >
               <MoreVertical className='h-4 w-4' />
             </Button>
@@ -92,7 +111,7 @@ export function CourseCard({
             {title}
           </h3>
           <p className='text-muted-foreground line-clamp-2 text-sm'>
-            {description}
+            {shortDescription}
           </p>
         </div>
         <div className='flex flex-wrap gap-1'>

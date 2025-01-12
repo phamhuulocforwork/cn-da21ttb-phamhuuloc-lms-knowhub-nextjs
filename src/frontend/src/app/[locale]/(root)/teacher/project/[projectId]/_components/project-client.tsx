@@ -58,7 +58,10 @@ export function ProjectClient({
 
   return (
     <div className='mx-4 md:mx-11'>
-      <ProjectHeader title={project.title} />
+      <ProjectHeader
+        title={project.title}
+        description={project.description || ''}
+      />
       <Tabs defaultValue='course' className='w-full'>
         <div className='flex items-center justify-between'>
           <TabsList className={styles.tabsList}>
@@ -82,9 +85,17 @@ export function ProjectClient({
               onSearchChange={setSearchQuery}
             />
             {viewType === 'grid' ? (
-              <CourseGrid projectId={projectId} courses={paginatedCourses} />
+              <CourseGrid
+                projectId={projectId}
+                courses={paginatedCourses}
+                showStatus={true}
+              />
             ) : (
-              <CourseList projectId={projectId} courses={paginatedCourses} />
+              <CourseList
+                projectId={projectId}
+                courses={paginatedCourses}
+                showStatus={true}
+              />
             )}
             <PaginationControls
               currentPage={currentPage}

@@ -114,12 +114,21 @@ export default new (class CourseController {
 
   async createCourse(req: Request, res: Response): Promise<Response> {
     try {
-      const { title, description, thumbnail, videoUrl, categoryIds, projectId, content } = req.body;
+      const {
+        title,
+        short_description,
+        description,
+        thumbnail,
+        videoUrl,
+        categoryIds,
+        projectId,
+      } = req.body;
       const userId = req.user?.id;
 
       const course = await db.course.create({
         data: {
           title,
+          short_description,
           description,
           thumbnail,
           videoUrl,
@@ -144,7 +153,16 @@ export default new (class CourseController {
   async updateCourse(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const { title, description, thumbnail, videoUrl, categoryIds, status, content } = req.body;
+      const {
+        title,
+        short_description,
+        description,
+        thumbnail,
+        videoUrl,
+        categoryIds,
+        status,
+        content,
+      } = req.body;
       const userId = req.user?.id;
 
       const course = await db.course.findUnique({
@@ -163,6 +181,7 @@ export default new (class CourseController {
         where: { id },
         data: {
           title,
+          short_description,
           description,
           thumbnail,
           videoUrl,

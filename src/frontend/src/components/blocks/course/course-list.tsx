@@ -3,9 +3,11 @@ import { CourseListItem } from '@/components/blocks/course/course-list-item';
 
 export default function CourseList({
   courses,
+  showStatus = false,
   projectId,
 }: {
   courses: Course[];
+  showStatus?: boolean;
   projectId: string;
 }) {
   return (
@@ -16,8 +18,10 @@ export default function CourseList({
           projectId={projectId}
           id={course.id}
           title={course.title}
-          description={course?.description || ''}
+          shortDescription={course?.short_description || ''}
           thumbnail={course?.thumbnail || ''}
+          showStatus={showStatus}
+          status={course?.status}
           categories={course.categories}
           updatedAt={course.updatedAt}
           enrollments={course._count.enrollments}

@@ -15,8 +15,10 @@ interface CourseListItemProps {
   projectId: string;
   id: string;
   title: string;
-  description: string;
+  shortDescription: string;
   thumbnail: string;
+  showStatus: boolean;
+  status: string;
   categories: Category[];
   updatedAt: Date;
   enrollments: number;
@@ -26,8 +28,10 @@ export function CourseListItem({
   projectId,
   id,
   title,
-  description,
+  shortDescription,
   thumbnail,
+  showStatus,
+  status,
   categories,
   updatedAt,
   enrollments,
@@ -68,7 +72,7 @@ export function CourseListItem({
                 {title}
               </h3>
               <p className='text-muted-foreground mt-1 line-clamp-2 text-sm'>
-                {description}
+                {shortDescription}
               </p>
             </div>
             <DropdownMenu>

@@ -1,10 +1,12 @@
-import { Category } from './category';
 import { QuestionType, Status } from './common';
+
+import { Category } from './category';
 
 export interface Quiz {
   id: string;
   title: string;
   description?: string | null;
+  short_description: string;
   thumbnail?: string | null;
   duration: number;
   categories: Category[];

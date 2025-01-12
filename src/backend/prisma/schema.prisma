@@ -48,7 +48,7 @@ model User {
 model Project {
   id          String    @id @default(cuid())
   title       String
-  description String?   @db.Text
+  description String?
   thumbnail   String?
   status      Status    @default(DRAFT)
   createdAt   DateTime  @default(now())
@@ -65,16 +65,17 @@ model Project {
 }
 
 model Course {
-  id          String    @id @default(cuid())
-  title       String
-  description String?   @db.Text
-  thumbnail   String?
-  videoUrl    String?
-  status      Status    @default(DRAFT)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  publishedAt DateTime?
-  deletedAt   DateTime?
+  id                String    @id @default(cuid())
+  title             String
+  short_description String
+  description       String?   @db.Text
+  thumbnail         String?
+  videoUrl          String?
+  status            Status    @default(DRAFT)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  publishedAt       DateTime?
+  deletedAt         DateTime?
 
   // Relations
   author      User      @relation(fields: [authorId], references: [id])
@@ -86,19 +87,20 @@ model Course {
 }
 
 model Quiz {
-  id              String    @id @default(cuid())
-  title           String
-  description     String?
-  thumbnail       String?
-  duration        Int       // in minutes
-  startTime       DateTime?
-  endTime         DateTime?
-  randomizeAnswers Boolean  @default(false)
-  status          Status    @default(DRAFT)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  publishedAt     DateTime?
-  deletedAt       DateTime?
+  id                String    @id @default(cuid())
+  title             String
+  short_description String
+  description       String?   @db.Text
+  thumbnail         String?
+  duration          Int       
+  startTime         DateTime?
+  endTime           DateTime?
+  randomizeAnswers  Boolean  @default(false)
+  status            Status    @default(DRAFT)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  publishedAt       DateTime?
+  deletedAt         DateTime?
 
   // Relations
   author          User      @relation(fields: [authorId], references: [id])

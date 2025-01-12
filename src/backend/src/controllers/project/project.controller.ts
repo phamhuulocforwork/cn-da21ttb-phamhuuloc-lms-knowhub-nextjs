@@ -98,7 +98,9 @@ export default new (class ProjectController {
         id: true,
         title: true,
         description: true,
+        short_description: true,
         thumbnail: true,
+        status: true,
         categories: true,
         updatedAt: true,
         _count: { select: { enrollments: true } },
@@ -108,7 +110,9 @@ export default new (class ProjectController {
         id: true,
         title: true,
         description: true,
+        short_description: true,
         thumbnail: true,
+        status: true,
         categories: true,
         updatedAt: true,
         _count: {
@@ -131,13 +135,11 @@ export default new (class ProjectController {
           },
           categories: true,
           courses: {
-            where: { status: "PUBLISHED" },
             select: {
               ...courseSelect,
             },
           },
           quizzes: {
-            where: { status: "PUBLISHED" },
             select: { ...quizSelect },
           },
         },
