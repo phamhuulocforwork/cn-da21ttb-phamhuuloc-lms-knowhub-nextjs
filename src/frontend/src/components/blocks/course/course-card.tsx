@@ -61,7 +61,8 @@ export function CourseCard({
             alt={title}
             width={300}
             height={200}
-            className='h-32 w-full object-cover'
+            className='h-32 w-full cursor-pointer object-cover'
+            onClick={() => handleClick()}
           />
           <div className='absolute left-2 top-2 flex flex-col gap-1 rounded-md bg-black/50'>
             <div className='flex items-center gap-1 px-2 py-0.5 text-sm text-white'>

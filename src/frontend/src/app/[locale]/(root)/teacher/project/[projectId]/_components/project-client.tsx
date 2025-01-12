@@ -33,23 +33,18 @@ export function ProjectClient({
   projectId: string;
   project: ProjectWithContent;
 }) {
-  // View state
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
 
-  // Search state
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearch = useDebounce(searchQuery, 500);
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  // Filter courses based on search
   const filteredCourses = project.courses.filter((course) =>
     course.title.toLowerCase().includes(debouncedSearch.toLowerCase()),
   );
 
-  // Calculate pagination
   const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
   const paginatedCourses = filteredCourses.slice(
     (currentPage - 1) * itemsPerPage,
@@ -62,6 +57,7 @@ export function ProjectClient({
         title={project.title}
         description={project.description || ''}
       />
+
       <Tabs defaultValue='course' className='w-full'>
         <div className='flex items-center justify-between'>
           <TabsList className={styles.tabsList}>

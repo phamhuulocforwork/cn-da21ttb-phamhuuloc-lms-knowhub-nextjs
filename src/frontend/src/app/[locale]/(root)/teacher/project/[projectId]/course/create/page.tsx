@@ -146,6 +146,7 @@ export default function CreateCoursePage({
           variant='icon'
           size='icon'
           className='bg-muted-200 hover:bg-muted-300'
+          onClick={() => router.back()}
         >
           <X />
         </Button>

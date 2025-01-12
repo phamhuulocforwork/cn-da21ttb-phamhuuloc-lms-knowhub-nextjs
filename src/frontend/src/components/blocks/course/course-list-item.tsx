@@ -44,13 +44,14 @@ export function CourseListItem({
   };
 
   return (
-    <div className='flex flex-col gap-4 rounded-lg border p-4 hover:bg-accent/50 md:flex-row md:p-1'>
+    <div className='flex flex-col gap-4 rounded-lg border p-4 hover:bg-accent/15 md:flex-row md:p-1'>
       {/* Thumbnail */}
       <div className='relative h-48 w-full flex-shrink-0 md:h-32 md:w-48'>
         <img
           src={thumbnail}
           alt={title}
-          className='h-full w-full rounded-md object-cover'
+          className='h-full w-full cursor-pointer rounded-md object-cover'
+          onClick={() => handleClick()}
         />
         <div className='absolute left-2 top-2 rounded-md bg-black/50'>
           <div className='flex items-center gap-1 px-2 py-0.5 text-sm text-white'>
@@ -65,12 +66,29 @@ export function CourseListItem({
         <div className='space-y-2'>
           <div className='flex items-start justify-between'>
             <div className='flex-1'>
-              <h3
-                className='line-clamp-2 font-semibold hover:text-primary-500 md:line-clamp-1'
-                onClick={() => handleClick()}
-              >
-                {title}
-              </h3>
+              <div className='flex items-center gap-2'>
+                <h3
+                  className='line-clamp-2 cursor-pointer font-semibold hover:text-primary-500 md:line-clamp-1'
+                  onClick={() => handleClick()}
+                >
+                  {title}
+                </h3>
+                {showStatus && (
+                  <div
+                    className={`flex items-center gap-1 rounded-md px-2 py-0.5 text-sm text-white ${
+                      status === 'PUBLISHED'
+                        ? 'bg-green-500'
+                        : status === 'DRAFT'
+                          ? 'bg-yellow-500'
+                          : 'bg-red-500'
+                    }`}
+                  >
+                    <span>
+                      {status.charAt(0) + status.slice(1).toLowerCase()}
+                    </span>
+                  </div>
+                )}
+              </div>
               <p className='text-muted-foreground mt-1 line-clamp-2 text-sm'>
                 {shortDescription}
               </p>
@@ -89,12 +107,12 @@ export function CourseListItem({
           </div>
 
           <div className='flex flex-wrap gap-1'>
-            {categories.slice(0, 2).map((category) => (
+            {categories.slice(0, 4).map((category) => (
               <Badge key={category.id} variant='tag' className='text-xs'>
                 {category.name}
               </Badge>
             ))}
-            {categories.length > 2 && (
+            {categories.length > 4 && (
               <Badge variant='tag' className='text-xs'>
                 +{categories.length - 2} more
               </Badge>

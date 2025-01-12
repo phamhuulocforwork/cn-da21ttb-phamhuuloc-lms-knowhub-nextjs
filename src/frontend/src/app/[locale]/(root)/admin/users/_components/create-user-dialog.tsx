@@ -1,7 +1,3 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import {
   Dialog,
   DialogContent,
@@ -16,8 +12,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -25,10 +19,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Role } from '@/types/user';
-import { userService } from '@/services/userService';
-import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { useToast } from '@/components/hooks/use-toast';
+import { useTranslations } from 'next-intl';
+import { userService } from '@/services/userService';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface CreateUserDialogProps {
   open: boolean;
