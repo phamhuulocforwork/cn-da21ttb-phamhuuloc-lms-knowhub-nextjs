@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { ContentHeader } from '@/components/common/content-header';
+import { ContentControl } from '@/components/common/content-control';
 import CourseGrid from '@/components/blocks/course/course-grid';
 import CourseList from '@/components/blocks/course/course-list';
 import { PaginationControls } from '@/components/common/pagination-controls';
@@ -52,12 +52,11 @@ export function ProjectClient({
   );
 
   return (
-    <div className='mx-4 md:mx-11'>
+    <div className='mx-4 mb-4 md:mx-11 md:mb-11'>
       <ProjectHeader
         title={project.title}
         description={project.description || ''}
       />
-
       <Tabs defaultValue='course' className='w-full'>
         <div className='flex items-center justify-between'>
           <TabsList className={styles.tabsList}>
@@ -72,7 +71,7 @@ export function ProjectClient({
 
         <TabsContent value='course'>
           <div className='mt-4 flex flex-col gap-4'>
-            <ContentHeader
+            <ContentControl
               title='All courses'
               count={filteredCourses.length}
               viewType={viewType}
@@ -105,7 +104,7 @@ export function ProjectClient({
 
         <TabsContent value='quiz'>
           <div className='mt-4 flex flex-col gap-4'>
-            <ContentHeader
+            <ContentControl
               title='All quizzes'
               count={project.quizzes.length}
               viewType={viewType}

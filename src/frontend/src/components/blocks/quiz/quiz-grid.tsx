@@ -3,7 +3,7 @@ import { QuizCard } from '@/components/blocks/quiz/quiz-card';
 
 export default function QuizGrid({ quizzes }: { quizzes: Quiz[] }) {
   return (
-    <div className='grid grid-cols-1 gap-6 md:grid-cols-3 xl:grid-cols-4'>
+    <div className='grid grid-cols-1 gap-6 md:grid-cols-3 2xl:grid-cols-4'>
       {quizzes.map((quiz, index) => (
         <QuizCard
           key={quiz.id}

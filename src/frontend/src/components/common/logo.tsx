@@ -103,7 +103,13 @@ const IconLogo = ({
   </svg>
 );
 
-export function Logo({ className }: { className?: string }) {
+export function Logo({
+  className,
+  redirect,
+}: {
+  className?: string;
+  redirect?: boolean;
+}) {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [showFullLogo, setShowFullLogo] = useState(true);
@@ -141,10 +147,21 @@ export function Logo({ className }: { className?: string }) {
     [theme, mounted],
   );
 
+  const handleClick = () => {
+    if (redirect) {
+      window.location.href = '/';
+    }
+  };
+
   return (
     <div
       ref={containerRef}
-      className={cn(className, 'flex w-full items-center justify-center py-2')}
+      className={cn(
+        className,
+        'flex w-full items-center justify-center py-2',
+        redirect && 'cursor-pointer',
+      )}
+      onClick={handleClick}
     >
       {showFullLogo ? <FullLogo {...colors} /> : <IconLogo {...colors} />}
     </div>

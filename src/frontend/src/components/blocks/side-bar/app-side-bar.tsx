@@ -56,7 +56,7 @@ export function AppSidebar() {
         <SidebarTrigger className='absolute -right-3 top-20 z-30 rounded-full border border-border bg-background p-1 duration-0 dark:bg-foreground' />
       )}
       <SidebarHeader>
-        <Logo />
+        <Logo redirect={true} />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

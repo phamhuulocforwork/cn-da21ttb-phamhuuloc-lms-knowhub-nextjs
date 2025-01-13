@@ -1,61 +1,75 @@
-import { LayoutGrid, List } from 'lucide-react';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+'use client';
 
-import { Input } from '@/components/ui/input';
+import { BookOpenText, MessagesSquare, MonitorPlay } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ContentHeaderProps {
+  type: 'course' | 'quiz';
   title: string;
-  count?: number;
-  viewType: 'grid' | 'list';
-  searchQuery: string;
-  onViewChange: (value: 'grid' | 'list') => void;
-  onSearchChange: (value: string) => void;
+  description: string;
+  status?: string;
 }
 
 export function ContentHeader({
+  type,
   title,
-  count,
-  viewType,
-  searchQuery,
-  onViewChange,
-  onSearchChange,
+  description,
+  status,
 }: ContentHeaderProps) {
+  const getIcon = () => {
+    switch (type) {
+      case 'course':
+        return <MonitorPlay className='h-8 w-8' />;
+      case 'quiz':
+        return <MessagesSquare className='h-8 w-8' />;
+      default:
+        return <BookOpenText className='h-8 w-8' />;
+    }
+  };
+
+  const getStatusColor = () => {
+    switch (status?.toLowerCase()) {
+      case 'published':
+        return 'bg-green-500';
+      case 'draft':
+        return 'bg-yellow-500';
+      default:
+        return 'bg-red-500';
+    }
+  };
+
   return (
-    <div className='flex items-center justify-between'>
-      <h2 className='text-base font-semibold'>
-        {title}{' '}
-        {count && <span className='text-muted-foreground'>{count}</span>}
-      </h2>
-      <div className='flex gap-2'>
-        <Input
-          placeholder='Search...'
-          className='w-full sm:w-[300px]'
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-        />
-        <ToggleGroup
-          type='single'
-          value={viewType}
-          className='gap-0 rounded-md'
-          onValueChange={(value) =>
-            value && onViewChange(value as 'grid' | 'list')
-          }
-        >
-          <ToggleGroupItem
-            className='rounded-r-none border border-r-0'
-            value='grid'
-            aria-label='Grid view'
-          >
-            <LayoutGrid className='h-4 w-4' />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            className='rounded-l-none border border-l-0'
-            value='list'
-            aria-label='List view'
-          >
-            <List className='h-4 w-4' />
-          </ToggleGroupItem>
-        </ToggleGroup>
+    <div className='mt-8 space-y-4 border-b pb-4'>
+      <div className='flex items-center justify-between'>
+        <div className='flex items-center gap-4'>
+          <div className='flex items-center gap-4'>
+            <div
+              className={cn(
+                'hidden rounded-md p-2 text-white md:block',
+                type === 'course' ? 'bg-blue-500' : 'bg-orange-500',
+              )}
+            >
+              {getIcon()}
+            </div>
+            <div className='flex flex-col'>
+              <div className='flex items-center gap-2'>
+                <h1 className='text-xl font-bold md:text-xl'>{title}</h1>
+                {status && (
+                  <span
+                    className={cn(
+                      'rounded-md px-2 py-0.5 text-sm text-white',
+                      getStatusColor(),
+                    )}
+                  >
+                    {status.charAt(0).toUpperCase() +
+                      status.slice(1).toLowerCase()}
+                  </span>
+                )}
+              </div>
+              <p className='text-muted-foreground text-sm'>{description}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
