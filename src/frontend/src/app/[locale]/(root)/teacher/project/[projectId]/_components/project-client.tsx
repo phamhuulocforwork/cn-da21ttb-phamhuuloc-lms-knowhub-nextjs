@@ -26,13 +26,7 @@ const styles = {
   ),
 };
 
-export function ProjectClient({
-  projectId,
-  project,
-}: {
-  projectId: string;
-  project: ProjectWithContent;
-}) {
+export function ProjectClient({ project }: { project: ProjectWithContent }) {
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -81,13 +75,13 @@ export function ProjectClient({
             />
             {viewType === 'grid' ? (
               <CourseGrid
-                projectId={projectId}
+                projectId={project.id}
                 courses={paginatedCourses}
                 showStatus={true}
               />
             ) : (
               <CourseList
-                projectId={projectId}
+                projectId={project.id}
                 courses={paginatedCourses}
                 showStatus={true}
               />

@@ -1,18 +1,22 @@
+import { CourseClient } from './_components/course-client';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { Suspense } from 'react';
-import { notFound } from 'next/navigation';
-import { CourseClient } from './_components/course-client';
 import { courseService } from '@/services/courseService';
+import { notFound } from 'next/navigation';
+import { projectService } from '@/services/projectService';
 
 export default async function CourseDetailPage({
   params,
 }: {
-  params: { courseId: string };
+  params: { courseId: string; projectId: string };
 }) {
   try {
-    const course = await courseService.getCourse(params.courseId);
+    const [course, project] = await Promise.all([
+      courseService.getCourse(params.courseId),
+      projectService.getProject(params.projectId),
+    ]);
 
-    if (!course) {
+    if (!course || !project) {
       notFound();
     }
 
@@ -24,7 +28,7 @@ export default async function CourseDetailPage({
           </div>
         }
       >
-        <CourseClient />
+        <CourseClient course={course} />
       </Suspense>
     );
   } catch (error) {

@@ -24,7 +24,7 @@ export default async function ProjectDetailPage({
           </div>
         }
       >
-        <ProjectClient projectId={params.projectId} project={project} />
+        <ProjectClient project={project} />
       </Suspense>
     );
   } catch (error) {
