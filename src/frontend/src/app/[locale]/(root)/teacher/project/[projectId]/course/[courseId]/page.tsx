@@ -28,7 +28,7 @@ export default async function CourseDetailPage({
           </div>
         }
       >
-        <CourseClient course={course} />
+        <CourseClient params={params} />
       </Suspense>
     );
   } catch (error) {

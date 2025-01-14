@@ -17,6 +17,7 @@ enum Role {
 enum Status {
   DRAFT
   PUBLISHED
+  UNPUBLISHED
   DELETED
 }
 

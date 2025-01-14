@@ -1,6 +1,13 @@
 'use client';
 
-import { BookOpenText, MessagesSquare, MonitorPlay } from 'lucide-react';
+import {
+  BookOpenText,
+  MessagesSquare,
+  MonitorPlay,
+  Trash2,
+} from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface ContentHeaderProps {
@@ -8,6 +15,10 @@ interface ContentHeaderProps {
   title: string;
   description: string;
   status?: string;
+  onTogglePublish?: () => void;
+  onDelete?: () => void;
+  isDeleteLoading?: boolean;
+  isPublishLoading?: boolean;
 }
 
 export function ContentHeader({
@@ -15,6 +26,10 @@ export function ContentHeader({
   title,
   description,
   status,
+  onTogglePublish,
+  onDelete,
+  isDeleteLoading,
+  isPublishLoading,
 }: ContentHeaderProps) {
   const getIcon = () => {
     switch (type) {
@@ -33,10 +48,15 @@ export function ContentHeader({
         return 'bg-green-500';
       case 'draft':
         return 'bg-yellow-500';
+      case 'unpublished':
+        return 'bg-red-500';
       default:
         return 'bg-red-500';
     }
   };
+
+  const isPublished = status?.toLowerCase() === 'published';
+  const showActionButtons = status?.toLowerCase() !== 'deleted';
 
   return (
     <div className='mt-8 space-y-4 border-b pb-4'>
@@ -70,6 +90,27 @@ export function ContentHeader({
             </div>
           </div>
         </div>
+        {showActionButtons && (
+          <div className='flex items-center gap-2'>
+            <Button
+              variant='ghost'
+              onClick={onTogglePublish}
+              disabled={isPublishLoading}
+              className='font-semibold'
+            >
+              {isPublished ? 'Unpublish' : 'Publish'}
+            </Button>
+            <Button
+              variant='outline'
+              size='icon'
+              className='border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive'
+              onClick={onDelete}
+              disabled={isDeleteLoading}
+            >
+              <Trash2 className='h-4 w-4' />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

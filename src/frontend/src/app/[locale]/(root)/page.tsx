@@ -1,10 +1,11 @@
 'use client';
 
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Clock, FileText, MonitorPlay } from 'lucide-react';
-import Link from 'next/link';
+
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Course {
   id: string;

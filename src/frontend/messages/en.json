@@ -202,6 +202,8 @@
     "addSuccess": "Added successfully",
     "deleteError": "Failed to delete",
     "deleteSuccess": "Deleted successfully",
+    "updateError": "Failed to update",
+    "updateSuccess": "Updated successfully",
     "editError": "Failed to edit",
     "editSuccess": "Edited successfully"
   }

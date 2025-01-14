@@ -1,5 +1,5 @@
-import { api } from '@/config/axios';
 import { Category } from '@/types/category';
+import { api } from '@/config/axios';
 
 interface GetCategoriesParams {
   page?: number;
