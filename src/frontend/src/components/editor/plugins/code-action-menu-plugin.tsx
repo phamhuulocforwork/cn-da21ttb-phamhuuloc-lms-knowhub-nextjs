@@ -6,8 +6,10 @@
  *
  */
 // import './index.css';
-import { useEffect, useRef, useState } from 'react';
 import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { createPortal } from 'react-dom';
 
 import {
   $isCodeNode,
@@ -17,7 +19,6 @@ import {
 } from '@lexical/code';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $getNearestNodeFromDOMNode } from 'lexical';
-import { createPortal } from 'react-dom';
 
 import { useDebounce } from '../hooks/use-debounce';
 import { CopyButton } from '../ui/code-button';

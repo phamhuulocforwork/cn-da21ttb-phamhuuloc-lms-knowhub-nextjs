@@ -1,9 +1,11 @@
 'use client';
 
-import { X } from 'lucide-react';
 import Image from 'next/image';
-import { useRouter } from '@/i18n/routing';
+
+import { X } from 'lucide-react';
+
 import { RegisterForm } from '@/app/[locale]/(auth)/_components/register-form';
+import { useRouter } from '@/i18n/routing';
 
 export default function RegisterPage() {
   const router = useRouter();

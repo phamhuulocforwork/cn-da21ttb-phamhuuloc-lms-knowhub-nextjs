@@ -1,7 +1,7 @@
 import {
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
 } from '@/components/ui/side-bar';
 import { Skeleton } from '@/components/ui/skeleton';
 

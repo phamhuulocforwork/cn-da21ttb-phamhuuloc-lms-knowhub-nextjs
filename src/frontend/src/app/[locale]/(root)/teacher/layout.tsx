@@ -1,7 +1,10 @@
-import Forbidden from '@/components/pages/forbidden';
-import { authOptions } from '@/lib/auth';
-import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+
+import { getServerSession } from 'next-auth';
+
+import Forbidden from '@/components/pages/forbidden';
+
+import { authOptions } from '@/lib/auth';
 
 export default async function TeacherLayout({
   children,

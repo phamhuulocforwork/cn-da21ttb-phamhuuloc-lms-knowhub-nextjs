@@ -5,8 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
 import * as React from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+
+import { createPortal } from 'react-dom';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useLexicalEditable } from '@lexical/react/useLexicalEditable';
@@ -24,7 +26,6 @@ import {
 import { $findMatchingParent, mergeRegister } from '@lexical/utils';
 import { $getNearestNodeFromDOMNode, NodeKey } from 'lexical';
 import { PlusIcon } from 'lucide-react';
-import { createPortal } from 'react-dom';
 
 import { useDebounce } from '../hooks/use-debounce';
 

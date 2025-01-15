@@ -1,13 +1,16 @@
 'use client';
+
 import React, { useState } from 'react';
+
 import {
-  motion,
-  useTransform,
   AnimatePresence,
+  motion,
   useMotionValue,
   useSpring,
+  useTransform,
 } from 'framer-motion';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export const AnimatedTooltip = ({
   items,

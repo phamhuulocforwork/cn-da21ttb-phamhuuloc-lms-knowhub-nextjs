@@ -1,9 +1,13 @@
-import { CourseClient } from './_components/course-client';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { Suspense } from 'react';
-import { courseService } from '@/services/courseService';
+
 import { notFound } from 'next/navigation';
+
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
+
+import { courseService } from '@/services/courseService';
 import { projectService } from '@/services/projectService';
+
+import { CourseClient } from './_components/course-client';
 
 export default async function CourseDetailPage({
   params,

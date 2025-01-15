@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
-import { ProfileSkeleton } from './_components/profile-skeleton';
+
 import ProfileClient from './_components/profile-client';
+import { ProfileSkeleton } from './_components/profile-skeleton';
 
 export default function ProfilePage() {
   return (

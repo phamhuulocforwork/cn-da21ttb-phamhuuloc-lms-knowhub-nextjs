@@ -1,4 +1,5 @@
 import { Project } from '@/types/project';
+
 import { api } from '@/config/axios';
 
 interface GetProjectsParams {

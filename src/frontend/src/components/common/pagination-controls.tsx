@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import {
   Pagination,
   PaginationContent,
@@ -13,9 +15,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useTranslations } from 'next-intl';
+
+import { cn } from '@/lib/utils';
 
 interface PaginationControlsProps {
+  className?: string;
   currentPage: number;
   totalPages: number;
   itemsPerPage: number;
@@ -24,6 +28,7 @@ interface PaginationControlsProps {
 }
 
 export function PaginationControls({
+  className,
   currentPage,
   totalPages,
   itemsPerPage,
@@ -33,7 +38,7 @@ export function PaginationControls({
   const t = useTranslations('admin.pagination');
 
   return (
-    <div className='flex items-center justify-between'>
+    <div className={cn('flex items-center justify-between', className)}>
       <div className='flex items-center gap-2'>
         <p className='text-muted-foreground text-sm'>{t('itemsPerPage')}</p>
         <Select

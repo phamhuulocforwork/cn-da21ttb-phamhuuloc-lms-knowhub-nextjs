@@ -1,5 +1,11 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
+
+import Image from 'next/image';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SerializedEditorState } from 'lexical';
 import {
   ArrowRight,
   LayoutGrid,
@@ -7,30 +13,27 @@ import {
   TvMinimalPlay,
   X,
 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { Editor } from '@/components/blocks/editor-x/editor';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
-import { useCallback, useEffect, useState } from 'react';
-
-import { Button } from '@/components/ui/button';
-import { Editor } from '@/components/blocks/editor-x/editor';
-import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { SerializedEditorState } from 'lexical';
+import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
+
 import { categoryService } from '@/services/categoryService';
 import { courseService } from '@/services/courseService';
-import { useForm } from 'react-hook-form';
+
 import { useRouter } from '@/i18n/routing';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 const formSchema = z.object({
   projectId: z.string(),

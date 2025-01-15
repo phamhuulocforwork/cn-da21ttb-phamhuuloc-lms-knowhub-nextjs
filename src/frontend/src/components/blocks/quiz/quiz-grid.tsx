@@ -1,5 +1,6 @@
-import { Quiz } from '@/types/quiz';
 import { QuizCard } from '@/components/blocks/quiz/quiz-card';
+
+import { Quiz } from '@/types/quiz';
 
 export default function QuizGrid({ quizzes }: { quizzes: Quiz[] }) {
   return (

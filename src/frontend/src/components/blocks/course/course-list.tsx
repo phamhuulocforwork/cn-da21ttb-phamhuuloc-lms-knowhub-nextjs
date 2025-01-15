@@ -1,5 +1,6 @@
-import { Course } from '@/types/course';
 import { CourseListItem } from '@/components/blocks/course/course-list-item';
+
+import { Course } from '@/types/course';
 
 export default function CourseList({
   courses,

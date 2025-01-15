@@ -1,4 +1,7 @@
 import { Album, MoreVertical, Users } from 'lucide-react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,9 +9,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Category } from '@/types/category';
+
 import { useRouter } from '@/i18n/routing';
 
 interface CourseListItemProps {

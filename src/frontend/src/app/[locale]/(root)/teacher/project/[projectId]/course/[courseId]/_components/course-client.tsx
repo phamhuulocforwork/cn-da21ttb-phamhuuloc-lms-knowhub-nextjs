@@ -1,5 +1,14 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
+
+import * as z from 'zod';
+import { LayoutTemplate } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import { ContentHeader } from '@/components/common/content-header';
+import { EditField } from '@/components/common/edit-field';
+import { useToast } from '@/components/hooks/use-toast';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,25 +19,51 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { useCallback, useEffect, useState } from 'react';
+import { Option } from '@/components/ui/multiple-selector';
 
-import { ContentHeader } from '@/components/common/content-header';
-import { Course } from '@/types/course';
-import { EditField } from '@/components/common/edit-field';
-import { LayoutTemplate } from 'lucide-react';
 import { Status } from '@/types/common';
+import { Course } from '@/types/course';
+
 import { categoryService } from '@/services/categoryService';
 import { courseService } from '@/services/courseService';
-import { useToast } from '@/components/hooks/use-toast';
-import { useTranslations } from 'next-intl';
+
+const titleSchema = z
+  .string()
+  .min(1, 'Title is required')
+  .max(100, 'Title is too long');
+const shortDescriptionSchema = z
+  .string()
+  .min(1, 'Short description is required')
+  .max(200, 'Short description is too long');
 
 export function CourseClient({ params }: { params: { courseId: string } }) {
-  const [course, setCourse] = useState<Course | null>(null);
   const { toast } = useToast();
   const tToast = useTranslations('toast');
+  const [course, setCourse] = useState<Course | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isPublishLoading, setIsPublishLoading] = useState(false);
+  const [categories, setCategories] = useState<Option[]>([]);
+
+  const fetchCategories = useCallback(async (search: string = '') => {
+    const { categories } = await categoryService.getCategories({
+      page: 1,
+      limit: 10,
+      search,
+    });
+
+    const mappedCategories = categories.map((category) => ({
+      label: category.name,
+      value: category.id,
+    }));
+
+    setCategories(mappedCategories);
+    return mappedCategories;
+  }, []);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -180,15 +215,17 @@ export function CourseClient({ params }: { params: { courseId: string } }) {
             <EditField
               label='Course Title'
               value={course.title}
-              onSave={(value) => handleSaveField('title', value as string)}
+              onSave={(value) => handleSaveField('title', value)}
+              validation={titleSchema}
+              required
             />
 
             <EditField
               label='Course Short Description'
               value={course?.short_description || ''}
-              onSave={(value) =>
-                handleSaveField('short_description', value as string)
-              }
+              onSave={(value) => handleSaveField('short_description', value)}
+              validation={shortDescriptionSchema}
+              required
             />
           </div>
         </div>
@@ -196,7 +233,7 @@ export function CourseClient({ params }: { params: { courseId: string } }) {
           label='Course Description'
           value={course?.description || ''}
           type='editor'
-          onSave={(value) => handleSaveField('description', value as string)}
+          onSave={(value) => handleSaveField('description', value)}
         />
       </div>
     </div>

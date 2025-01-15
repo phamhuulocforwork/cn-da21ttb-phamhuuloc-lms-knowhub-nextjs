@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import * as React from 'react';
 import { ReactPortal, useCallback, useEffect, useRef, useState } from 'react';
+
+import { createPortal } from 'react-dom';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useLexicalEditable } from '@lexical/react/useLexicalEditable';
@@ -41,8 +42,7 @@ import {
   $isRangeSelection,
   $isTextNode,
 } from 'lexical';
-import { ChevronDownIcon, PaintBucketIcon, SquareIcon } from 'lucide-react';
-import { createPortal } from 'react-dom';
+import { ChevronDownIcon, PaintBucketIcon } from 'lucide-react';
 
 import {
   Command,

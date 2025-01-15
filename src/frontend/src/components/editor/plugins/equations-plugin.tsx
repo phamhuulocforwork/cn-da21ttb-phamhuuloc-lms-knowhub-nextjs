@@ -6,11 +6,9 @@
  *
  */
 import { useCallback, useEffect } from 'react';
-import * as React from 'react';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $wrapNodeInElement } from '@lexical/utils';
-import 'katex/dist/katex.css';
 import {
   $createParagraphNode,
   $insertNodes,
@@ -23,6 +21,8 @@ import {
 
 import { $createEquationNode, EquationNode } from '../nodes/equation-node';
 import KatexEquationAlterer from '../ui/katex-equation-alterer';
+
+import 'katex/dist/katex.css';
 
 type CommandPayload = {
   equation: string;

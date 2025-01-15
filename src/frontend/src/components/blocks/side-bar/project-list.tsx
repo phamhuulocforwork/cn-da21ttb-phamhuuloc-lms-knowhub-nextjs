@@ -1,6 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { Plus, SquareMinus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import { Separator } from '@/components/ui/separator';
 import {
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -8,13 +13,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/side-bar';
-import { useEffect, useState } from 'react';
+
+import { Project } from '@/types/project';
+
+import { projectService } from '@/services/projectService';
 
 import { Link } from '@/i18n/routing';
-import { Project } from '@/types/project';
-import { Separator } from '@/components/ui/separator';
-import { projectService } from '@/services/projectService';
-import { useTranslations } from 'next-intl';
 
 export function ProjectList() {
   const t = useTranslations('sidebar');

@@ -1,6 +1,5 @@
-import { QuestionType, Status } from './common';
-
 import { Category } from './category';
+import { QuestionType, Status } from './common';
 
 export interface Quiz {
   id: string;

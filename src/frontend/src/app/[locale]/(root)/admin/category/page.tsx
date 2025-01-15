@@ -1,6 +1,8 @@
-import CategoryManagementClient from './_components/category-management-client';
-import { ManagementSkeleton } from '@/components/common/management-skeleton';
 import { Suspense } from 'react';
+
+import { ManagementSkeleton } from '@/components/common/management-skeleton';
+
+import CategoryManagementClient from './_components/category-management-client';
 
 export default function UserManagementPage() {
   return (

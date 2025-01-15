@@ -1,7 +1,8 @@
 'use client';
 
-import { NeatConfig, NeatGradient } from '@firecms/neat';
 import { useEffect, useRef, useState } from 'react';
+
+import { NeatConfig, NeatGradient } from '@firecms/neat';
 
 const config: NeatConfig = {
   colors: [

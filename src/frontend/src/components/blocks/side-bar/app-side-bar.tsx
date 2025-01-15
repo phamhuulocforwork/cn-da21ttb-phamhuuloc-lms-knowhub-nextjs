@@ -1,5 +1,14 @@
 'use client';
 
+import React from 'react';
+
+import { usePathname } from 'next/navigation';
+
+import { useTranslations } from 'next-intl';
+
+import { UserMenu } from '@/components/blocks/side-bar/user-menu';
+import { Logo } from '@/components/common/logo';
+import useIsMobile from '@/components/hooks/use-mobile';
 import {
   Sidebar,
   SidebarContent,
@@ -15,18 +24,14 @@ import {
   SidebarTrigger,
 } from '@/components/ui/side-bar';
 
-import { Logo } from '@/components/common/logo';
-import { NavigationSkeleton } from './navigation-skeleton';
-import { ProjectList } from './project-list';
-import React from 'react';
 import { User } from '@/types/user';
-import { UserMenu } from '@/components/blocks/side-bar/user-menu';
-import { UserMenuSkeleton } from './user-menu-skeleton';
+
 import { navigations } from '@/config/sidebarConfig';
 import { useAuth } from '@/contexts/auth-provider';
-import useIsMobile from '@/components/hooks/use-mobile';
-import { usePathname } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+
+import { NavigationSkeleton } from './navigation-skeleton';
+import { ProjectList } from './project-list';
+import { UserMenuSkeleton } from './user-menu-skeleton';
 
 export function AppSidebar() {
   const isMobile = useIsMobile();

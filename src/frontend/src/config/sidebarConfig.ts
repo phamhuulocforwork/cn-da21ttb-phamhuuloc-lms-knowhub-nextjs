@@ -1,4 +1,4 @@
-import { ChartColumnStacked, Home, Users, SquareMinus } from 'lucide-react';
+import { ChartColumnStacked, Home, SquareMinus, Users } from 'lucide-react';
 
 type NavigationItem = {
   title: string;

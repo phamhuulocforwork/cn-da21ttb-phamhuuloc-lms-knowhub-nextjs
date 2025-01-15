@@ -1,3 +1,6 @@
+import { MoreVertical } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -15,9 +18,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { MoreVertical } from 'lucide-react';
+
 import { User } from '@/types/user';
-import { useTranslations } from 'next-intl';
 
 interface UserTableProps {
   users: User[];

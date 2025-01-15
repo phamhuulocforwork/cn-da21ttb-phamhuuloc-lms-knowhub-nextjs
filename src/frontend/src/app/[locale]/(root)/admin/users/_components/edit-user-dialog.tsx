@@ -1,3 +1,12 @@
+import { useState } from 'react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { useToast } from '@/components/hooks/use-toast';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -12,7 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Role, User } from '@/types/user';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -21,15 +30,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { useToast } from '@/components/hooks/use-toast';
-import { useTranslations } from 'next-intl';
+import { Role, User } from '@/types/user';
+
 import { userService } from '@/services/userService';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 const editUserSchema = z.object({
   name: z.string().min(1, 'Name is required'),

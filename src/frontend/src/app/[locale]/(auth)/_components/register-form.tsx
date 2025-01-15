@@ -1,9 +1,13 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -12,16 +16,15 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { ParentFormMessage } from '@/components/ui/parent-form-message';
+
+import { Role } from '@/types/user';
+
+import { authService } from '@/services/authService';
 
 import { CardWrapper } from '@/app/[locale]/(auth)/_components/card-wrapper';
-import { useTranslations } from 'next-intl';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { ParentFormMessage } from '@/components/ui/parent-form-message';
-import { authService } from '@/services/authService';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { z } from 'zod';
-import { Role } from '@/types/user';
 
 export const RegisterForm = () => {
   const [loading, setLoading] = useTransition();

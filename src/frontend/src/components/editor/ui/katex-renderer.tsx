@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import * as React from 'react';
 import { useEffect, useRef } from 'react';
 
 import katex from 'katex';

@@ -1,33 +1,38 @@
-import { Check, Pencil, X } from 'lucide-react';
-import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
-import { SerializedEditorState, createEditor } from 'lexical';
 import { useEffect, useState } from 'react';
 
 import { $generateHtmlFromNodes } from '@lexical/html';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Category } from '@/types/category';
-import { Editor } from '@/components/blocks/editor-x/editor';
-import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
+import { SerializedEditorState, createEditor } from 'lexical';
+import { Check, Pencil, X } from 'lucide-react';
+import { ZodSchema } from 'zod';
+
+import { Editor } from '@/components/blocks/editor-x/editor';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Option } from '@/components/ui/multiple-selector';
 
 interface EditFieldProps {
   label: string;
   value: string;
-  type?: 'text' | 'editor';
+  options?: Option[];
+  type?: 'text' | 'editor' | 'multiple-selector';
   onSave: (value: string) => Promise<void>;
-  onSearch?: (search: string) => Promise<Option[]>;
+  validation?: ZodSchema;
+  required?: boolean;
 }
 
 export function EditField({
   label,
   value,
+  options,
   type = 'text',
   onSave,
-  onSearch,
+  validation,
+  required = false,
 }: EditFieldProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value);
+  const [error, setError] = useState<string | null>(null);
   const [editorState, setEditorState] = useState<SerializedEditorState>(
     type === 'editor' ? JSON.parse(value as string) : null,
   );
@@ -43,12 +48,45 @@ export function EditField({
       tempEditor.setEditorState(tempEditor.parseEditorState(value as string));
       tempEditor.update(() => {
         const htmlString = $generateHtmlFromNodes(tempEditor);
-        setHtml(htmlString);
+        // Check if editor state is empty
+        const editorState = tempEditor.getEditorState();
+        const json = editorState.toJSON();
+        const isEmpty = json.root.children.every(
+          (child: any) =>
+            child.children.length === 0 ||
+            (child.children.length === 1 && child.children[0].text === ''),
+        );
+
+        if (isEmpty) {
+          setHtml('<p class="text-muted-foreground italic">Empty content</p>');
+        } else {
+          setHtml(htmlString);
+        }
       });
     }
   }, [type, value]);
 
+  const validateField = (valueToValidate: string): boolean => {
+    if (!validation) return true;
+
+    try {
+      validation.parse(valueToValidate);
+      setError(null);
+      return true;
+    } catch (err: any) {
+      setError(err.errors?.[0]?.message || 'Invalid value');
+      return false;
+    }
+  };
+
   const handleSave = async () => {
+    const valueToValidate =
+      type === 'editor' ? JSON.stringify(editorState) : editValue;
+
+    if (!validateField(valueToValidate as string)) {
+      return;
+    }
+
     try {
       setLoading(true);
       if (type === 'editor') {
@@ -57,6 +95,7 @@ export function EditField({
         await onSave(editValue as string);
       }
       setIsEditing(false);
+      setError(null);
     } catch (error) {
       console.error('Failed to save:', error);
     } finally {
@@ -85,7 +124,10 @@ export function EditField({
   return (
     <div className='space-y-2 rounded-md bg-muted-50 p-4'>
       <div className='flex items-center justify-between'>
-        <Label className='font-semibold'>{label}</Label>
+        <Label className='font-semibold'>
+          {label}
+          {required && <span className='ml-1 text-destructive'>*</span>}
+        </Label>
         {!isEditing && (
           <Button
             variant='icon'
@@ -101,11 +143,21 @@ export function EditField({
       {isEditing ? (
         <div className='space-y-2'>
           {type === 'text' ? (
-            <Input
-              value={editValue as string}
-              onChange={(e) => setEditValue(e.target.value)}
-              disabled={loading}
-            />
+            <>
+              <Input
+                value={editValue as string}
+                onChange={(e) => {
+                  setEditValue(e.target.value);
+                  if (error) validateField(e.target.value);
+                }}
+                disabled={loading}
+              />
+              {error && (
+                <p className='text-[0.8rem] font-medium text-destructive'>
+                  {error}
+                </p>
+              )}
+            </>
           ) : type === 'editor' ? (
             <Editor
               editorSerializedState={editorState}

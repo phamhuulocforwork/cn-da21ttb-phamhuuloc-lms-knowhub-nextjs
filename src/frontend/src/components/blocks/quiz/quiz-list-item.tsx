@@ -1,3 +1,5 @@
+import { Album, MoreVertical, Users } from 'lucide-react';
+
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -6,8 +8,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+
 import { Category } from '@/types/category';
-import { Album, MoreVertical, Users } from 'lucide-react';
 
 interface CourseListItemProps {
   title: string;

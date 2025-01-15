@@ -1,7 +1,7 @@
 import { Category } from './category';
+import { Status } from './common';
 import { Course } from './course';
 import { Quiz } from './quiz';
-import { Status } from './common';
 import { User } from './user';
 
 export interface Project {

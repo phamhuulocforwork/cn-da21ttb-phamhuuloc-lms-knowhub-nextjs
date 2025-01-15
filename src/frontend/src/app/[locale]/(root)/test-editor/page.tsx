@@ -1,10 +1,11 @@
 'use client';
 
-import { SerializedEditorState, createEditor } from 'lexical';
+import { useState } from 'react';
 
 import { $generateHtmlFromNodes } from '@lexical/html';
+import { SerializedEditorState, createEditor } from 'lexical';
+
 import { Editor } from '@/components/blocks/editor-x/editor';
-import { useState } from 'react';
 
 const initialValue = {
   root: {

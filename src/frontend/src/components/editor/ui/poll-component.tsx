@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import * as React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useCollaborationContext } from '@lexical/react/LexicalCollaborationContext';

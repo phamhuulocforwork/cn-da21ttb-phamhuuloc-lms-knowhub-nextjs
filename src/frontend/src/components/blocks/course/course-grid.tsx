@@ -1,5 +1,6 @@
-import { Course } from '@/types/course';
 import { CourseCard } from '@/components/blocks/course/course-card';
+
+import { Course } from '@/types/course';
 
 export default function CourseGrid({
   courses,

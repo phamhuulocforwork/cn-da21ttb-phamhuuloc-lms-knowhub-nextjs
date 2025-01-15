@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import * as React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { createPortal } from 'react-dom';
 
 import dynamic from 'next/dynamic';
 
@@ -21,12 +22,10 @@ import {
   $isRangeSelection,
   TextNode,
 } from 'lexical';
-import { createPortal } from 'react-dom';
 
 import {
   Command,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';

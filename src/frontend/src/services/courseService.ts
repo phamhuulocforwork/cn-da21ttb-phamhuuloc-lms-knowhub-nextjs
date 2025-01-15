@@ -1,4 +1,5 @@
 import { Course } from '@/types/course';
+
 import { api } from '@/config/axios';
 
 interface GetCoursesParams {

@@ -1,4 +1,13 @@
-import { Category } from '@/types/category';
+import { MoreVertical } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   Table,
   TableBody,
@@ -7,15 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { MoreVertical } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+
+import { Category } from '@/types/category';
 
 interface CategoryTableProps {
   categories: Category[];

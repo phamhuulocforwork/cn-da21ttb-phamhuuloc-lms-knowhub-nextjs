@@ -5,9 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import * as React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
@@ -15,7 +13,6 @@ import {
   $insertNodeToNearestRoot,
   mergeRegister,
 } from '@lexical/utils';
-import { LexicalEditor } from 'lexical';
 import type {
   ElementNode,
   LexicalCommand,
@@ -33,6 +30,7 @@ import {
   KEY_ARROW_LEFT_COMMAND,
   KEY_ARROW_RIGHT_COMMAND,
   KEY_ARROW_UP_COMMAND,
+  LexicalEditor,
   createCommand,
 } from 'lexical';
 

@@ -7,6 +7,8 @@
  */
 import { useCallback, useMemo, useState } from 'react';
 
+import { createPortal } from 'react-dom';
+
 import dynamic from 'next/dynamic';
 
 import { $createCodeNode } from '@lexical/code';
@@ -46,7 +48,6 @@ import {
   Heading2Icon,
   Heading3Icon,
   ImageIcon,
-  ImagePlayIcon,
   ListCheckIcon,
   ListCollapseIcon,
   ListIcon,
@@ -58,12 +59,10 @@ import {
   TableIcon,
   TextIcon,
 } from 'lucide-react';
-import { createPortal } from 'react-dom';
 
 import {
   Command,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -73,7 +72,7 @@ import { INSERT_COLLAPSIBLE_COMMAND } from './collapsible-plugin';
 import { EmbedConfigs } from './embeds/auto-embed-plugin';
 import { InsertEquationDialog } from './equations-plugin';
 import { INSERT_EXCALIDRAW_COMMAND } from './excalidraw-plugin';
-import { INSERT_IMAGE_COMMAND, InsertImageDialog } from './images-plugin';
+import { InsertImageDialog } from './images-plugin';
 import { InsertLayoutDialog } from './layout-plugin';
 import { INSERT_PAGE_BREAK } from './page-break-plugin';
 import { InsertPollDialog } from './poll-plugin';

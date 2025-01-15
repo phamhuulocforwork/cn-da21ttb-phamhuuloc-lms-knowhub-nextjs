@@ -1,18 +1,19 @@
 'use client';
 
-import { EditorState, SerializedEditorState } from 'lexical';
 import {
   InitialConfigType,
   LexicalComposer,
 } from '@lexical/react/LexicalComposer';
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+import { EditorState, SerializedEditorState } from 'lexical';
+
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 import { FloatingLinkContext } from './context/floating-link-context';
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { Plugins } from './plugins/plugins';
 import { SharedAutocompleteContext } from './context/shared-autocomplete-context';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { editorTheme } from './themes/editor-theme';
 import { nodes } from './nodes/nodes';
+import { Plugins } from './plugins/plugins';
+import { editorTheme } from './themes/editor-theme';
 
 const editorConfig: InitialConfigType = {
   namespace: 'Editor',

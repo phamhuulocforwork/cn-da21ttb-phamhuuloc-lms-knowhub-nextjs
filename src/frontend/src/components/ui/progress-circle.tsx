@@ -1,7 +1,8 @@
 'use client';
 
+import { type VariantProps, cva } from 'class-variance-authority';
+
 import { cn } from '@/lib/utils';
-import { cva, type VariantProps } from 'class-variance-authority';
 
 const progressCircleVariants = cva('rotate-[-90deg]', {
   variants: {

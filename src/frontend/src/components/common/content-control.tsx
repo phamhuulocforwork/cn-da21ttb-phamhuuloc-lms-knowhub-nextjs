@@ -1,7 +1,7 @@
 import { LayoutGrid, List } from 'lucide-react';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 import { Input } from '@/components/ui/input';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 interface ContentControlProps {
   title: string;

@@ -1,11 +1,11 @@
 import {
   BadgeCheck,
-  LogOut,
-  SunMoon,
-  LogIn,
-  UserPlus,
   BookOpen,
+  LogIn,
+  LogOut,
   LucideIcon,
+  SunMoon,
+  UserPlus,
 } from 'lucide-react';
 
 export type MenuItemType = {

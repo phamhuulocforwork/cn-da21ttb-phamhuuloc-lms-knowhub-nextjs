@@ -1,10 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+
+import Link from 'next/link';
+
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
+import { FcGoogle } from 'react-icons/fc';
 import { z } from 'zod';
 
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -13,17 +20,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { ParentFormMessage } from '@/components/ui/parent-form-message';
 
 import { CardWrapper } from '@/app/[locale]/(auth)/_components/card-wrapper';
-import { useTranslations } from 'next-intl';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { FcGoogle } from 'react-icons/fc';
-import { ParentFormMessage } from '@/components/ui/parent-form-message';
-import { signIn } from 'next-auth/react';
 import { useRouter } from '@/i18n/routing';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
 
 export const LoginForm = () => {
   const router = useRouter();

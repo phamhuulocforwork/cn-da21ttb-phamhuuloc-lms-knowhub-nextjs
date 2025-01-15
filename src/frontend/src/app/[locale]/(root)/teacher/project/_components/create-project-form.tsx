@@ -1,7 +1,13 @@
 'use client';
 
-import * as z from 'zod';
+import { useCallback, useEffect, useState } from 'react';
 
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
+
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -10,17 +16,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
-import { useCallback, useEffect, useState } from 'react';
-
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
 import { Textarea } from '@/components/ui/textarea';
+
 import { categoryService } from '@/services/categoryService';
 import { projectService } from '@/services/projectService';
-import { useForm } from 'react-hook-form';
-import { useTranslations } from 'next-intl';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 const formSchema = z.object({
   title: z.string().min(1, {

@@ -5,7 +5,7 @@ import {
   $patchStyleText,
 } from '@lexical/selection';
 import { $getSelection, $isRangeSelection, BaseSelection } from 'lexical';
-import { BaselineIcon, PaintBucketIcon } from 'lucide-react';
+import { PaintBucketIcon } from 'lucide-react';
 
 import { useToolbarContext } from '../../context/toolbar-context';
 import { useUpdateToolbarHandler } from '../../hooks/use-update-toolbar';

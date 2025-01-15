@@ -1,8 +1,9 @@
 'use client';
 
-import { ChevronsUpDown } from 'lucide-react';
-
 import * as React from 'react';
+
+import { ChevronsUpDown } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -21,13 +22,14 @@ import {
   useSidebar,
 } from '@/components/ui/side-bar';
 
-import { useTheme } from 'next-themes';
 import { User } from '@/types/user';
-import { useRouter } from '@/i18n/routing';
+
 import { menuItems } from '@/config/menuConfig';
 import { menuHandlers } from '@/config/menuHandlers';
-import { UserMenuSkeleton } from './user-menu-skeleton';
 import { useAuth } from '@/contexts/auth-provider';
+import { useRouter } from '@/i18n/routing';
+
+import { UserMenuSkeleton } from './user-menu-skeleton';
 
 export function UserMenu({
   user,

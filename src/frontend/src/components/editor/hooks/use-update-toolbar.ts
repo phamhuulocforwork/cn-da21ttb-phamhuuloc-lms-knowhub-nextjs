@@ -3,11 +3,10 @@ import { useEffect } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $getSelection,
-  $isRangeSelection,
   BaseSelection,
   COMMAND_PRIORITY_CRITICAL,
+  SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import { SELECTION_CHANGE_COMMAND } from 'lexical';
 
 import { useToolbarContext } from '../context/toolbar-context';
 

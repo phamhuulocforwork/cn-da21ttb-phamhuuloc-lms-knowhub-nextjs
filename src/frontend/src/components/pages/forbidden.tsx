@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { Link } from '@/i18n/routing';
+
 import { useTranslations } from 'next-intl';
+
+import { Link } from '@/i18n/routing';
 
 export default function Forbidden() {
   const t = useTranslations('errorPage');

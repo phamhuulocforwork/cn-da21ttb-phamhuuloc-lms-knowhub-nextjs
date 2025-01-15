@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import * as React from 'react';
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
 import { HashtagNode } from '@lexical/hashtag';

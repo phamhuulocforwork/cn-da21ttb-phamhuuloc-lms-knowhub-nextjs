@@ -5,15 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import {
-  Dispatch,
-  LegacyRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import * as React from 'react';
+import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
+
+import { createPortal } from 'react-dom';
 
 import { $isCodeHighlightNode } from '@lexical/code';
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
@@ -36,13 +30,11 @@ import {
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import {
-  BoldIcon,
   CodeIcon,
   LinkIcon,
   SubscriptIcon,
   SuperscriptIcon,
 } from 'lucide-react';
-import { createPortal } from 'react-dom';
 
 import { Separator } from '@/components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';

@@ -1,4 +1,5 @@
 import { User } from '@/types/user';
+
 import { api } from '@/config/axios';
 
 interface AuthResponse {

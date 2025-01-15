@@ -1,16 +1,19 @@
 'use client';
 
-import ProfileHeader from './profile-header';
-import StatsGrid from './stats-grid';
-import RecentActivity from './recent-activity';
-import AccountDetails from './account-details';
 import { useEffect, useState } from 'react';
-import { userService } from '@/services/userService';
+
 import type {
+  RecentActivity as RecentActivityType,
   UserProfile,
   UserStats,
-  RecentActivity as RecentActivityType,
 } from '@/types/profile';
+
+import { userService } from '@/services/userService';
+
+import AccountDetails from './account-details';
+import ProfileHeader from './profile-header';
+import RecentActivity from './recent-activity';
+import StatsGrid from './stats-grid';
 
 export default function ProfileClient() {
   const [profile, setProfile] = useState<UserProfile | null>(null);

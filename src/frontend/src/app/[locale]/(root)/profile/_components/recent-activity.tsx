@@ -1,5 +1,7 @@
 import Image from 'next/image';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
 import type { RecentActivity } from '@/types/profile';
 
 interface Props {

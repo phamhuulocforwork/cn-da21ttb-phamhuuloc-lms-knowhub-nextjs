@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
+
 import { FolderKanban, Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+
 import CreateContentDialog from './create-content-dialog';
-import { useState } from 'react';
 
 interface ProjectHeaderProps {
   title: String;

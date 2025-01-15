@@ -6,7 +6,8 @@
  *
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import * as React from 'react';
+
+import { createPortal } from 'react-dom';
 
 import dynamic from 'next/dynamic';
 
@@ -18,20 +19,13 @@ import {
 } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 import { TextNode } from 'lexical';
 import { CircleUserRoundIcon } from 'lucide-react';
-import { createPortal } from 'react-dom';
 
 import {
   Command,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 
 import { $createMentionNode } from '../nodes/mention-node';
 

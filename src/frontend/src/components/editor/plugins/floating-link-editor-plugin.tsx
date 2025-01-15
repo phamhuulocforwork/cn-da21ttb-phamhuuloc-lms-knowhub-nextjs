@@ -5,8 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
 import * as React from 'react';
+import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
+
+import { createPortal } from 'react-dom';
 
 import {
   $createLinkNode,
@@ -16,7 +18,6 @@ import {
 } from '@lexical/link';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $findMatchingParent, mergeRegister } from '@lexical/utils';
-import { PopoverPortal } from '@radix-ui/react-popover';
 import {
   $getSelection,
   $isLineBreakNode,
@@ -31,15 +32,9 @@ import {
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import { Check, Pencil, Trash, X } from 'lucide-react';
-import { createPortal } from 'react-dom';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 
 import { useFloatingLinkContext } from '../context/floating-link-context';
 import { getSelectedNode } from '../utils/get-selected-node';

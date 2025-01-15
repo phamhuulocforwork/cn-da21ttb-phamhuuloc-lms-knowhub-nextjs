@@ -11,11 +11,14 @@ import {
   INDENT_CONTENT_COMMAND,
   OUTDENT_CONTENT_COMMAND,
 } from 'lexical';
-import { IndentIncreaseIcon } from 'lucide-react';
-import { IndentDecreaseIcon } from 'lucide-react';
-import { AlignLeftIcon } from 'lucide-react';
-import { AlignJustifyIcon } from 'lucide-react';
-import { AlignCenterIcon, AlignRightIcon } from 'lucide-react';
+import {
+  AlignCenterIcon,
+  AlignJustifyIcon,
+  AlignLeftIcon,
+  AlignRightIcon,
+  IndentDecreaseIcon,
+  IndentIncreaseIcon,
+} from 'lucide-react';
 
 import { Separator } from '@/components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';

@@ -1,4 +1,9 @@
+import Image from 'next/image';
+
 import { Album, MoreVertical, Users } from 'lucide-react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -12,10 +17,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Category } from '@/types/category';
-import Image from 'next/image';
+
 import { useRouter } from '@/i18n/routing';
 
 interface CourseCardProps {

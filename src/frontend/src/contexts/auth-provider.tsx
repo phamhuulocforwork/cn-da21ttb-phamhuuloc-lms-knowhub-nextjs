@@ -7,10 +7,13 @@ import {
   useEffect,
   useState,
 } from 'react';
+
 import { SessionProvider, signOut, useSession } from 'next-auth/react';
 
-import { User } from '@/types/user';
 import { useMinimumLoading } from '@/components/hooks/use-minimum-loading';
+
+import { User } from '@/types/user';
+
 import { userService } from '@/services/userService';
 
 interface AuthContextType {

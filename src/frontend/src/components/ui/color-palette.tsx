@@ -1,16 +1,18 @@
 'use client';
 
 import * as React from 'react';
-import config from '@/tailwind.config';
-import { cn } from '@/lib/utils';
-import { Label } from '@/components/ui/label';
 
+import { Label } from '@/components/ui/label';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+
+import { cn } from '@/lib/utils';
+
+import config from '@/tailwind.config';
 
 interface ColorShadeProps extends React.HTMLAttributes<HTMLDivElement> {
   shade?: string;

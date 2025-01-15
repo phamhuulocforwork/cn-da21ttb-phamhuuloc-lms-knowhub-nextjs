@@ -1,9 +1,12 @@
-import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
+
+import { useToast } from '@/components/hooks/use-toast';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -19,11 +22,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { categoryService } from '@/services/categoryService';
+
 import { Category } from '@/types/category';
-import { useToast } from '@/components/hooks/use-toast';
+
+import { categoryService } from '@/services/categoryService';
 
 interface EditCategoryDialogProps {
   category: Category;

@@ -5,7 +5,7 @@ import {
   $patchStyleText,
 } from '@lexical/selection';
 import { $getSelection, $isRangeSelection, BaseSelection } from 'lexical';
-import { Minus, Plus, TypeIcon } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

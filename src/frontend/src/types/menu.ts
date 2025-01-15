@@ -1,4 +1,5 @@
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+
 import { LucideIcon } from 'lucide-react';
 
 export interface MenuItem {

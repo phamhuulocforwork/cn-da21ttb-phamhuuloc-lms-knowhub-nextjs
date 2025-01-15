@@ -5,8 +5,8 @@ import {
   $isRangeSelection,
   BaseSelection,
   COMMAND_PRIORITY_NORMAL,
+  KEY_MODIFIER_COMMAND,
 } from 'lexical';
-import { KEY_MODIFIER_COMMAND } from 'lexical';
 import { LinkIcon } from 'lucide-react';
 
 import { Toggle } from '@/components/ui/toggle';

@@ -1,14 +1,12 @@
 import { useCallback } from 'react';
 
-import { $isCodeNode } from '@lexical/code';
-import { $createCodeNode } from '@lexical/code';
+import { $createCodeNode, $isCodeNode } from '@lexical/code';
 import {
   $convertFromMarkdownString,
   $convertToMarkdownString,
 } from '@lexical/markdown';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $createTextNode } from 'lexical';
-import { $getRoot } from 'lexical';
+import { $createTextNode, $getRoot } from 'lexical';
 import { FileTextIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';

@@ -1,11 +1,12 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
+
 import { Clock, FileText, MonitorPlay } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import Image from 'next/image';
-import Link from 'next/link';
 
 interface Course {
   id: string;

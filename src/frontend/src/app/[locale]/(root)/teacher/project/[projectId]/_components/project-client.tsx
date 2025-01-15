@@ -1,17 +1,20 @@
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useState } from 'react';
 
-import { ContentControl } from '@/components/common/content-control';
 import CourseGrid from '@/components/blocks/course/course-grid';
 import CourseList from '@/components/blocks/course/course-list';
-import { PaginationControls } from '@/components/common/pagination-controls';
-import { ProjectHeader } from './project-header';
-import { ProjectWithContent } from '@/types/project';
 import QuizGrid from '@/components/blocks/quiz/quiz-grid';
-import { cn } from '@/lib/utils';
+import { ContentControl } from '@/components/common/content-control';
+import { PaginationControls } from '@/components/common/pagination-controls';
 import { useDebounce } from '@/components/hooks/use-debounce';
-import { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+import { cn } from '@/lib/utils';
+
+import { ProjectWithContent } from '@/types/project';
+
+import { ProjectHeader } from './project-header';
 
 const styles = {
   tabsList: cn(
@@ -46,79 +49,78 @@ export function ProjectClient({ project }: { project: ProjectWithContent }) {
   );
 
   return (
-    <div className='mx-4 mb-4 md:mx-11 md:mb-11'>
-      <ProjectHeader
-        title={project.title}
-        description={project.description || ''}
+    <div className='mx-4 flex min-h-screen flex-col justify-between md:mx-11'>
+      <div>
+        <ProjectHeader
+          title={project.title}
+          description={project.description || ''}
+        />
+        <Tabs defaultValue='course'>
+          <div className='flex items-center justify-between'>
+            <TabsList className={styles.tabsList}>
+              <TabsTrigger className={styles.tabsTrigger} value='course'>
+                Course
+              </TabsTrigger>
+              <TabsTrigger className={styles.tabsTrigger} value='quiz'>
+                Quiz
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
+          <TabsContent
+            className='flex h-full flex-col justify-between'
+            value='course'
+          >
+            <div className='mt-4 flex flex-col gap-4'>
+              <ContentControl
+                title='All courses'
+                count={filteredCourses.length}
+                viewType={viewType}
+                searchQuery={searchQuery}
+                onViewChange={setViewType}
+                onSearchChange={setSearchQuery}
+              />
+              {viewType === 'grid' ? (
+                <CourseGrid
+                  projectId={project.id}
+                  courses={paginatedCourses}
+                  showStatus={true}
+                />
+              ) : (
+                <CourseList
+                  projectId={project.id}
+                  courses={paginatedCourses}
+                  showStatus={true}
+                />
+              )}
+            </div>
+          </TabsContent>
+
+          <TabsContent value='quiz'>
+            <div className='mt-4 flex flex-col gap-4'>
+              <ContentControl
+                title='All quizzes'
+                count={project.quizzes.length}
+                viewType={viewType}
+                searchQuery={searchQuery}
+                onViewChange={setViewType}
+                onSearchChange={setSearchQuery}
+              />
+              {viewType === 'grid' ? (
+                <QuizGrid quizzes={project.quizzes} />
+              ) : null}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+      <PaginationControls
+        className='my-4'
+        currentPage={currentPage}
+        totalPages={totalPages}
+        itemsPerPage={itemsPerPage}
+        onPageChange={setCurrentPage}
+        onItemsPerPageChange={setItemsPerPage}
       />
-      <Tabs defaultValue='course' className='w-full'>
-        <div className='flex items-center justify-between'>
-          <TabsList className={styles.tabsList}>
-            <TabsTrigger className={styles.tabsTrigger} value='course'>
-              Course
-            </TabsTrigger>
-            <TabsTrigger className={styles.tabsTrigger} value='quiz'>
-              Quiz
-            </TabsTrigger>
-          </TabsList>
-        </div>
-
-        <TabsContent value='course'>
-          <div className='mt-4 flex flex-col gap-4'>
-            <ContentControl
-              title='All courses'
-              count={filteredCourses.length}
-              viewType={viewType}
-              searchQuery={searchQuery}
-              onViewChange={setViewType}
-              onSearchChange={setSearchQuery}
-            />
-            {viewType === 'grid' ? (
-              <CourseGrid
-                projectId={project.id}
-                courses={paginatedCourses}
-                showStatus={true}
-              />
-            ) : (
-              <CourseList
-                projectId={project.id}
-                courses={paginatedCourses}
-                showStatus={true}
-              />
-            )}
-            <PaginationControls
-              currentPage={currentPage}
-              totalPages={totalPages}
-              itemsPerPage={itemsPerPage}
-              onPageChange={setCurrentPage}
-              onItemsPerPageChange={setItemsPerPage}
-            />
-          </div>
-        </TabsContent>
-
-        <TabsContent value='quiz'>
-          <div className='mt-4 flex flex-col gap-4'>
-            <ContentControl
-              title='All quizzes'
-              count={project.quizzes.length}
-              viewType={viewType}
-              searchQuery={searchQuery}
-              onViewChange={setViewType}
-              onSearchChange={setSearchQuery}
-            />
-            {viewType === 'grid' ? (
-              <QuizGrid quizzes={project.quizzes} />
-            ) : null}
-            <PaginationControls
-              currentPage={currentPage}
-              totalPages={totalPages}
-              itemsPerPage={itemsPerPage}
-              onPageChange={setCurrentPage}
-              onItemsPerPageChange={setItemsPerPage}
-            />
-          </div>
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }
