@@ -20,6 +20,7 @@
     "@radix-ui/react-toggle": "^1.1.1",
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.6",
+    "@uploadthing/react": "^7.1.5",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.1",
@@ -45,6 +46,7 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "three.js": "^0.77.1",
+    "uploadthing": "^7.4.4",
     "xlsx": "^0.18.5",
     "zod": "^3.24.1"
   },

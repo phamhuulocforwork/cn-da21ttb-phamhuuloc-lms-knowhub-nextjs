@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import Image from 'next/image';
+
 import { $generateHtmlFromNodes } from '@lexical/html';
 import { Label } from '@radix-ui/react-label';
 import { SerializedEditorState, createEditor } from 'lexical';
@@ -7,28 +9,37 @@ import { Check, Pencil, X } from 'lucide-react';
 import { ZodSchema } from 'zod';
 
 import { Editor } from '@/components/blocks/editor-x/editor';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Option } from '@/components/ui/multiple-selector';
+import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
+
+import { UploadDropzone } from '@/lib/uploadthing';
+
+import { ourFileRouter } from '@/app/api/uploadthing/core';
 
 interface EditFieldProps {
   label: string;
-  value: string;
+  value: string | string[];
   options?: Option[];
-  type?: 'text' | 'editor' | 'multiple-selector';
-  onSave: (value: string) => Promise<void>;
+  type?: 'text' | 'editor' | 'multiple-selector' | 'file';
+  onSave: (value: string | string[]) => Promise<void>;
   validation?: ZodSchema;
   required?: boolean;
+  onSearch?: (search: string) => Promise<Option[]>;
+  endpoint?: keyof typeof ourFileRouter;
 }
 
 export function EditField({
   label,
   value,
-  options,
+  options = [],
   type = 'text',
   onSave,
   validation,
   required = false,
+  onSearch,
+  endpoint,
 }: EditFieldProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value);
@@ -38,6 +49,11 @@ export function EditField({
   );
   const [html, setHtml] = useState<string>('');
   const [loading, setLoading] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState<Option[]>(
+    type === 'multiple-selector'
+      ? options.filter((opt) => (value as string[]).includes(opt.value))
+      : [],
+  );
 
   useEffect(() => {
     if (type === 'editor' && value) {
@@ -121,6 +137,91 @@ export function EditField({
     setIsEditing(false);
   };
 
+  const renderField = () => {
+    switch (type) {
+      case 'text':
+        return (
+          <>
+            <Input
+              value={editValue as string}
+              onChange={(e) => {
+                setEditValue(e.target.value);
+                if (error) validateField(e.target.value);
+              }}
+              disabled={loading}
+            />
+            {error && (
+              <p className='text-[0.8rem] font-medium text-destructive'>
+                {error}
+              </p>
+            )}
+          </>
+        );
+      case 'editor':
+        return (
+          <Editor
+            editorSerializedState={editorState}
+            onSerializedChange={(value) => {
+              setEditorState(value);
+              const tempEditor = createEditor({
+                nodes: [],
+                onError: () => null,
+              });
+              tempEditor.setEditorState(
+                tempEditor.parseEditorState(JSON.stringify(value)),
+              );
+              tempEditor.update(() => {
+                const htmlString = $generateHtmlFromNodes(tempEditor);
+                setHtml(htmlString);
+              });
+            }}
+          />
+        );
+      case 'multiple-selector':
+        return (
+          <MultipleSelector
+            disabled={loading}
+            defaultOptions={options}
+            onSearch={onSearch}
+            triggerSearchOnFocus={true}
+            value={selectedOptions}
+            onChange={(selected) => {
+              setSelectedOptions(selected);
+            }}
+            placeholder='Click to select categories'
+            emptyIndicator='No results'
+            options={options}
+          />
+        );
+      case 'file':
+        return (
+          <div className='space-y-4'>
+            <Image
+              src={value as string}
+              alt='Upload preview'
+              width={1920}
+              height={1080}
+              className='h-64 w-full rounded-md object-cover'
+            />
+            <UploadDropzone
+              endpoint={endpoint!}
+              onClientUploadComplete={(res: any) => {
+                if (res?.[0]) {
+                  onSave(res[0].url);
+                  setIsEditing(false);
+                }
+              }}
+              onUploadError={(error: Error) => {
+                console.error('Failed to upload:', error);
+              }}
+            />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className='space-y-2 rounded-md bg-muted-50 p-4'>
       <div className='flex items-center justify-between'>
@@ -142,63 +243,70 @@ export function EditField({
 
       {isEditing ? (
         <div className='space-y-2'>
-          {type === 'text' ? (
-            <>
-              <Input
-                value={editValue as string}
-                onChange={(e) => {
-                  setEditValue(e.target.value);
-                  if (error) validateField(e.target.value);
+          {renderField()}
+          {type !== 'file' && (
+            <div className='flex items-center gap-2'>
+              <Button
+                size='sm'
+                onClick={async () => {
+                  if (type === 'multiple-selector') {
+                    await onSave(selectedOptions.map((opt) => opt.value));
+                  } else {
+                    await handleSave();
+                  }
+                  setIsEditing(false);
                 }}
                 disabled={loading}
-              />
-              {error && (
-                <p className='text-[0.8rem] font-medium text-destructive'>
-                  {error}
-                </p>
-              )}
-            </>
-          ) : type === 'editor' ? (
-            <Editor
-              editorSerializedState={editorState}
-              onSerializedChange={(value) => {
-                setEditorState(value);
-                const tempEditor = createEditor({
-                  nodes: [],
-                  onError: () => null,
-                });
-                tempEditor.setEditorState(
-                  tempEditor.parseEditorState(JSON.stringify(value)),
-                );
-                tempEditor.update(() => {
-                  const htmlString = $generateHtmlFromNodes(tempEditor);
-                  setHtml(htmlString);
-                });
-              }}
-            />
-          ) : null}
-          <div className='flex items-center gap-2'>
-            <Button size='sm' onClick={handleSave} disabled={loading}>
-              <Check className='mr-2 h-4 w-4' />
-              Save
-            </Button>
-            <Button
-              variant='outline'
-              size='sm'
-              onClick={handleCancel}
-              disabled={loading}
-            >
-              <X className='mr-2 h-4 w-4' />
-              Cancel
-            </Button>
-          </div>
+              >
+                <Check className='mr-2 h-4 w-4' />
+                Save
+              </Button>
+              <Button
+                variant='outline'
+                size='sm'
+                onClick={handleCancel}
+                disabled={loading}
+              >
+                <X className='mr-2 h-4 w-4' />
+                Cancel
+              </Button>
+            </div>
+          )}
         </div>
       ) : (
         <div className=''>
-          {type === 'text' ? (
+          {type === 'file' ? (
+            <>
+              {value ? (
+                <Image
+                  src={value as string}
+                  alt='thumbnail'
+                  width={1920}
+                  height={1080}
+                  className='h-64 w-full rounded-md object-cover'
+                />
+              ) : (
+                <div className='flex h-full items-center justify-center bg-muted'>
+                  <span className='text-sm text-muted-foreground'>
+                    Click to upload
+                  </span>
+                </div>
+              )}
+            </>
+          ) : type === 'text' ? (
             <p className='text-sm'>{value as string}</p>
           ) : type === 'editor' ? (
             <div dangerouslySetInnerHTML={{ __html: html }} />
+          ) : type === 'multiple-selector' ? (
+            <div className='flex flex-wrap gap-1'>
+              {options
+                .filter((opt) => (value as string[]).includes(opt.value))
+                .map((category) => (
+                  <Badge key={category.value} variant='tag' className='text-xs'>
+                    {category.label}
+                  </Badge>
+                ))}
+            </div>
           ) : null}
         </div>
       )}

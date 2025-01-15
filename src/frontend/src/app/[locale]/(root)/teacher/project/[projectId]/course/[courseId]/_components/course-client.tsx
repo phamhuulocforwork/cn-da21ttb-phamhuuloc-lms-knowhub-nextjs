@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 
 import { ContentHeader } from '@/components/common/content-header';
 import { EditField } from '@/components/common/edit-field';
+import { FileUpload } from '@/components/common/file-upload';
 import { useToast } from '@/components/hooks/use-toast';
 import {
   AlertDialog,
@@ -166,6 +167,42 @@ export function CourseClient({ params }: { params: { courseId: string } }) {
     }
   };
 
+  const handleSaveCategories = async (categoryIds: string[]) => {
+    if (!course) return;
+
+    try {
+      await courseService.updateCourse(course.id, {
+        categories: categories
+          .filter((cat) => categoryIds.includes(cat.value))
+          .map((cat) => ({
+            id: cat.value,
+            name: cat.label,
+          })),
+      });
+
+      setCourse({
+        ...course,
+        categories: categories
+          .filter((cat) => categoryIds.includes(cat.value))
+          .map((cat) => ({
+            id: cat.value,
+            name: cat.label,
+          })),
+      });
+
+      toast({
+        variant: 'success',
+        title: tToast('updateSuccess'),
+      });
+    } catch (error) {
+      console.error('Failed to update course categories:', error);
+      toast({
+        variant: 'destructive',
+        title: tToast('updateError'),
+      });
+    }
+  };
+
   if (!course) {
     return null;
   }
@@ -213,9 +250,18 @@ export function CourseClient({ params }: { params: { courseId: string } }) {
             </div>
 
             <EditField
+              label='Course thumbnail'
+              value={course?.thumbnail || ''}
+              type='file'
+              endpoint='courseThumbnail'
+              onSave={(url) => handleSaveField('thumbnail', url as string)}
+              required
+            />
+
+            <EditField
               label='Course Title'
               value={course.title}
-              onSave={(value) => handleSaveField('title', value)}
+              onSave={(value) => handleSaveField('title', value as string)}
               validation={titleSchema}
               required
             />
@@ -223,17 +269,30 @@ export function CourseClient({ params }: { params: { courseId: string } }) {
             <EditField
               label='Course Short Description'
               value={course?.short_description || ''}
-              onSave={(value) => handleSaveField('short_description', value)}
+              onSave={(value) =>
+                handleSaveField('short_description', value as string)
+              }
               validation={shortDescriptionSchema}
+              required
+            />
+
+            <EditField
+              label='Categories'
+              value={course.categories.map((cat) => cat.id)}
+              type='multiple-selector'
+              options={categories}
+              onSearch={fetchCategories}
+              onSave={(value) => handleSaveCategories(value as string[])}
               required
             />
           </div>
         </div>
+
         <EditField
           label='Course Description'
           value={course?.description || ''}
           type='editor'
-          onSave={(value) => handleSaveField('description', value)}
+          onSave={(value) => handleSaveField('description', value as string)}
         />
       </div>
     </div>
