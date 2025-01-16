@@ -144,6 +144,7 @@ export function UserMenu({
                 <DropdownMenuItem
                   key={item.id}
                   onClick={() => handleMenuAction(item.id)}
+                  className='cursor-pointer'
                 >
                   <item.icon className='h-4 w-4' />
                   {item.label}
@@ -160,6 +161,7 @@ export function UserMenu({
                 <DropdownMenuItem
                   key={item.id}
                   onClick={() => handleMenuAction(item.id)}
+                  className='cursor-pointer'
                 >
                   <item.icon className='h-4 w-4' />
                   {item.id === 'theme'

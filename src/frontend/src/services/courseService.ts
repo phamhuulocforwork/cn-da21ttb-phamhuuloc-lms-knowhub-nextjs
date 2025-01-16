@@ -6,7 +6,9 @@ interface GetCoursesParams {
   page?: number;
   limit?: number;
   search?: string;
+  categoryId?: string;
   projectId?: string;
+  view?: 'grid' | 'list';
 }
 
 interface GetCoursesResponse {
@@ -21,9 +23,24 @@ interface GetCoursesResponse {
 
 export const courseService = {
   async getCourses(params?: GetCoursesParams): Promise<GetCoursesResponse> {
-    const { page = 1, limit = 10, search = '', projectId } = params || {};
+    const {
+      page = 1,
+      limit = 10,
+      search = '',
+      categoryId = '',
+      projectId,
+      view = 'grid',
+    } = params || {};
+
     const { data } = await api.get('/api/course', {
-      params: { page, limit, search, projectId },
+      params: {
+        page,
+        limit,
+        search,
+        categoryId,
+        projectId,
+        view,
+      },
     });
     return data;
   },
