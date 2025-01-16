@@ -83,8 +83,63 @@ model Course {
   authorId    String
   project     Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId   String?
+  chapters    Chapter[]
+  purchases   Purchase[]
   categories  Category[]
   enrollments CourseEnrollment[]
+}
+
+model Chapter {
+  id          String    @id @default(cuid())
+  title       String
+  description String?   @db.Text
+  videoUrl    String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  position Int
+  isPublished Boolean @default(false)
+
+  // Relations
+  courseId String
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  // User progress
+  userProgress UserProgress[]
+
+  @@index([courseId])
+}
+
+model UserProgress {
+  id String @id @default(cuid())
+  userId String
+
+  chapterId String
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  isCompleted Boolean @default(false)
+  completedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([chapterId])
+  @@unique([userId, chapterId])
+}
+
+model Purchase {
+  id String @id @default(cuid())
+  userId String
+
+  courseId String
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
 }
 
 model Quiz {

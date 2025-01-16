@@ -16,7 +16,10 @@ export default new (class CourseController {
 
       const where = {
         OR: [{ title: { contains: search } }, { description: { contains: search } }],
-        status: "PUBLISHED",
+        status: {
+          in: ["PUBLISHED", "DRAFT"],
+        },
+
         ...(categoryId && {
           categories: {
             some: { id: categoryId },
@@ -43,6 +46,7 @@ export default new (class CourseController {
                 title: true,
               },
             },
+            chapters: true,
             _count: {
               select: {
                 enrollments: true,
@@ -93,6 +97,9 @@ export default new (class CourseController {
               title: true,
             },
           },
+          chapters: {
+            orderBy: { position: "asc" },
+          },
           _count: {
             select: {
               enrollments: true,
@@ -133,6 +140,7 @@ export default new (class CourseController {
         },
         include: {
           categories: true,
+          chapters: true,
         },
       });
 
@@ -178,6 +186,7 @@ export default new (class CourseController {
         },
         include: {
           categories: true,
+          chapters: true,
         },
       });
 
@@ -225,6 +234,7 @@ export default new (class CourseController {
         where: { id },
         include: {
           project: true,
+          chapters: true,
         },
       });
 

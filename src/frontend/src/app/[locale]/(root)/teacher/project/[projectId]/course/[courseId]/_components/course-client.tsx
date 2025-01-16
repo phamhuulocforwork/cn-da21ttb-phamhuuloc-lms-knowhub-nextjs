@@ -3,12 +3,11 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import * as z from 'zod';
-import { LayoutTemplate } from 'lucide-react';
+import { LayoutList, LayoutTemplate } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { ContentHeader } from '@/components/common/content-header';
 import { EditField } from '@/components/common/edit-field';
-import { FileUpload } from '@/components/common/file-upload';
 import { useToast } from '@/components/hooks/use-toast';
 import {
   AlertDialog,
@@ -22,11 +21,14 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Option } from '@/components/ui/multiple-selector';
 
+import { Chapter } from '@/types/chapter';
 import { Status } from '@/types/common';
 import { Course } from '@/types/course';
 
 import { categoryService } from '@/services/categoryService';
 import { courseService } from '@/services/courseService';
+
+import { ChapterList } from './chapter-list';
 
 const titleSchema = z
   .string()
@@ -37,7 +39,11 @@ const shortDescriptionSchema = z
   .min(1, 'Short description is required')
   .max(200, 'Short description is too long');
 
-export function CourseClient({ params }: { params: { courseId: string } }) {
+export function CourseClient({
+  params,
+}: {
+  params: { courseId: string; projectId: string };
+}) {
   const { toast } = useToast();
   const tToast = useTranslations('toast');
   const [course, setCourse] = useState<Course | null>(null);
@@ -284,6 +290,18 @@ export function CourseClient({ params }: { params: { courseId: string } }) {
               onSearch={fetchCategories}
               onSave={(value) => handleSaveCategories(value as string[])}
               required
+            />
+          </div>
+
+          <div className='space-y-6'>
+            <div className='flex items-center gap-x-2'>
+              <LayoutList className='h-6 w-6 text-primary' />
+              <h2 className='text-xl font-bold'>Customize your course</h2>
+            </div>
+            <ChapterList
+              projectId={params.projectId}
+              courseId={course.id}
+              items={course.chapters}
             />
           </div>
         </div>

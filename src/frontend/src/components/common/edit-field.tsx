@@ -48,6 +48,7 @@ export function EditField({
     type === 'editor' ? JSON.parse(value as string) : null,
   );
   const [html, setHtml] = useState<string>('');
+  const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<Option[]>(
     type === 'multiple-selector'
@@ -107,6 +108,8 @@ export function EditField({
       setLoading(true);
       if (type === 'editor') {
         await onSave(JSON.stringify(editorState));
+      } else if (type === 'file') {
+        await onSave(image as string);
       } else {
         await onSave(editValue as string);
       }
@@ -197,7 +200,7 @@ export function EditField({
         return (
           <div className='space-y-4'>
             <Image
-              src={value as string}
+              src={image || (value as string)}
               alt='Upload preview'
               width={1920}
               height={1080}
@@ -207,8 +210,7 @@ export function EditField({
               endpoint={endpoint!}
               onClientUploadComplete={(res: any) => {
                 if (res?.[0]) {
-                  onSave(res[0].url);
-                  setIsEditing(false);
+                  setImage(res[0].url);
                 }
               }}
               onUploadError={(error: Error) => {
@@ -223,7 +225,7 @@ export function EditField({
   };
 
   return (
-    <div className='space-y-2 rounded-md bg-muted-50 p-4'>
+    <div className='space-y-2 rounded-md bg-slate-100 p-4'>
       <div className='flex items-center justify-between'>
         <Label className='font-semibold'>
           {label}
@@ -231,8 +233,8 @@ export function EditField({
         </Label>
         {!isEditing && (
           <Button
-            variant='icon'
-            size='sm'
+            variant='ghost'
+            size='icon'
             onClick={() => setIsEditing(true)}
             className='h-8 w-8 p-0'
           >
@@ -244,34 +246,32 @@ export function EditField({
       {isEditing ? (
         <div className='space-y-2'>
           {renderField()}
-          {type !== 'file' && (
-            <div className='flex items-center gap-2'>
-              <Button
-                size='sm'
-                onClick={async () => {
-                  if (type === 'multiple-selector') {
-                    await onSave(selectedOptions.map((opt) => opt.value));
-                  } else {
-                    await handleSave();
-                  }
-                  setIsEditing(false);
-                }}
-                disabled={loading}
-              >
-                <Check className='mr-2 h-4 w-4' />
-                Save
-              </Button>
-              <Button
-                variant='outline'
-                size='sm'
-                onClick={handleCancel}
-                disabled={loading}
-              >
-                <X className='mr-2 h-4 w-4' />
-                Cancel
-              </Button>
-            </div>
-          )}
+          <div className='flex items-center gap-2'>
+            <Button
+              size='sm'
+              onClick={async () => {
+                if (type === 'multiple-selector') {
+                  await onSave(selectedOptions.map((opt) => opt.value));
+                } else {
+                  await handleSave();
+                }
+                setIsEditing(false);
+              }}
+              disabled={loading}
+            >
+              <Check className='mr-2 h-4 w-4' />
+              Save
+            </Button>
+            <Button
+              variant='outline'
+              size='sm'
+              onClick={handleCancel}
+              disabled={loading}
+            >
+              <X className='mr-2 h-4 w-4' />
+              Cancel
+            </Button>
+          </div>
         </div>
       ) : (
         <div className=''>

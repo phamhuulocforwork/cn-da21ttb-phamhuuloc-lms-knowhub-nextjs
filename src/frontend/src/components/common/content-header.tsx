@@ -2,6 +2,7 @@
 
 import {
   BookOpenText,
+  LayoutTemplate,
   MessagesSquare,
   MonitorPlay,
   Trash2,
@@ -12,9 +13,9 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface ContentHeaderProps {
-  type: 'course' | 'quiz';
+  type: 'course' | 'quiz' | 'chapter';
   title: string;
-  description: string;
+  description?: string;
   status?: string;
   onTogglePublish?: () => void;
   onDelete?: () => void;
@@ -38,6 +39,8 @@ export function ContentHeader({
         return <MonitorPlay className='h-8 w-8' />;
       case 'quiz':
         return <MessagesSquare className='h-8 w-8' />;
+      case 'chapter':
+        return <LayoutTemplate className='h-8 w-8' />;
       default:
         return <BookOpenText className='h-8 w-8' />;
     }
@@ -87,7 +90,7 @@ export function ContentHeader({
                   </span>
                 )}
               </div>
-              <p className='text-muted-foreground text-sm'>{description}</p>
+              {description && <p className='text-muted-foreground text-sm'>{description}</p>}
             </div>
           </div>
         </div>

@@ -14,7 +14,9 @@ export default new (class ProjectController {
 
       const where = {
         OR: [{ title: { contains: search } }, { description: { contains: search } }],
-        status: "PUBLISHED",
+        status: {
+          in: ["PUBLISHED"],
+        },
         ...(categoryId && {
           categories: {
             some: { id: categoryId },
@@ -135,11 +137,21 @@ export default new (class ProjectController {
           },
           categories: true,
           courses: {
+            where: {
+              status: {
+                in: ["PUBLISHED", "UNPUBLISHED", "DRAFT"],
+              },
+            },
             select: {
               ...courseSelect,
             },
           },
           quizzes: {
+            where: {
+              status: {
+                in: ["PUBLISHED", "UNPUBLISHED", "DRAFT"],
+              },
+            },
             select: { ...quizSelect },
           },
         },

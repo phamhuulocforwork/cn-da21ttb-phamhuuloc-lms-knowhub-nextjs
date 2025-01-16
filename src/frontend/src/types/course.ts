@@ -1,4 +1,5 @@
 import { Category } from './category';
+import { Chapter } from './chapter';
 import { Status } from './common';
 
 export interface Course {
@@ -16,6 +17,7 @@ export interface Course {
   authorId: string;
   projectId?: string | null;
   categories: Category[];
+  chapters: Chapter[];
   _count: {
     enrollments: number;
   };
