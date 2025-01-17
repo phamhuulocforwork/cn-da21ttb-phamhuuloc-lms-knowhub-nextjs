@@ -123,7 +123,7 @@ export default function CreateCoursePage({
       title: '',
       description: initialDescriptionValue,
       short_description: '',
-      thumbnail: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e',
+      thumbnail: '/assets/images/placeholder.png',
       categoryIds: [],
     },
   });
@@ -170,7 +170,7 @@ export default function CreateCoursePage({
       </div>
       <div className='container mt-8 flex flex-col'>
         <Image
-          src='https://images.unsplash.com/photo-1586717791821-3f44a563fa4c'
+          src='/assets/images/placeholder.png'
           alt='thumbnail'
           width={1920}
           height={1080}
