@@ -103,9 +103,9 @@ export default new (class CourseController {
             include: {
               userProgress: {
                 where: {
-                  userId: req.user?.id
-                }
-              }
+                  userId: req.user?.id,
+                },
+              },
             },
           },
           _count: {
@@ -258,23 +258,6 @@ export default new (class CourseController {
       // Check if user already enrolled
       if (course.enrollments.length > 0) {
         return res.status(400).json({ error: "Already enrolled in this course" });
-      }
-
-      // Check if course belongs to a project
-      if (course.projectId) {
-        const hasAccess = await db.project.findFirst({
-          where: {
-            id: course.projectId,
-            OR: [
-              { authorId: userId },
-              { courses: { some: { enrollments: { some: { userId } } } } },
-            ],
-          },
-        });
-
-        if (!hasAccess) {
-          return res.status(403).json({ error: "Not authorized" });
-        }
       }
 
       const enrollment = await db.courseEnrollment.create({
