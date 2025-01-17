@@ -1,6 +1,5 @@
 import {
   BadgeCheck,
-  BookOpen,
   LogIn,
   LogOut,
   LucideIcon,
@@ -23,7 +22,6 @@ export const menuItems = {
   ],
   TEACHER: [
     { id: 'profile', icon: BadgeCheck, label: 'Profile', type: 'navigation' },
-    { id: 'courses', icon: BookOpen, label: 'My Courses', type: 'navigation' },
     { id: 'theme', icon: SunMoon, label: 'Theme', type: 'action' },
     { id: 'logout', icon: LogOut, label: 'Log out', type: 'action' },
   ],

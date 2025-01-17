@@ -13,11 +13,9 @@ export interface Chapter {
   userProgress?: {
     id: string;
     userId: string;
+    chapterId: string;
     isCompleted: boolean;
-    completedAt?: Date;
-    createdAt: Date;
-    updatedAt: Date;
-  };
+  } | null;
 }
 
 export interface MuxData {

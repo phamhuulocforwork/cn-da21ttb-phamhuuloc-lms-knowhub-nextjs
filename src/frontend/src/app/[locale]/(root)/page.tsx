@@ -1,122 +1,127 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
+import { useCallback, useEffect, useState } from 'react';
 
-import { Clock, FileText, MonitorPlay } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
+import CourseGrid from '@/components/blocks/course/course-grid';
+import CourseList from '@/components/blocks/course/course-list';
+import { ContentControl } from '@/components/common/content-control';
+import { PaginationControls } from '@/components/common/pagination-controls';
+import { useDebounce } from '@/components/hooks/use-debounce';
+import { useMinimumLoading } from '@/components/hooks/use-minimum-loading';
+import {
+  CourseGridSkeleton,
+  CourseListSkeleton,
+} from '@/components/skeletons/course-skeleton';
 
-interface Course {
-  id: string;
-  title: string;
-  type: 'Course';
-  materials: number;
-  completion?: number;
-  deadline: {
-    type: 'days' | 'hours';
-    value: number;
-  };
-  image: string;
-}
+import { Category } from '@/types/category';
+import { Course } from '@/types/course';
 
-const courses: Course[] = [
-  {
-    id: '1',
-    title: 'Mastering UI/UX Design: A Guide',
-    type: 'Course',
-    materials: 5,
-    deadline: {
-      type: 'days',
-      value: 1,
-    },
-    image: 'https://placehold.co/400x400',
-  },
-  {
-    id: '2',
-    title: 'Creating Engaging Learning Journey',
-    type: 'Course',
-    materials: 12,
-    completion: 64,
-    deadline: {
-      type: 'hours',
-      value: 12,
-    },
-    image: 'https://placehold.co/400x400',
-  },
-];
+import { categoryService } from '@/services/categoryService';
+import { courseService } from '@/services/courseService';
 
-export default function LearningProgress() {
+export default function CoursesPage() {
+  const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalPages, setTotalPages] = useState(0);
+  const t = useTranslations('courses');
+  const { loading, withMinimumLoading } = useMinimumLoading(500);
+
+  const debouncedSearch = useDebounce(searchQuery, 500);
+
+  // Fetch categories
+  const fetchCategories = useCallback(async () => {
+    try {
+      const { categories } = await categoryService.getCategories({
+        page: 1,
+        limit: 100,
+      });
+      setCategories(categories);
+    } catch (error) {
+      console.error('Failed to fetch categories:', error);
+    }
+  }, []);
+
+  // Fetch courses
+  const fetchCourses = useCallback(async () => {
+    try {
+      const { courses: fetchedCourses, meta } = await withMinimumLoading(
+        courseService.getCourses({
+          page: currentPage,
+          limit: itemsPerPage,
+          search: debouncedSearch,
+          categoryId: selectedCategory,
+        }),
+      );
+      setCourses(fetchedCourses);
+      setTotalPages(meta.totalPages);
+    } catch (error) {
+      console.error('Failed to fetch courses:', error);
+    }
+  }, [
+    currentPage,
+    itemsPerPage,
+    debouncedSearch,
+    selectedCategory,
+    withMinimumLoading,
+  ]);
+
+  // Initial fetch
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  // Fetch courses when dependencies change
+  useEffect(() => {
+    fetchCourses();
+  }, [fetchCourses]);
+
   return (
-    <div className='mx-auto w-full max-w-4xl p-4'>
-      <div className='mb-6 flex items-center justify-between'>
-        <h2 className='flex items-center gap-2 text-xl font-semibold'>
-          In progress learning content
-          <span className='inline-flex h-5 w-5 items-center justify-center rounded-full bg-gray-100 text-xs'>
-            i
-          </span>
-        </h2>
-        <Link href='#' className='text-sm text-blue-600 hover:text-blue-800'>
-          View all
-        </Link>
+    <div className='mx-4 flex min-h-screen flex-col justify-between md:mx-11'>
+      <div>
+        <div className='mt-4 flex flex-col gap-4'>
+          <ContentControl
+            title={t('allCourses')}
+            count={courses.length}
+            viewType={viewType}
+            searchQuery={searchQuery}
+            onViewChange={setViewType}
+            onSearchChange={setSearchQuery}
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+          />
+
+          {loading ? (
+            viewType === 'grid' ? (
+              <CourseGridSkeleton />
+            ) : (
+              <CourseListSkeleton />
+            )
+          ) : viewType === 'grid' ? (
+            <CourseGrid courses={courses} showStatus={false} projectId='' />
+          ) : (
+            <CourseList courses={courses} showStatus={false} projectId='' />
+          )}
+        </div>
       </div>
-      <div className='space-y-4'>
-        {courses.map((course) => (
-          <Card key={course.id} className='p-4'>
-            <div className='flex items-start gap-4'>
-              <div className='h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100'>
-                <Image
-                  src={course.image}
-                  width={80}
-                  height={80}
-                  alt=''
-                  unoptimized={true} //FIXME: Xóa khi sử dụng ảnh thật
-                  className='h-full w-full object-cover'
-                />
-              </div>
-              <div className='min-w-0 flex-1'>
-                <div className='mb-2 flex items-center gap-2'>
-                  <Badge
-                    variant='secondary'
-                    className='bg-blue-50 text-blue-700 hover:bg-blue-50'
-                  >
-                    <MonitorPlay className='mr-1 h-3 w-3' />
-                    {course.type}
-                  </Badge>
-                </div>
-                <h3 className='mb-2 truncate text-lg font-medium'>
-                  {course.title}
-                </h3>
-                <div className='grid grid-cols-3 gap-4'>
-                  <div className='flex items-center gap-2 text-sm text-gray-600'>
-                    <FileText className='h-4 w-4' />
-                    <span>{course.materials} Material</span>
-                  </div>
-                  <div className='flex items-center gap-2 text-sm text-gray-600'>
-                    {course.completion ? (
-                      <div className='flex items-center gap-2'>
-                        <div className='flex h-4 w-4 items-center justify-center rounded-full border-2 border-blue-500'>
-                          <div className='h-2 w-2 rounded-full bg-blue-500' />
-                        </div>
-                        {course.completion}%
-                      </div>
-                    ) : (
-                      <span>-</span>
-                    )}
-                  </div>
-                  <div className='flex items-center gap-2 text-sm text-gray-600'>
-                    <Clock className='h-4 w-4' />
-                    <span>
-                      {course.deadline.value} {course.deadline.type}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
+
+      {!loading && (
+        <PaginationControls
+          className='my-4'
+          currentPage={currentPage}
+          totalPages={totalPages}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={setItemsPerPage}
+        />
+      )}
     </div>
   );
 }

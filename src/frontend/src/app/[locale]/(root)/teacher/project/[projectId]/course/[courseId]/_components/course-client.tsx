@@ -46,6 +46,8 @@ export function CourseClient({
 }) {
   const { toast } = useToast();
   const tToast = useTranslations('toast');
+  const t = useTranslations('teacher.course');
+  const tAlert = useTranslations('alertDialog');
   const [course, setCourse] = useState<Course | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
@@ -229,19 +231,18 @@ export function CourseClient({
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Course</AlertDialogTitle>
+            <AlertDialogTitle>{t('delete.title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this course? This action cannot be
-              undone.
+              {t('delete.description')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{tAlert('cancel')}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               className='bg-destructive hover:bg-destructive/90'
             >
-              Delete
+              {tAlert('confirm')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -252,11 +253,11 @@ export function CourseClient({
           <div className='space-y-6'>
             <div className='flex items-center gap-x-2'>
               <LayoutTemplate className='h-6 w-6 text-primary' />
-              <h2 className='text-xl font-bold'>Customize your course</h2>
+              <h2 className='text-xl font-bold'>{t('customize.title')}</h2>
             </div>
 
             <EditField
-              label='Course thumbnail'
+              label={t('customize.thumbnail')}
               value={course?.thumbnail || ''}
               type='file'
               endpoint='courseThumbnail'
@@ -265,7 +266,7 @@ export function CourseClient({
             />
 
             <EditField
-              label='Course Title'
+              label={t('customize.courseTitle')}
               value={course.title}
               onSave={(value) => handleSaveField('title', value as string)}
               validation={titleSchema}
@@ -273,7 +274,7 @@ export function CourseClient({
             />
 
             <EditField
-              label='Course Short Description'
+              label={t('customize.shortDescription')}
               value={course?.short_description || ''}
               onSave={(value) =>
                 handleSaveField('short_description', value as string)
@@ -283,7 +284,7 @@ export function CourseClient({
             />
 
             <EditField
-              label='Categories'
+              label={t('customize.categories')}
               value={course.categories.map((cat) => cat.id)}
               type='multiple-selector'
               options={categories}
@@ -296,7 +297,7 @@ export function CourseClient({
           <div className='space-y-6'>
             <div className='flex items-center gap-x-2'>
               <LayoutList className='h-6 w-6 text-primary' />
-              <h2 className='text-xl font-bold'>Customize your course</h2>
+              <h2 className='text-xl font-bold'>{t('chapters.title')}</h2>
             </div>
             <ChapterList
               projectId={params.projectId}
@@ -307,7 +308,7 @@ export function CourseClient({
         </div>
 
         <EditField
-          label='Course Description'
+          label={t('customize.description')}
           value={course?.description || ''}
           type='editor'
           onSave={(value) => handleSaveField('description', value as string)}

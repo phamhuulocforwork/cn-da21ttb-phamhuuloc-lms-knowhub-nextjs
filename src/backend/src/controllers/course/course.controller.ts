@@ -91,6 +91,7 @@ export default new (class CourseController {
             },
           },
           categories: true,
+          enrollments: true,
           project: {
             select: {
               id: true,
@@ -99,6 +100,13 @@ export default new (class CourseController {
           },
           chapters: {
             orderBy: { position: "asc" },
+            include: {
+              userProgress: {
+                where: {
+                  userId: req.user?.id
+                }
+              }
+            },
           },
           _count: {
             select: {
@@ -235,11 +243,21 @@ export default new (class CourseController {
         include: {
           project: true,
           chapters: true,
+          enrollments: {
+            where: {
+              userId: userId,
+            },
+          },
         },
       });
 
       if (!course) {
         return res.status(404).json({ error: "Course not found" });
+      }
+
+      // Check if user already enrolled
+      if (course.enrollments.length > 0) {
+        return res.status(400).json({ error: "Already enrolled in this course" });
       }
 
       // Check if course belongs to a project
@@ -269,6 +287,9 @@ export default new (class CourseController {
       return res.status(201).json(enrollment);
     } catch (error) {
       console.error("Enroll course error:", error);
+      if ((error as any).code === "P2002") {
+        return res.status(400).json({ error: "Already enrolled in this course" });
+      }
       return res.status(500).json({ error: "Internal server error" });
     }
   }

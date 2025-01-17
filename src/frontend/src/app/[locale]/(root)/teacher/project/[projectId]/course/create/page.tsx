@@ -13,6 +13,7 @@ import {
   TvMinimalPlay,
   X,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -88,6 +89,7 @@ export default function CreateCoursePage({
   params: { projectId: string };
 }) {
   const router = useRouter();
+  const t = useTranslations('teacher.projects');
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Option[]>([]);
   const [editorState, setEditorState] = useState<SerializedEditorState>(
@@ -152,16 +154,16 @@ export default function CreateCoursePage({
         >
           <X />
         </Button>
-        <h1 className='text-lg font-semibold'>Create new course</h1>
+        <h1 className='text-lg font-semibold'>{t('create.formTitle')}</h1>
         <Button onClick={form.handleSubmit(onSubmit)} disabled={loading}>
           {loading ? (
             <span className='flex items-center gap-2'>
               <LoadingSpinner size='sm' />
-              Creating...
+              {t('create.submitting')}
             </span>
           ) : (
             <span className='flex items-center gap-2'>
-              Next step <ArrowRight />
+              {t('create.create')} <ArrowRight />
             </span>
           )}
         </Button>
@@ -190,7 +192,7 @@ export default function CreateCoursePage({
                         <Input
                           disabled={loading}
                           className='border-none text-3xl font-bold tracking-wide ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
-                          placeholder='Course title*'
+                          placeholder={t('create.title')}
                           {...field}
                         />
                       </FormControl>
@@ -202,7 +204,7 @@ export default function CreateCoursePage({
                 <div className='flex flex-col gap-2'>
                   <div className='flex flex-col gap-4 md:flex-row md:gap-0'>
                     <Label className='w-48' icon={LayoutGrid}>
-                      Categories*
+                      {t('create.categories')}*
                     </Label>
                     <FormField
                       control={form.control}
@@ -228,8 +230,8 @@ export default function CreateCoursePage({
                                   selected.map((opt) => opt.value),
                                 );
                               }}
-                              placeholder='Click to select categories'
-                              emptyIndicator='No results'
+                              placeholder={t('create.selectCategories')}
+                              emptyIndicator={t('create.no_results')}
                               options={categories}
                             />
                           </FormControl>
@@ -241,7 +243,7 @@ export default function CreateCoursePage({
 
                   <div className='flex flex-col gap-4 md:flex-row md:gap-0'>
                     <Label className='w-48' icon={ScrollText}>
-                      Short description*
+                      {t('create.description')}*
                     </Label>
                     <FormField
                       control={form.control}
@@ -251,7 +253,7 @@ export default function CreateCoursePage({
                           <FormControl>
                             <Input
                               className='flex-1 rounded-none border-2 border-b border-l-0 border-r-0 border-t-0 border-dotted focus-visible:ring-0 focus-visible:ring-offset-0'
-                              placeholder='Short description'
+                              placeholder={t('create.description')}
                               {...field}
                             />
                           </FormControl>

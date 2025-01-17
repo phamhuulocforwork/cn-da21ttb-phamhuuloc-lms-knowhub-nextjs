@@ -21,11 +21,19 @@ export interface Course {
   _count: {
     enrollments: number;
   };
+  enrollments: CourseEnrollment[];
 }
 
 export interface CourseEnrollment {
   id: string;
-  enrolledAt: Date;
   userId: string;
   courseId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: {
+    id: string;
+  };
+  course: {
+    id: string;
+  };
 }

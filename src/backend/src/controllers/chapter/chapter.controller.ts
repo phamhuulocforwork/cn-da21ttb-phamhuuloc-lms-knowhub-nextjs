@@ -48,6 +48,13 @@ class ChapterController {
           id: chapterId,
           courseId,
         },
+        include: {
+          userProgress: {
+            where: {
+              userId: req.user?.id
+            }
+          }
+        }
       });
 
       if (!chapter) {
@@ -157,6 +164,54 @@ class ChapterController {
       res.status(204).send();
     } catch (error: any) {
       res.status(500).json({ message: error.message });
+    }
+  };
+
+  updateProgress = async (req: Request, res: Response) => {
+    try {
+      const { courseId, chapterId } = req.params;
+      const userId = req.user?.id;
+
+      if (!userId) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      // Check if user is enrolled in the course
+      const enrollment = await db.courseEnrollment.findUnique({
+        where: {
+          userId_courseId: {
+            userId,
+            courseId,
+          },
+        },
+      });
+
+      if (!enrollment) {
+        return res.status(403).json({ error: "Not enrolled in this course" });
+      }
+
+      // Update progress
+      const progress = await db.userProgress.upsert({
+        where: {
+          userId_chapterId: {
+            userId,
+            chapterId,
+          },
+        },
+        update: {
+          isCompleted: true,
+        },
+        create: {
+          userId,
+          chapterId,
+          isCompleted: true,
+        },
+      });
+
+      return res.json(progress);
+    } catch (error) {
+      console.error("Update progress error:", error);
+      return res.status(500).json({ error: "Internal server error" });
     }
   };
 }

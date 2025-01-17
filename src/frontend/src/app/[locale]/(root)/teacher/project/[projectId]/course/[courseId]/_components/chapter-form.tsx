@@ -9,7 +9,6 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Editor } from '@/components/blocks/editor-x/editor';
 import { useToast } from '@/components/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import {
@@ -82,6 +81,7 @@ export function ChapterForm({
   );
   const { toast } = useToast();
   const tToast = useTranslations('toast');
+  const t = useTranslations('teacher.course.chapters');
 
   const form = useForm<ChapterFormValues>({
     resolver: zodResolver(formSchema),
@@ -125,12 +125,12 @@ export function ChapterForm({
             name='title'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Chapter Title</FormLabel>
+                <FormLabel>{t('chapterTitle')}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     disabled={loading}
-                    placeholder='Enter chapter title'
+                    placeholder={t('enterChapterTitle')}
                   />
                 </FormControl>
                 <FormMessage />
@@ -141,7 +141,7 @@ export function ChapterForm({
           <div className='flex items-center gap-2'>
             <Button type='submit' disabled={loading}>
               <Check className='mr-2 h-4 w-4' />
-              Create
+              {t('create')}
             </Button>
             <Button
               type='button'
@@ -150,7 +150,7 @@ export function ChapterForm({
               disabled={loading}
             >
               <X className='mr-2 h-4 w-4' />
-              Cancel
+              {t('cancel')}
             </Button>
           </div>
         </form>

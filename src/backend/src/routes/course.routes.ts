@@ -6,8 +6,11 @@ import { Router } from "express";
 const router = Router();
 
 // Public routes
+
 router.get("/", CourseController.getCourses as any);
 router.get("/:id", CourseController.getCourse as any);
+router.get("/:courseId/chapters", ChapterController.getChapters as any);
+router.get("/:courseId/chapters/:chapterId", ChapterController.getChapter as any);
 
 // Protected routes
 router.use(authMiddleware as any);
@@ -15,6 +18,7 @@ router.use(authMiddleware as any);
 // Student routes
 router.post("/:id/enroll", CourseController.enrollCourse as any);
 router.delete("/:id/enroll", CourseController.unenrollCourse as any);
+router.put("/:courseId/chapters/:chapterId/progress", ChapterController.updateProgress as any);
 
 // Teacher routes
 router.use(teacherMiddleware as any);
@@ -23,9 +27,7 @@ router.put("/:id", CourseController.updateCourse as any);
 router.delete("/:id", CourseController.deleteCourse as any);
 
 // Chapter routes (nested under course)
-router.get("/:courseId/chapters", ChapterController.getChapters as any);
 router.post("/:courseId/chapters", ChapterController.createChapter as any);
-router.get("/:courseId/chapters/:chapterId", ChapterController.getChapter as any);
 router.put("/:courseId/chapters/:chapterId", ChapterController.updateChapter as any);
 router.patch(
   "/:courseId/chapters/:chapterId/position",

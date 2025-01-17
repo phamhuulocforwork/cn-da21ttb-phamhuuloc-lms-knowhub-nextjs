@@ -1,4 +1,5 @@
 import { Album, MoreVertical, Users } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -14,7 +15,7 @@ import { Category } from '@/types/category';
 import { useRouter } from '@/i18n/routing';
 
 interface CourseListItemProps {
-  projectId: string;
+  projectId?: string;
   id: string;
   title: string;
   shortDescription: string;
@@ -38,11 +39,16 @@ export function CourseListItem({
   updatedAt,
   enrollments,
 }: CourseListItemProps) {
+  const t = useTranslations('course');
   const lastEdited = new Date(updatedAt).toLocaleDateString();
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/teacher/project/${projectId}/course/${id}`);
+    if (projectId) {
+      router.push(`/teacher/project/${projectId}/course/${id}`);
+    } else {
+      router.push(`/courses/${id}`);
+    }
   };
 
   return (
@@ -102,8 +108,8 @@ export function CourseListItem({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem>Delete</DropdownMenuItem>
+                <DropdownMenuItem>{t('edit')}</DropdownMenuItem>
+                <DropdownMenuItem>{t('delete')}</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

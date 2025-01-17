@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { Album, MoreVertical, Users } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,19 +11,13 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 
 import { Category } from '@/types/category';
 
 import { useRouter } from '@/i18n/routing';
 
 interface CourseCardProps {
-  projectId: string;
+  projectId?: string;
   id: string;
   title: string;
   shortDescription: string;
@@ -48,11 +43,15 @@ export function CourseCard({
 }: CourseCardProps) {
   const isOverflowing = title.length > 50;
   const lastEdited = new Date(updatedAt).toLocaleDateString();
-
+  const t = useTranslations('course');
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/teacher/project/${projectId}/course/${id}`);
+    if (projectId) {
+      router.push(`/teacher/project/${projectId}/course/${id}`);
+    } else {
+      router.push(`/courses/${id}`);
+    }
   };
 
   return (
@@ -70,7 +69,9 @@ export function CourseCard({
           <div className='absolute left-2 top-2 flex flex-col gap-1 rounded-md bg-black/50'>
             <div className='flex items-center gap-1 px-2 py-0.5 text-sm text-white'>
               <span>
-                {enrollments > 0 ? `${enrollments} Enrolled` : 'No enrollments'}
+                {enrollments > 0
+                  ? `${enrollments} ${t('enrolled')}`
+                  : `${t('noEnrollments')}`}
               </span>
               <Users className='h-4 w-4' />
             </div>
@@ -91,20 +92,6 @@ export function CourseCard({
             </div>
           )}
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant='ghost'
-              className='absolute right-2 top-2 h-8 w-8 rounded-full bg-slate-100 p-0'
-            >
-              <MoreVertical className='h-4 w-4' />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </CardHeader>
       <CardContent className='flex flex-1 flex-col p-4'>
         <div className='mb-4 flex-1'>
@@ -120,20 +107,26 @@ export function CourseCard({
         </div>
         <div className='flex flex-wrap gap-1'>
           {categories.slice(0, 2).map((category) => (
-            <Badge key={category.id} variant='tag' className='text-xs'>
+            <Badge
+              key={category.id}
+              variant='tag'
+              className='text-xs text-foreground'
+            >
               {category.name}
             </Badge>
           ))}
           {categories.length > 2 && (
-            <Badge variant='tag' className='text-xs'>
-              +{categories.length - 2} more
+            <Badge variant='tag' className='text-xs text-foreground'>
+              +{categories.length - 2} {t('more')}
             </Badge>
           )}
         </div>
       </CardContent>
       <CardFooter>
         <div className='flex items-center gap-2 text-sm font-medium'>
-          <div className='text-slate-500'>Edited {lastEdited} •</div>
+          <div className='text-slate-500'>
+            {t('edited')} {lastEdited} •
+          </div>
           <div className='flex items-center gap-1'>
             <Album className='h-4 w-4' />
             {/* TODO: Hiện thị số lượng bài học */}

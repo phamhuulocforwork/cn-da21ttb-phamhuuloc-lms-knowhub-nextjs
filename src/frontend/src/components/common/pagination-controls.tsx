@@ -45,7 +45,7 @@ export function PaginationControls({
           value={itemsPerPage.toString()}
           onValueChange={(value) => onItemsPerPageChange(Number(value))}
         >
-          <SelectTrigger className='w-[70px]'>
+          <SelectTrigger className='w-[70px] text-foreground'>
             <SelectValue placeholder='10' />
           </SelectTrigger>
           <SelectContent>

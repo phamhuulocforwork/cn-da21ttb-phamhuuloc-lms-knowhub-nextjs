@@ -145,7 +145,7 @@ export function CreateProjectForm() {
           )}
         />
 
-        <Button type='submit' disabled={loading}>
+        <Button type='submit' className='w-full' disabled={loading}>
           {t('create')}
         </Button>
       </form>

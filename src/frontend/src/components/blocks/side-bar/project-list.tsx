@@ -38,7 +38,25 @@ export function ProjectList() {
   }, []);
 
   if (!projects.length) {
-    return null;
+    return (
+      <>
+        <Separator className='my-2' />
+        <SidebarGroupLabel className='flex items-center justify-between'>
+          <div className='flex items-center gap-2'>
+            {t('projects')}
+            <span className='rounded-sm bg-slate-200 text-foreground px-2 py-0.5 text-xs'>
+              {projects.length}
+            </span>
+          </div>
+          <Link
+            href='/teacher/project/create'
+            className='rounded-full border bg-background text-foreground p-1'
+          >
+            <Plus className='h-3 w-3' />
+          </Link>
+        </SidebarGroupLabel>
+      </>
+    );
   }
 
   return (
@@ -47,13 +65,13 @@ export function ProjectList() {
       <SidebarGroupLabel className='flex items-center justify-between'>
         <div className='flex items-center gap-2'>
           {t('projects')}
-          <span className='rounded-sm bg-slate-200 px-2 py-0.5 text-xs'>
+          <span className='rounded-sm bg-slate-200 text-foreground px-2 py-0.5 text-xs'>
             {projects.length}
           </span>
         </div>
         <Link
           href='/teacher/project/create'
-          className='rounded-full border bg-background p-1'
+          className='rounded-full border bg-background text-foreground p-1'
         >
           <Plus className='h-3 w-3' />
         </Link>

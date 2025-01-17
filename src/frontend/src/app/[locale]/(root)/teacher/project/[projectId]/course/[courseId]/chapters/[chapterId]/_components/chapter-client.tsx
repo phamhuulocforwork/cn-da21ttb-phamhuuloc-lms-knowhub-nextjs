@@ -47,6 +47,8 @@ export function ChapterClient({
   const router = useRouter();
   const { toast } = useToast();
   const tToast = useTranslations('toast');
+  const tTeacher = useTranslations('teacher.course.chapters');
+  const tAlert = useTranslations('alertDialog');
   const [chapter, setChapter] = useState<Chapter | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
@@ -154,7 +156,9 @@ export function ChapterClient({
       <ContentHeader
         type='chapter'
         title={chapter.title}
-        status={chapter.isPublished ? 'PUBLISHED' : 'UNPUBLISHED'}
+        status={
+          chapter.isPublished ? tTeacher('published') : tTeacher('unpublished')
+        }
         onTogglePublish={handleTogglePublish}
         onDelete={() => setShowDeleteDialog(true)}
         isDeleteLoading={isDeleteLoading}
@@ -164,19 +168,18 @@ export function ChapterClient({
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Chapter</AlertDialogTitle>
+            <AlertDialogTitle>{tTeacher('edit')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this chapter? This action cannot
-              be undone.
+              {tTeacher('description')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{tAlert('cancel')}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               className='bg-destructive hover:bg-destructive/90'
             >
-              Delete
+              {tAlert('confirm')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -189,18 +192,18 @@ export function ChapterClient({
             className='flex items-center text-sm font-semibold hover:opacity-75'
           >
             <ArrowLeft className='h-4 w-4 mr-2' />
-            Back to course
+            {tTeacher('back')}
           </Link>
         </div>
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
           <div className='space-y-6'>
             <div className='flex items-center gap-x-2'>
               <LayoutTemplate className='h-6 w-6 text-primary' />
-              <h2 className='text-xl font-bold'>Chapter Details</h2>
+              <h2 className='text-xl font-bold'>{tTeacher('customize')}</h2>
             </div>
 
             <EditField
-              label='Chapter Title'
+              label={tTeacher('chapterTitle')}
               value={chapter.title}
               onSave={(value) => handleSaveField('title', value as string)}
               validation={titleSchema}
@@ -208,7 +211,7 @@ export function ChapterClient({
             />
 
             <EditField
-              label='Chapter Description'
+              label={tTeacher('description')}
               value={chapter?.description || ''}
               type='editor'
               onSave={(value) =>
@@ -222,7 +225,7 @@ export function ChapterClient({
           <div className='space-y-6'>
             <div className='flex items-center gap-x-2'>
               <Video className='h-6 w-6 text-primary' />
-              <h2 className='text-xl font-bold'>Chapter Video</h2>
+              <h2 className='text-xl font-bold'>{tTeacher('chapterVideo')}</h2>
             </div>
             <ChapterVideoForm
               initialData={chapter}

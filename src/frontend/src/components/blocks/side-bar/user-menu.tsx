@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 
-import { ChevronsUpDown } from 'lucide-react';
+import { ChevronsUpDown, Languages } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -12,6 +13,8 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -27,7 +30,7 @@ import { User } from '@/types/user';
 import { menuItems } from '@/config/menuConfig';
 import { menuHandlers } from '@/config/menuHandlers';
 import { useAuth } from '@/contexts/auth-provider';
-import { useRouter } from '@/i18n/routing';
+import { usePathname, useRouter } from '@/i18n/routing';
 
 import { UserMenuSkeleton } from './user-menu-skeleton';
 
@@ -41,17 +44,16 @@ export function UserMenu({
   const { isMobile } = useSidebar();
   const { theme, setTheme } = useTheme();
   const router = useRouter();
+  const pathname = usePathname();
   const { status } = useAuth();
+  const t = useTranslations('sidebar');
   const role = user?.role || 'GUEST';
   const items = menuItems[role];
 
-  // Thêm state để track việc load auth lần đầu
   const [initialLoadComplete, setInitialLoadComplete] = React.useState(false);
 
-  // Chỉ show loading khi chưa load lần đầu và đang trong trạng thái loading
   const isLoading = !initialLoadComplete && status === 'loading';
 
-  // Effect để đánh dấu đã load xong lần đầu
   React.useEffect(() => {
     if (status !== 'loading') {
       setInitialLoadComplete(true);
@@ -69,9 +71,14 @@ export function UserMenu({
     }
   };
 
-  // Tách items theo type
+  const handleLanguageChange = (locale: string) => {
+    router.replace(pathname, { locale });
+  };
+
   const navigationItems = items.filter((item) => item.type === 'navigation');
   const actionItems = items.filter((item) => item.type === 'action');
+
+  const currentLocale = pathname.split('/')[1];
 
   return (
     <SidebarMenu>
@@ -139,7 +146,6 @@ export function UserMenu({
               </>
             )}
             <DropdownMenuGroup>
-              {/* Navigation Items */}
               {navigationItems.map((item) => (
                 <DropdownMenuItem
                   key={item.id}
@@ -147,16 +153,14 @@ export function UserMenu({
                   className='cursor-pointer'
                 >
                   <item.icon className='h-4 w-4' />
-                  {item.label}
+                  {t.raw(`menu.${item.id}`)}
                 </DropdownMenuItem>
               ))}
 
-              {/* Separator */}
               {navigationItems.length > 0 && actionItems.length > 0 && (
                 <DropdownMenuSeparator />
               )}
 
-              {/* Action Items */}
               {actionItems.map((item) => (
                 <DropdownMenuItem
                   key={item.id}
@@ -165,10 +169,28 @@ export function UserMenu({
                 >
                   <item.icon className='h-4 w-4' />
                   {item.id === 'theme'
-                    ? `Theme: ${theme === 'light' ? 'dark' : 'light'}`
-                    : item.label}
+                    ? `${t('tool.theme')}: ${t(`tool.${theme === 'light' ? 'dark' : 'light'}`)}`
+                    : t.raw(`menu.${item.id}`)}
                 </DropdownMenuItem>
               ))}
+
+              <DropdownMenuSeparator />
+
+              <DropdownMenuLabel className='flex items-center gap-2'>
+                <Languages className='h-4 w-4' />
+                {t('tool.language')}
+              </DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={currentLocale}
+                onValueChange={handleLanguageChange}
+              >
+                <DropdownMenuRadioItem value='en'>
+                  English
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value='vi'>
+                  Tiếng Việt
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -9,7 +9,7 @@ export default function CourseGrid({
 }: {
   courses: Course[];
   showStatus?: boolean;
-  projectId: string;
+  projectId?: string;
 }) {
   return (
     <div className='grid grid-cols-1 gap-6 md:grid-cols-3 2xl:grid-cols-4'>

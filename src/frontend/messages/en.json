@@ -1,4 +1,44 @@
 {
+  "common": {
+    "search": "Search...",
+    "selectCategory": "Select category",
+    "selectCategoryPlaceholder": "Select a category",
+    "itemsPerPage": "Items/page",
+    "noData": "No courses found"
+  },
+  "courses": {
+    "allCourses": "All courses",
+    "enroll": "Enroll",
+    "unenroll": "Unenroll"
+  },
+  "course": {
+    "enroll": "Enroll",
+    "enrollSuccess": "Successfully enrolled in course",
+    "enrollError": "Error enrolling in course",
+    "continue": "Continue learning",
+    "chapters": "Chapters",
+    "chapterLocked": "Chapter locked",
+    "courseInfo": "Course information",
+    "description": "Description",
+    "edited": "Last edited",
+    "enrolled": "enrolled",
+    "noEnrollments": "No enrollments",
+    "more": "more",
+    "nextChapter": "Next chapter",
+    "courseCompleted": "Course completed",
+    "courseCompletedDesc": "Congratulations! You have completed this course.",
+    "chaptersCompleted": "chapters completed",
+    "loadError": "Error loading chapter",
+    "notFound": "Chapter not found",
+    "notFoundDesc": "The chapter you're looking for doesn't exist or has been removed",
+    "noVideo": "No video available",
+    "completed": "Completed",
+    "markComplete": "Mark as complete",
+    "alreadyCompleted": "Already completed",
+    "chapterCompleted": "Chapter completed",
+    "error": "Error",
+    "updateProgressError": "Error updating progress"
+  },
   "admin": {
     "category": {
       "addCategory": "Add category",
@@ -182,18 +222,74 @@
   },
   "teacher": {
     "projects": {
+      "allCourses": "All Courses",
+      "allQuizzes": "All Quizzes",
+      "course": "Courses",
+      "quiz": "Quizzes",
+      "wiki": "Wiki",
+      "createContent": "Create Content",
+      "cancel": "Cancel",
+      "courseDescription": "Create an interactive course with lessons and exercises",
+      "quizDescription": "Create a quiz to test knowledge and understanding",
+      "wikiDescription": "Create a wiki page to share knowledge and resources",
       "create": {
         "categories": "Categories",
         "category": "Category",
         "create": "Create",
-        "description": "Create a new project",
+        "createProject": "Create project",
+        "createProjectDesc": "Create a new project to organize your courses, quizzes.",
         "selectCategories": "Select categories",
         "submit": "Create project",
         "submitting": "Creating...",
         "thumbnail": "Thumbnail",
-        "title": "Create project",
+        "formTitle": "Create project",
+        "title": "Title",
+        "formDescription": "Create a new project to organize your courses, quizzes.",
+        "description": "Description",
         "uploadThumbnail": "Upload thumbnail",
-        "uploadThumbnailPlaceholder": "Upload a thumbnail for your project"
+        "uploadThumbnailPlaceholder": "Upload a thumbnail for your project",
+        "no_results": "No results found"
+      }
+    },
+    "course": {
+      "customize": {
+        "title": "Customize Course",
+        "thumbnail": "Course Thumbnail",
+        "courseTitle": "Course Title",
+        "shortDescription": "Short Description",
+        "description": "Description",
+        "categories": "Categories"
+      },
+      "delete": {
+        "title": "Delete Course",
+        "description": "Are you sure you want to delete this course? This action cannot be undone."
+      },
+      "chapters": {
+        "title": "Course Chapters",
+        "addChapter": "Add Chapter",
+        "noChapters": "No chapters found. Add a chapter to get started.",
+        "chapterTitle": "Chapter Title",
+        "enterChapterTitle": "Enter chapter title",
+        "create": "Create",
+        "updateSuccess": "Chapters reordered successfully",
+        "updateError": "Failed to reorder chapters",
+        "titleRequired": "Title is required",
+        "description": "Chapter Content",
+        "dragToReorder": "Drag to reorder",
+        "edit": "Delete Chapter",
+        "published": "Published",
+        "unpublished": "Draft",
+        "locked": "Locked",
+        "unlocked": "Unlocked",
+        "video": "Chapter Video",
+        "back": "Back to course",
+        "customize": "Customize Chapter",
+        "chapterVideo": "Chapter Video",
+        "cancel": "Cancel",
+        "addVideo": "Add video",
+        "editVideo": "Edit video",
+        "uploadVideo": "Upload your video here. Video files up to 100MB are supported.",
+        "videoProcessing": "Videos can take a few minutes to process. Refresh the page if video does not appear."
       }
     }
   },
@@ -205,6 +301,16 @@
     "updateError": "Failed to update",
     "updateSuccess": "Updated successfully",
     "editError": "Failed to edit",
-    "editSuccess": "Edited successfully"
+    "editSuccess": "Edited successfully",
+    "chapter": {
+      "createSuccess": "Chapter created successfully",
+      "createError": "Failed to create chapter",
+      "updateSuccess": "Chapter updated successfully",
+      "updateError": "Failed to update chapter",
+      "deleteSuccess": "Chapter deleted successfully",
+      "deleteError": "Failed to delete chapter",
+      "reorderSuccess": "Chapters reordered successfully",
+      "reorderError": "Failed to reorder chapters"
+    }
   }
 }

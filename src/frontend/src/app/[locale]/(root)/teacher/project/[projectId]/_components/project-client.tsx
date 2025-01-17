@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import CourseGrid from '@/components/blocks/course/course-grid';
 import CourseList from '@/components/blocks/course/course-list';
-import QuizGrid from '@/components/blocks/quiz/quiz-grid';
 import { ContentControl } from '@/components/common/content-control';
 import { PaginationControls } from '@/components/common/pagination-controls';
 import { useDebounce } from '@/components/hooks/use-debounce';
@@ -30,6 +31,7 @@ const styles = {
 };
 
 export function ProjectClient({ project }: { project: ProjectWithContent }) {
+  const t = useTranslations('teacher.projects');
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -59,10 +61,10 @@ export function ProjectClient({ project }: { project: ProjectWithContent }) {
           <div className='flex items-center justify-between'>
             <TabsList className={styles.tabsList}>
               <TabsTrigger className={styles.tabsTrigger} value='course'>
-                Course
+                {t('course')}
               </TabsTrigger>
               <TabsTrigger className={styles.tabsTrigger} value='quiz'>
-                Quiz
+                {t('quiz')}
               </TabsTrigger>
             </TabsList>
           </div>
@@ -73,7 +75,7 @@ export function ProjectClient({ project }: { project: ProjectWithContent }) {
           >
             <div className='mt-4 flex flex-col gap-4'>
               <ContentControl
-                title='All courses'
+                title={t('allCourses')}
                 count={filteredCourses.length}
                 viewType={viewType}
                 searchQuery={searchQuery}
@@ -99,16 +101,16 @@ export function ProjectClient({ project }: { project: ProjectWithContent }) {
           <TabsContent value='quiz'>
             <div className='mt-4 flex flex-col gap-4'>
               <ContentControl
-                title='All quizzes'
+                title={t('allQuizzes')}
                 count={project.quizzes.length}
                 viewType={viewType}
                 searchQuery={searchQuery}
                 onViewChange={setViewType}
                 onSearchChange={setSearchQuery}
               />
-              {viewType === 'grid' ? (
+              {/* {viewType === 'grid' ? (
                 <QuizGrid quizzes={project.quizzes} />
-              ) : null}
+              ) : null} */}
             </div>
           </TabsContent>
         </Tabs>

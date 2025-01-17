@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import CourseGrid from '@/components/blocks/course/course-grid';
 import CourseList from '@/components/blocks/course/course-list';
 import { ContentControl } from '@/components/common/content-control';
@@ -20,7 +22,6 @@ import { categoryService } from '@/services/categoryService';
 import { courseService } from '@/services/courseService';
 
 export default function CoursesPage() {
-  // States
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -29,6 +30,7 @@ export default function CoursesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
+  const t = useTranslations('courses');
   const { loading, withMinimumLoading } = useMinimumLoading(500);
 
   const debouncedSearch = useDebounce(searchQuery, 500);
@@ -85,7 +87,7 @@ export default function CoursesPage() {
       <div>
         <div className='mt-4 flex flex-col gap-4'>
           <ContentControl
-            title='All courses'
+            title={t('allCourses')}
             count={courses.length}
             viewType={viewType}
             searchQuery={searchQuery}

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 
 import { BookOpenText, MessagesSquare, MonitorPlay } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -63,37 +64,37 @@ const ContentCard = ({
   );
 };
 
-const contentTypes = [
-  {
-    icon: <MonitorPlay className='h-4 w-4' />,
-    title: 'Course',
-    path: '/course/create',
-    description: 'Create and publish educational content for learners.',
-    iconClassName: 'bg-primary-100 text-primary',
-  },
-  {
-    icon: <MessagesSquare className='h-4 w-4' />,
-    title: 'Quiz',
-    path: '/quiz/create',
-    description:
-      "Create an assessment to evaluate learners' understanding of the material.",
-    iconClassName: 'bg-orange-100 text-orange-700',
-  },
-  {
-    icon: <BookOpenText className='h-4 w-4' />,
-    title: 'Wiki',
-    path: '/wiki/create',
-    description: 'Create a knowledge base for course-related information.',
-    iconClassName: 'bg-teal-100 text-teal-700',
-    disabled: true,
-  },
-];
-
 export default function CreateContentDialog({
   open,
   onClose,
 }: CreateContentDialogProps) {
   const router = useRouter();
+  const t = useTranslations('teacher.projects');
+
+  const contentTypes = [
+    {
+      icon: <MonitorPlay className='h-4 w-4' />,
+      title: t('course'),
+      path: '/course/create',
+      description: t('courseDescription'),
+      iconClassName: 'bg-primary-100 text-primary',
+    },
+    {
+      icon: <MessagesSquare className='h-4 w-4' />,
+      title: t('quiz'),
+      path: '/quiz/create',
+      description: t('quizDescription'),
+      iconClassName: 'bg-orange-100 text-orange-700',
+    },
+    {
+      icon: <BookOpenText className='h-4 w-4' />,
+      title: t('wiki'),
+      path: '/wiki/create',
+      description: t('wikiDescription'),
+      iconClassName: 'bg-teal-100 text-teal-700',
+      disabled: true,
+    },
+  ];
 
   const handleContentClick = (content: (typeof contentTypes)[0]) => {
     if (content.disabled) return;
@@ -106,7 +107,7 @@ export default function CreateContentDialog({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader className='flex flex-row items-center justify-between'>
-          <DialogTitle>Create new content</DialogTitle>
+          <DialogTitle>{t('createContent')}</DialogTitle>
         </DialogHeader>
         <div className='grid grid-cols-1 gap-4 border-y py-4 md:grid-cols-2'>
           {contentTypes.map((content, index) => (
@@ -123,7 +124,7 @@ export default function CreateContentDialog({
         </div>
         <div className='flex justify-end'>
           <Button variant='outline' onClick={onClose}>
-            Cancel
+            {t('cancel')}
           </Button>
         </div>
       </DialogContent>

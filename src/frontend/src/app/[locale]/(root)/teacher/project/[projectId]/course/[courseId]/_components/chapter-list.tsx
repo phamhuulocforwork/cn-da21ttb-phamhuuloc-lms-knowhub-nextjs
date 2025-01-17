@@ -31,7 +31,7 @@ export function ChapterList({
   const [isCreating, setIsCreating] = useState(false);
   const [isReordering, setIsReordering] = useState(false);
   const { toast } = useToast();
-  const tToast = useTranslations('toast');
+  const t = useTranslations('teacher.course.chapters');
 
   const handleCreateSuccess = (newChapter: Chapter) => {
     setChapters([...chapters, newChapter]);
@@ -58,7 +58,7 @@ export function ChapterList({
 
       toast({
         variant: 'success',
-        title: tToast('updateSuccess'),
+        title: t('updateSuccess'),
       });
     } catch (error) {
       // Revert to original order on error
@@ -67,7 +67,7 @@ export function ChapterList({
       console.error('Failed to reorder chapters:', error);
       toast({
         variant: 'destructive',
-        title: tToast('updateError'),
+        title: t('updateError'),
       });
     } finally {
       setIsReordering(false);
@@ -77,10 +77,10 @@ export function ChapterList({
   return (
     <div className='space-y-4 rounded-md bg-muted-50 p-4'>
       <div className='flex items-center justify-between'>
-        <h2 className='font-semibold'>Course Chapters</h2>
+        <h2 className='font-semibold'>{t('title')}</h2>
         <Button variant='ghost' onClick={() => setIsCreating(true)}>
           <CirclePlus className='mr-2 h-4 w-4' />
-          Add Chapter
+          {t('addChapter')}
         </Button>
       </div>
 
@@ -99,9 +99,7 @@ export function ChapterList({
         className='space-y-2'
       >
         {!chapters.length && (
-          <p className='text-sm text-muted-foreground'>
-            No chapters found. Add a chapter to get started.
-          </p>
+          <p className='text-sm text-muted-foreground'>{t('noChapters')}</p>
         )}
         {chapters.map((chapter) => (
           <Reorder.Item

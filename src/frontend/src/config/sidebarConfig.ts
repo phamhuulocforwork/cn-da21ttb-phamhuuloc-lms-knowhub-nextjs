@@ -25,7 +25,7 @@ export const navigations: Record<string, NavigationConfig> = {
     navigations: [
       {
         title: 'home',
-        url: '/student',
+        url: '/',
         icon: Home,
       },
     ],
@@ -34,7 +34,7 @@ export const navigations: Record<string, NavigationConfig> = {
     navigations: [
       {
         title: 'home',
-        url: '/teacher',
+        url: '/',
         icon: Home,
       },
     ],

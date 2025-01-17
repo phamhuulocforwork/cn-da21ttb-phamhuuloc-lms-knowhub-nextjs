@@ -1,1 +1,316 @@
-{}
+{
+  "common": {
+    "search": "Tìm kiếm...",
+    "selectCategory": "Chọn danh mục",
+    "selectCategoryPlaceholder": "Chọn một danh mục",
+    "itemsPerPage": "Số mục/trang",
+    "noData": "Không tìm thấy khóa học"
+  },
+  "courses": {
+    "allCourses": "Tất cả khóa học",
+    "enroll": "Đăng ký",
+    "unenroll": "Hủy đăng ký"
+  },
+  "course": {
+    "enroll": "Đăng ký",
+    "enrollSuccess": "Đăng ký khóa học thành công",
+    "enrollError": "Lỗi khi đăng ký khóa học",
+    "continue": "Tiếp tục học",
+    "chapters": "Chương",
+    "chapterLocked": "Chương bị khóa",
+    "courseInfo": "Thông tin khóa học",
+    "description": "Mô tả",
+    "edited": "Chỉnh sửa lần cuối",
+    "enrolled": "đã đăng ký",
+    "noEnrollments": "Chưa có đăng ký",
+    "more": "thêm",
+    "nextChapter": "Chương tiếp theo",
+    "courseCompleted": "Đã hoàn thành khóa học",
+    "courseCompletedDesc": "Chúc mừng! Bạn đã hoàn thành khóa học này.",
+    "chaptersCompleted": "chương đã hoàn thành",
+    "loadError": "Lỗi khi tải chương",
+    "notFound": "Không tìm thấy chương",
+    "notFoundDesc": "Chương bạn đang tìm kiếm không tồn tại hoặc đã bị xóa",
+    "noVideo": "Không có video",
+    "completed": "Đã hoàn thành",
+    "markComplete": "Đánh dấu hoàn thành",
+    "alreadyCompleted": "Đã hoàn thành",
+    "chapterCompleted": "Đã hoàn thành chương",
+    "error": "Lỗi",
+    "updateProgressError": "Lỗi khi cập nhật tiến độ"
+  },
+  "admin": {
+    "category": {
+      "addCategory": "Thêm danh mục",
+      "allCategories": "Tất cả danh mục",
+      "createCategory": {
+        "cancel": "Hủy",
+        "description": "Mô tả",
+        "descriptionPlaceholder": "Mô tả danh mục",
+        "name": "Tên",
+        "namePlaceholder": "Tên danh mục",
+        "save": "Lưu",
+        "submit": "Tạo danh mục",
+        "submitting": "Đang tạo...",
+        "title": "Tạo danh mục"
+      },
+      "deleteCategory": {
+        "cancel": "Hủy",
+        "delete": "Xóa",
+        "description": "Bạn có chắc chắn muốn xóa danh mục {{name}}?",
+        "title": "Xóa danh mục"
+      },
+      "description": "Quản lý danh mục của bạn tại đây.",
+      "editCategory": {
+        "cancel": "Hủy",
+        "description": "Mô tả",
+        "name": "Tên",
+        "save": "Lưu thay đổi",
+        "saving": "Đang lưu...",
+        "title": "Chỉnh sửa danh mục"
+      },
+      "export": "Xuất",
+      "noData": "Không tìm thấy danh mục",
+      "search": "Tìm kiếm",
+      "table": {
+        "actions": {
+          "delete": "Xóa danh mục",
+          "edit": "Chỉnh sửa danh mục"
+        },
+        "description": "Mô tả",
+        "name": "Tên"
+      },
+      "title": "Quản lý danh mục"
+    },
+    "pagination": {
+      "itemsPerPage": "Số mục/trang"
+    },
+    "users": {
+      "addUser": "Thêm người dùng",
+      "allUsers": "Tất cả người dùng",
+      "createUser": {
+        "cancel": "Hủy",
+        "email": "Email",
+        "name": "Tên",
+        "password": "Mật khẩu",
+        "role": "Vai trò",
+        "selectRole": "Chọn vai trò",
+        "submit": "Tạo người dùng",
+        "submitting": "Đang tạo...",
+        "title": "Tạo người dùng",
+        "validation": {
+          "invalidCredentials": "Email hoặc mật khẩu không hợp lệ",
+          "invalidEmail": "Email không hợp lệ",
+          "invalidName": "Tên không hợp lệ",
+          "invalidPassword": "Vui lòng nhập mật khẩu",
+          "passwordLowercase": "Mật khẩu phải chứa ít nhất một chữ thường",
+          "passwordMin": "Mật khẩu phải có ít nhất 8 ký tự",
+          "passwordNumber": "Mật khẩu phải chứa ít nhất một số",
+          "passwordUppercase": "Mật khẩu phải chứa ít nhất một chữ hoa",
+          "passwordsDoNotMatch": "Mật khẩu không khớp"
+        }
+      },
+      "description": "Quản lý thành viên nhóm và quyền tài khoản của họ tại đây.",
+      "editUser": {
+        "cancel": "Hủy",
+        "email": "Email",
+        "name": "Tên",
+        "role": "Vai trò",
+        "save": "Lưu thay đổi",
+        "saving": "Đang lưu...",
+        "title": "Chỉnh sửa người dùng"
+      },
+      "export": "Xuất",
+      "noData": "Không tìm thấy người dùng",
+      "search": "Tìm kiếm",
+      "table": {
+        "actions": {
+          "delete": "Xóa người dùng",
+          "edit": "Chỉnh sửa người dùng"
+        },
+        "createdAt": "Ngày tạo",
+        "role": "Vai trò",
+        "userName": "Tên người dùng"
+      },
+      "title": "Quản lý người dùng"
+    }
+  },
+  "alertDialog": {
+    "cancel": "Hủy",
+    "confirm": "Xác nhận"
+  },
+  "auth": {
+    "login": {
+      "backButtonLabel": "Chưa có tài khoản? ",
+      "backButtonLinkText": "Đăng ký",
+      "email": "Email",
+      "emailPlaceholder": "example@gmail.com",
+      "forgotPassword": "Quên mật khẩu?",
+      "headerLabel": "Đăng nhập",
+      "loginWithGoogleLabel": "Đăng nhập với Google",
+      "password": "Mật khẩu",
+      "submit": "Đăng nhập",
+      "submitLoading": "Đang đăng nhập..."
+    },
+    "register": {
+      "backButtonLabel": "Đã có tài khoản? ",
+      "backButtonLinkText": "Đăng nhập",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "email": "Email",
+      "emailPlaceholder": "example@gmail.com",
+      "headerLabel": "Đăng ký",
+      "name": "Tên",
+      "namePlaceholder": "Nguyễn Văn A",
+      "password": "Mật khẩu",
+      "submit": "Đăng ký",
+      "submitLoading": "Đang đăng ký..."
+    },
+    "serverMessages": {
+      "error": {
+        "emailExists": "Email đã được đăng ký",
+        "invalidCredentials": "Email hoặc mật khẩu không hợp lệ",
+        "loginFailed": "Đăng nhập thất bại. Vui lòng thử lại",
+        "registrationFailed": "Đăng ký thất bại. Vui lòng thử lại",
+        "tooManyRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau"
+      },
+      "success": {
+        "login": "Đăng nhập thành công. Đang chuyển hướng...",
+        "register": "Đăng ký thành công. Đang chuyển hướng..."
+      }
+    },
+    "validation": {
+      "invalidCredentials": "Email hoặc mật khẩu không hợp lệ",
+      "invalidEmail": "Email không hợp lệ",
+      "invalidName": "Tên không hợp lệ",
+      "invalidPassword": "Vui lòng nhập mật khẩu",
+      "passwordLowercase": "Mật khẩu phải chứa ít nhất một chữ thường",
+      "passwordMin": "Mật khẩu phải có ít nhất 8 ký tự",
+      "passwordNumber": "Mật khẩu phải chứa ít nhất một số",
+      "passwordUppercase": "Mật khẩu phải chứa ít nhất một chữ hoa",
+      "passwordsDoNotMatch": "Mật khẩu không khớp"
+    }
+  },
+  "errorPage": {
+    "403": "Rất tiếc, bạn không được phép truy cập trang này!",
+    "404": "Rất tiếc, không tìm thấy trang này!",
+    "returnHome": "Trở về trang chủ"
+  },
+  "sidebar": {
+    "menu": {
+      "login": "Đăng nhập",
+      "logout": "Đăng xuất",
+      "notifications": "Thông báo",
+      "profile": "Hồ sơ",
+      "register": "Đăng ký"
+    },
+    "navigation": {
+      "category": "Danh mục",
+      "dashboard": "Bảng điều khiển",
+      "home": "Trang chủ",
+      "navigation": "Điều hướng",
+      "users": "Người dùng"
+    },
+    "projects": "Dự án",
+    "tool": {
+      "dark": "Tối",
+      "english": "Tiếng Anh",
+      "language": "Ngôn ngữ",
+      "light": "Sáng",
+      "theme": "Giao diện",
+      "vietnamese": "Tiếng Việt"
+    }
+  },
+  "teacher": {
+    "projects": {
+      "allCourses": "Tất cả khóa học",
+      "allQuizzes": "Tất cả bài kiểm tra",
+      "course": "Khóa học",
+      "quiz": "Bài kiểm tra",
+      "wiki": "Wiki",
+      "createContent": "Tạo nội dung",
+      "cancel": "Hủy",
+      "courseDescription": "Tạo khóa học tương tác với bài học và bài tập",
+      "quizDescription": "Tạo bài kiểm tra để đánh giá kiến thức và hiểu biết",
+      "wikiDescription": "Tạo trang wiki để chia sẻ kiến thức và tài nguyên",
+      "create": {
+        "categories": "Danh mục",
+        "category": "Danh mục",
+        "create": "Tạo",
+        "createProject": "Tạo dự án",
+        "createProjectDesc": "Tạo dự án mới để tổ chức khóa học, bài kiểm tra của bạn.",
+        "selectCategories": "Chọn danh mục",
+        "submit": "Tạo dự án",
+        "submitting": "Đang tạo...",
+        "thumbnail": "Ảnh thu nhỏ",
+        "formTitle": "Tạo dự án",
+        "title": "Tiêu đề",
+        "formDescription": "Tạo dự án mới để tổ chức khóa học, bài kiểm tra của bạn.",
+        "description": "Mô tả",
+        "uploadThumbnail": "Tải lên ảnh thu nhỏ",
+        "uploadThumbnailPlaceholder": "Tải lên ảnh thu nhỏ cho dự án của bạn",
+        "no_results": "Không tìm thấy kết quả"
+      }
+    },
+    "course": {
+      "customize": {
+        "title": "Tùy chỉnh khóa học",
+        "thumbnail": "Ảnh thu nhỏ khóa học",
+        "courseTitle": "Tiêu đề khóa học",
+        "shortDescription": "Mô tả ngắn",
+        "description": "Mô tả",
+        "categories": "Danh mục"
+      },
+      "delete": {
+        "title": "Xóa khóa học",
+        "description": "Bạn có chắc chắn muốn xóa khóa học này? Hành động này không thể hoàn tác."
+      },
+      "chapters": {
+        "title": "Chương khóa học",
+        "addChapter": "Thêm chương",
+        "noChapters": "Không tìm thấy chương. Thêm chương để bắt đầu.",
+        "chapterTitle": "Tiêu đề chương",
+        "enterChapterTitle": "Nhập tiêu đề chương",
+        "create": "Tạo",
+        "updateSuccess": "Sắp xếp lại chương thành công",
+        "updateError": "Không thể sắp xếp lại chương",
+        "titleRequired": "Tiêu đề là bắt buộc",
+        "description": "Nội dung chương",
+        "dragToReorder": "Kéo để sắp xếp lại",
+        "edit": "Xóa chương",
+        "published": "Đã xuất bản",
+        "unpublished": "Bản nháp",
+        "locked": "Đã khóa",
+        "unlocked": "Đã mở khóa",
+        "video": "Video chương",
+        "back": "Quay lại khóa học",
+        "customize": "Tùy chỉnh chương",
+        "chapterVideo": "Video chương",
+        "cancel": "Hủy",
+        "addVideo": "Thêm video",
+        "editVideo": "Chỉnh sửa video",
+        "uploadVideo": "Tải video của bạn lên đây. Hỗ trợ tệp video lên đến 100MB.",
+        "videoProcessing": "Video có thể mất vài phút để xử lý. Làm mới trang nếu video không xuất hiện."
+      }
+    }
+  },
+  "toast": {
+    "addError": "Thêm thất bại",
+    "addSuccess": "Thêm thành công",
+    "deleteError": "Xóa thất bại",
+    "deleteSuccess": "Xóa thành công",
+    "updateError": "Cập nhật thất bại",
+    "updateSuccess": "Cập nhật thành công",
+    "editError": "Chỉnh sửa thất bại",
+    "editSuccess": "Chỉnh sửa thành công",
+    "chapter": {
+      "createSuccess": "Tạo chương thành công",
+      "createError": "Tạo chương thất bại",
+      "updateSuccess": "Cập nhật chương thành công",
+      "updateError": "Cập nhật chương thất bại",
+      "deleteSuccess": "Xóa chương thành công",
+      "deleteError": "Xóa chương thất bại",
+      "reorderSuccess": "Sắp xếp lại chương thành công",
+      "reorderError": "Sắp xếp lại chương thất bại"
+    }
+  }
+}

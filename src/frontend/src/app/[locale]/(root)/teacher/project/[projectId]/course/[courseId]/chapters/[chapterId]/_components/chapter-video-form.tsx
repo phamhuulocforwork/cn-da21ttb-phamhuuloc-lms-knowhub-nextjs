@@ -31,6 +31,7 @@ export function ChapterVideoForm({
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const tToast = useTranslations('toast');
+  const t = useTranslations('teacher.course.chapters');
   const router = useRouter();
 
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -63,24 +64,24 @@ export function ChapterVideoForm({
   return (
     <div className='mt-6 rounded-md bg-slate-100 p-4'>
       <div className='font-medium flex items-center justify-between'>
-        Chapter video
+        {t('chapterVideo')}
         <Button onClick={toggleEdit} variant='ghost'>
           {isEditing && (
             <>
               <Video className='h-4 w-4 mr-2' />
-              Cancel
+              {t('cancel')}
             </>
           )}
           {!isEditing && !initialData.videoUrl && (
             <>
               <PlusCircle className='h-4 w-4 mr-2' />
-              Add a video
+              {t('addVideo')}
             </>
           )}
           {!isEditing && initialData.videoUrl && (
             <>
               <Pencil className='h-4 w-4 mr-2' />
-              Edit video
+              {t('editVideo')}
             </>
           )}
         </Button>
@@ -105,15 +106,14 @@ export function ChapterVideoForm({
         <div>
           <FileUpload endpoint='chapterVideo' onChange={onSubmit} />
           <div className='text-xs text-muted-foreground mt-4'>
-            Upload chapter video
+            {t('uploadVideo')}
           </div>
         </div>
       )}
 
       {initialData.videoUrl && !isEditing && (
         <div className='text-xs text-muted-foreground mt-2'>
-          Videos can take a few minutes to process. Refresh the page if video
-          does not appear.
+          {t('videoProcessing')}
         </div>
       )}
     </div>

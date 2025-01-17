@@ -90,7 +90,9 @@ export function ContentHeader({
                   </span>
                 )}
               </div>
-              {description && <p className='text-muted-foreground text-sm'>{description}</p>}
+              {description && (
+                <p className='text-muted-foreground text-sm'>{description}</p>
+              )}
             </div>
           </div>
         </div>

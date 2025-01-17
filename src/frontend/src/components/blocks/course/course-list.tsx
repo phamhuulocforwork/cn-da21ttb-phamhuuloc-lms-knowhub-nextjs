@@ -9,7 +9,7 @@ export default function CourseList({
 }: {
   courses: Course[];
   showStatus?: boolean;
-  projectId: string;
+  projectId?: string;
 }) {
   return (
     <div className='w-full space-y-4'>

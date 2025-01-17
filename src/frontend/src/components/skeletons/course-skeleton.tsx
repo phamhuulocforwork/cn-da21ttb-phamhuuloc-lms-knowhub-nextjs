@@ -46,4 +46,4 @@ export function CourseListSkeleton() {
       ))}
     </div>
   );
-} 
+}

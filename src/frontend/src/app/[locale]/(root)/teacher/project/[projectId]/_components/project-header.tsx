@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { FolderKanban, Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 
@@ -15,6 +16,7 @@ interface ProjectHeaderProps {
 
 export function ProjectHeader({ title, description }: ProjectHeaderProps) {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const t = useTranslations('teacher.projects');
 
   return (
     <div className='mb-4 mt-8 space-y-4'>
@@ -36,7 +38,7 @@ export function ProjectHeader({ title, description }: ProjectHeaderProps) {
           className='h-9 px-2 md:h-10 md:px-4'
         >
           <Plus className='h-4 w-4 md:mr-2' />
-          <span className='hidden md:inline-block'>New Content</span>
+          <span className='hidden md:inline-block'>{t('createContent')}</span>
         </Button>
         {showCreateDialog && (
           <CreateContentDialog

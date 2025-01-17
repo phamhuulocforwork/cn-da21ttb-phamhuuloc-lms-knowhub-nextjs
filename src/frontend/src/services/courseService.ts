@@ -65,13 +65,20 @@ export const courseService = {
     return data;
   },
 
-  async enrollCourse(id: string) {
-    const { data } = await api.post(`/api/course/${id}/enroll`);
+  async enrollCourse(courseId: string) {
+    const { data } = await api.post(`/api/course/${courseId}/enroll`);
     return data;
   },
 
-  async unenrollCourse(id: string) {
-    const { data } = await api.delete(`/api/course/${id}/enroll`);
+  async unenrollCourse(courseId: string) {
+    const { data } = await api.delete(`/api/course/${courseId}/enroll`);
+    return data;
+  },
+
+  async getChapter(courseId: string, chapterId: string) {
+    const { data } = await api.get(
+      `/api/course/${courseId}/chapters/${chapterId}`,
+    );
     return data;
   },
 };

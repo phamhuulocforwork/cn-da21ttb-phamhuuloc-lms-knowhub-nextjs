@@ -1,6 +1,6 @@
 import { LayoutGrid, List, Search } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -37,6 +37,7 @@ export function ContentControl({
   selectedCategory,
   onCategoryChange,
 }: ContentControlProps) {
+  const t = useTranslations('common');
   return (
     <div className='flex flex-col gap-4'>
       <div className='flex items-center justify-between'>
@@ -75,7 +76,7 @@ export function ContentControl({
         <div className='relative flex-1'>
           <Search className='absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground' />
           <Input
-            placeholder='Search...'
+            placeholder={t('search')}
             className='pl-9'
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
@@ -85,7 +86,7 @@ export function ContentControl({
         {categories && onCategoryChange && (
           <Select value={selectedCategory} onValueChange={onCategoryChange}>
             <SelectTrigger className='w-full md:w-[180px]'>
-              <SelectValue placeholder='Select category' />
+              <SelectValue placeholder={t('selectCategoryPlaceholder')} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
