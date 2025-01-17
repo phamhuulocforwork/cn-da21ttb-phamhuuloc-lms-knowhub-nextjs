@@ -1,6 +1,6 @@
 # Tên đề tài: XÂY DỰNG HỆ THỐNG QUẢN LÝ HỌC TẬP (LMS) BẰNG NEXT.JS
 
-## ![Knowhub](./thesis/image/banner.png)
+## ![Knowhub](./thesis/images/banner.png)
 
 - Giáo viên hướng dẫn: TS. Nguyễn Bảo Ân
 - Thời gian thực hiện: 11/11/2024 đến ngày 05/01/2025
