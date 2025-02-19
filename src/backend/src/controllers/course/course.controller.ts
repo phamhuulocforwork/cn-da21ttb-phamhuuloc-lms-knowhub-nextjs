@@ -17,7 +17,7 @@ export default new (class CourseController {
       const where = {
         OR: [{ title: { contains: search } }, { description: { contains: search } }],
         status: {
-          in: ["PUBLISHED", "DRAFT"],
+          in: ["PUBLISHED"],
         },
 
         ...(categoryId && {
